@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>triangle</title>
+  <style>
+    .wrapper{
+      margin: 0 auto;
+      width: 600px;
+    }
+
+    .triangle-up{
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid red ;
+    }
+    .triangle-down{
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid red;
+    }
+    .triangle-left{
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: 20px solid red;
+    }
+    .triangle-right{
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 20px solid red;
+    }
+    .triangle-lefttop{
+      width: 0;
+      height: 0;
+      border-top: 20px solid red;
+      border-right: 20px solid transparent;
+    }
+    .triangle-righttop{
+      width: 0;
+      height: 0;
+      border-top: 20px solid red;
+      border-left: 20px solid transparent;
+    }
+    .triangle-leftbottom{
+      width: 0;
+      height: 0;
+      border-top:20px solid transparent;
+      border-left: 20px solid red;
+    }
+    .triangle-rightbottom{
+      width: 0;
+      height: 0;
+      border-top:20px solid transparent;
+      border-right: 20px solid red;
+    }
+
+    .triangle-isosceles{
+      position: relative;
+      padding: 15px;
+      margin: 1em 0 3em;
+      color: #000;
+      background: #f3961c;
+      background: linear-gradient(#f9d835,#f3961c);
+      border-radius: 10px;
+    }
+    .triangle-isosceles.top{
+      background: linear-gradient(#f3961c,#f9d835);
+    }
+    .triangle-isosceles:after{
+      content: ' ';
+      position: absolute;
+      bottom: -15px;
+      left: 50px;
+      border-width: 15px 15px 0;
+      border-style: solid;
+      border-color: #f3961C transparent;
+      display: block;
+      width: 0;
+      height: 0;
+    }
+    .triangle-isosceles.top:after{
+      top: -15px;
+      bottom: auto;
+      left: auto;
+      right: 50px;
+      border-width: 0 15px 15px;
+    }
+    .triangle-border {
+      position: relative;
+      padding: 15px;
+      margin: 1em 0 3em;
+      border: 5px solid #5a8f00;
+      color: #333;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    .triangle-border:before{
+      content: ' ';
+      position: absolute;
+      bottom: -20px;
+      left: 40px;
+      border-width: 20px 20px 0;
+      border-style: solid;
+      border-color: #5a8f00 transparent;
+      display: block;
+      width: 0;
+      height: 0
+    }
+    .triangle-border:after{
+      content: ' ';
+      position: absolute;
+      bottom: -13px;
+      left: 46px;
+      border-width: 14px 14px 0;
+      border-style: solid;
+      border-color: #FFF transparent;
+      display: block;
+      width: 0;
+      height: 0
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <p class="triangle-up"></p>
+    <p class="triangle-down"></p>
+    <p class="triangle-left"></p>
+    <p class="triangle-right"></p>
+    <p class="triangle-lefttop"></p>
+    <p class="triangle-righttop"></p>
+    <p class="triangle-leftbottom"></p>
+    <p class="triangle-rightbottom"></p>
+
+    <p class="triangle-isosceles">This only need one HTML element</p>
+    <p class="triangle-isosceles top">This only need one HTML element</p>
+
+    <p class="triangle-border">This only need one HTML element</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>word-wrap&word-break&white-space&text-overflow</title>
+  <style>
+  .container{
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    border: 1px solid red;
+  }
+  .container1{
+    word-wrap: normal;
+    word-break: break-all;
+  }
+  .container2{
+    word-wrap: break-word;
+  }
+  </style>
+</head>
+<body>
+<div class="container container1">
+  this is a veryveryveryveryveryveryveryvery long word;
+</div>
+<div class="container container2">
+  this is a veryveryveryveryveryveryveryvery long word;
+</div>
+</body>
+</html>

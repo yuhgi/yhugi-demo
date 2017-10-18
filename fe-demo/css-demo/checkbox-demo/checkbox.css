@@ -1,0 +1,45 @@
+input.uc-checkbox{
+	display: none;
+}
+
+input.uc-checkbox + label.uc-checkbox-icon{
+    background: url(./images/icon.png) 0px -296px no-repeat;
+    display: inline-block;
+    width:16px;
+    height: 16px;
+}
+
+input.uc-checkbox + label.uc-checkbox-icon:hover{
+    background: url(./images/icon.png) -16px -296px no-repeat;
+}
+
+input.uc-checkbox:checked + label.uc-checkbox-icon{
+    background: url(./images/icon.png) -32px -296px no-repeat;
+}
+
+input.uc-checkbox:checked + label.uc-checkbox-icon:hover{
+    background: url(./images/icon.png) -48px -296px no-repeat;
+}
+
+.mcptt-checkbox{
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+}
+
+.mcptt-checkbox .mcptt-checkbox-icon{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: url(./images/icon.png) 0px -296px no-repeat;
+}
+
+.mcptt-checkbox .mcptt-checkbox-icon:hover{
+    background: url(./images/icon.png) -16px -296px no-repeat;
+}
+
+
+.mcptt-checkbox .mcptt-checkbox-icon .mcptt-checkbox-field{
+    display: none;
+}

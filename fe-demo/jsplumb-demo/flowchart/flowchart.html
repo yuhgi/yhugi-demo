@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FlowChart</title>
+  <script src="./js/jsPlumb-2.1.7.js"></script>
+  <script src="./js/draggable.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="chart-container">
+  <div class="topbar">
+    工具栏
+    <button>保存</button>
+  </div>
+  <div class="dragdrop-area">
+    <div class="drag-scope">
+      <div id="start-elem" class="drag-elem start">开始</div>
+      <div id="judge-elem" class="drag-elem judge"><span>判断</span></div>
+      <div id="process-elem" class="drag-elem process">处理</div>
+      <div id="end-elem" class="drag-elem end">结束</div>
+    </div>
+    <div class="drop-scope" id="drop-scope"></div>
+  </div>
+</div>
+</body>
+</html>

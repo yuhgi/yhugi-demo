@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-多元素/组件渲染</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+
+        .fade-enter-active,.fade-leave-active{
+            transition: opacity .5s;
+        }
+
+        .fade-enter,.fade-leave-active{
+            opacity: 0;
+        }
+
+        .slide-fade-enter-active, .slide-fade-leave-active{
+            transition: all .5s linear;
+        }
+        .slide-fade-leave-active{
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        .slide-fade-enter{
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        .bounce-enter-active{
+            animation: bounce-in .5s;
+        }
+
+        .bounce-leave-active{
+            animation: bounce-out .5s;
+        }
+
+        @keyframes bounce-in{
+            0%{
+                transform: scale(0);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce-out{
+            0%{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="example-1">
+        <button @click="show = !show">
+            Toggle Table
+        </button>
+        <transition name="fade">
+            <table v-if="show">
+                <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>专业</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>张三1</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>张三2</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>张三3</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>张三4</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>张三5</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p v-else>Sorry, no items found.</p>
+        </transition>
+    </div>
+    <div id="example-2">
+        <transition name="fade">
+          <button v-if="isEditing" key="save" @click="saveClick">
+            Save
+          </button>
+          <button v-else key="edit" @click="editClick">
+            Edit
+          </button>
+        </transition>
+    </div>
+    <div id="example-3" :style="{position: 'relative',height:'22px'}">
+        <transition name="fade">
+            <button :key="docState" @click="clickHandler" :style="{display:'inline-block',position: 'absolute',left: 0,top:0}">
+                {{btnMessage}}
+            </button>
+        </transition>
+    </div>
+    <div id="example-4" :style="{position: 'relative',height:'22px'}">
+        <transition name="slide-fade">
+            <button
+                :key="onState"
+                @click="clickHandler"
+                :style="{display:'inline-block',position: 'absolute',left: 0,top:0}"
+            >
+                {{btnMessage}}
+            </button>
+        </transition>
+    </div>
+    <div id="example-5" :style="{position: 'relative',height:'22px'}">
+        <transition name="fade" mode="out-in">
+            <button :key="onState" @click="clickHandler"
+                :style="{display:'inline-block',position: 'absolute',left: 0,top:0}"
+            >
+                {{btnMessage}}
+            </button>
+        </transition>
+    </div>
+    <div id="example-6" :style="{position: 'relative',height:'22px'}">
+        <transition name="slide-fade" mode="in-out">
+            <button :key="onState" @click="clickHandler"
+                :style="{display:'inline-block',position: 'absolute',left: 0,top:0}"
+            >
+                {{btnMessage}}
+            </button>
+        </transition>
+    </div>
+    <div id="example-7">
+        <button :key="onState" @click="clickHandler">Toggle Component</button>
+        <transition name="fade" mode="out-in">
+            <component v-bind:is="view"></component>
+        </transition>
+    </div>
+    <script>
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{
+                show:true
+            }
+        });
+        var vm2 = new Vue({
+            el:'#example-2',
+            data:{
+                isEditing:false
+            },
+            methods:{
+                saveClick:function(){
+                    this.isEditing = false;
+                },
+                editClick:function(){
+                    this.isEditing = true;
+                }
+            }
+        });
+
+        var vm3 = new Vue({
+            el:'#example-3',
+            data:{
+                docState:'saved'
+            },
+            methods:{
+                clickHandler:function(){
+                    if(this.docState === 'saved'){
+                        this.docState = 'editing';
+                    }else if(this.docState === 'editing'){
+                        this.docState = 'edited';
+                    }else{
+                        this.docState = 'saved';
+                    }
+                }
+            },
+            computed:{
+                btnMessage:function(){
+                    switch(this.docState){
+                        case 'saved': return 'Edit';
+                        case 'edited': return 'Save';
+                        case 'editing': return 'Cancel';
+                    }
+                }
+            }
+        });
+
+        var vm4 = new Vue({
+            el:'#example-4',
+            data:{
+                onState:'off'
+            },
+            computed:{
+                btnMessage:function(){
+                    if(this.onState == 'on'){
+                        return 'off';
+                    }else{
+                        return 'on';
+                    }
+                }
+            },
+            methods:{
+                clickHandler:function(){
+                    this.onState = this.onState === 'on' ? 'off':'on';
+                }
+            }
+        });
+        var vm5 = new Vue({
+            el:'#example-5',
+            data:{
+                onState:'off'
+            },
+            computed:{
+                btnMessage:function(){
+                    if(this.onState === 'on'){
+                        return 'off';
+                    }else{
+                        return 'on';
+                    }
+                }
+            },
+            methods:{
+                clickHandler:function(){
+                    this.onState = this.onState === 'on' ? 'off':'on';
+                }
+            }
+        });
+        var vm6 = new Vue({
+            el:'#example-6',
+            data:{
+                onState:'off'
+            },
+            computed:{
+                btnMessage:function(){
+                    if(this.onState === 'on'){
+                        return 'off';
+                    }else{
+                        return 'on';
+                    }
+                }
+            },
+            methods:{
+                clickHandler:function(){
+                    this.onState = this.onState === 'on' ? 'off':'on';
+                }
+            }
+        });
+
+        var vm7 = new Vue({
+            el: '#example-7',
+            data: {
+                view: 'v-a'
+            },
+            components: {
+                'v-a': {
+                    template: '<div>Component A</div>'
+                },
+                'v-b': {
+                    template: '<div>Component B</div>'
+                }
+            },
+            methods:{
+                clickHandler:function(){
+                    this.view = this.view === 'v-a' ? 'v-b':'v-a';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

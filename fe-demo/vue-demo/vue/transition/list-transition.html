@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-list-transition</title>
+    <script src="../lib/lodash.min.js"></script>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .list-item{
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .list-enter-active,.list-leave-active{
+            transition: all 1s;
+        }
+        .list-enter, .list-leave-active{
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .list-move{
+            transition: transform 1s;
+        }
+
+        .flip-list-move{
+            transition: transform 1s;
+        }
+
+        .search-item{
+            transition: all .5s;
+        }
+        .slide-fade-enter,.slide-fade-leave-active{
+            opacity: 0;
+        }
+        .slide-fade-leave-active{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="example-1">
+        <button @click="add">Add</button>
+        <button @click="remove">Remove</button>
+        <transition-group name="list" tag="p">
+            <span v-for="item in items" :key="item" class="list-item">
+                {{item}}
+            </span>
+        </transition-group>
+    </div>
+    <div id="example-2">
+        <button @click="shuffle">Shuffle</button>
+        <transition-group name="flip-list" tag="ul">
+            <li v-for="item in items" :key="item">{{item}}</li>
+        </transition-group>
+    </div>
+    <div id="example-3">
+        <input type="text" v-model="query">
+        <transition-group
+            name="slide-fade"
+            tag="ul"
+            class="searchlist"
+        >
+            <li v-for="(item,index) in computedList"
+                :key="item.msg" :data-index="index" class="search-item"
+            >
+                {{item.msg}}
+            </li>
+        </transition-group>
+    </div>
+    <script>
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{
+                items:[1,2,3,4,5,6,7,8,9],
+                nextNum:10
+            },
+            methods:{
+                randomIndex:function(){
+                    return Math.floor(Math.random()*this.items.length);
+                },
+                add:function(){
+                    this.items.splice(this.randomIndex(),0,this.nextNum++);
+                },
+                remove:function(){
+                    this.items.splice(this.randomIndex(), 1);
+                }
+            }
+        });
+        var vm2 = new Vue({
+            el:'#example-2',
+            data:{
+                items:[1,2,3,4,5,6,7,8,9]
+            },
+            methods:{
+                shuffle:function(){
+                    this.items = _.shuffle(this.items);
+                }
+            }
+        });
+
+        var vm3 = new Vue({
+            el:'#example-3',
+            data:{
+                query: '',
+                list: [
+                    { msg: 'Bruce Lee' },
+                    { msg: 'Jackie Chan' },
+                    { msg: 'Chuck Norris' },
+                    { msg: 'Jet Li' },
+                    { msg: 'Kung Fury' }
+                ]
+            },
+            computed:{
+                computedList:function(){
+                    debugger
+                    var vm = this;
+                    var list =  this.list.filter(function(item){
+                        return item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1;
+                    });
+                    return list;
+                }
+            },
+            methods:{
+                beforeEnter:function(el){
+                    el.style.opacity = 0;
+                    el.style.height = 0;
+                },
+                enter:function(el,done){
+
+                },
+                leave:function(){
+
+                }
+            }
+        });
+    </script>
+</body>
+</html>

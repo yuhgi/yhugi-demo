@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dragdrop-simple</title>
+    <style>
+        .area{
+            display: inline-block;
+            margin: 50px;
+            width: 400px;
+            height: 400px;
+            border: 2px solid #0088ff;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1" class="area">
+        <img id="drag1" src="./images/w3school.gif" draggable="true" width="336" height="69" />
+    </div>
+    <div id="div2" class="area"></div>
+
+    <script>
+        function allowDrop(event){
+            event.preventDefault();
+        }
+
+        function drag(event){
+            event.dataTransfer.setData('text',event.target.id);
+        }
+
+        function drop(event){
+            event.preventDefault();
+            var id = event.dataTransfer.getData('text');
+            event.target.appendChild(document.getElementById(id));
+        }
+        var div1 = document.getElementById('div1'),
+            div2 = document.getElementById('div2');
+            img = document.getElementById('drag1');
+        img.addEventListener('dragstart',drag);
+        div2.addEventListener('dragover',allowDrop);
+        div2.addEventListener('drop',drop);
+        div1.addEventListener('dragover',allowDrop);
+        div1.addEventListener('drop',drop);
+    </script>
+</body>
+</html>

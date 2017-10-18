@@ -1,0 +1,90 @@
+.mcptt-usermarker{
+    cursor:default;
+    overflow:visible;
+}
+
+.mcptt-usermarker .mcptt-usermarker-name{
+    position:absolute;
+    bottom:-16px;
+    left:50%;
+    transform:translateX(-50%);
+    white-space:nowrap;
+    color:#0057AD;
+    font-family:Microsoft YaHei,Tahoma, Helvetica, Arial;
+    font-size: 14px;
+}
+
+.mcptt-usermarker .mt-usermarker-label{
+    border:1px solid #0057AD;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    background: #FFF;
+    white-space:nowrap;
+}
+
+.mt-usermarker-label .mt-usermarker-label-header{
+    height: 28px;
+    padding: 0 8px;
+    line-height: 28px;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+}
+
+.mt-usermarker-label-header  .header-name{
+    display: inline-block;
+    width:49.5%;
+    vertical-align: top;
+}
+.mt-usermarker-label-header  .header-alarm{
+    display: inline-block;
+    width:49.5%;
+    vertical-align: top;
+}
+.mt-usermarker-label-header .header-close{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: -12px;
+    top:-10px;
+    background: url(../images/btn_clozepanel.png) 0 0 no-repeat;
+}
+.mt-usermarker-label-header .header-close:hover{
+    background: url(../images/btn_clozepanel.png) 0 -24px no-repeat;
+}
+.mt-usermarker-label-header .header-close:active{
+    background: url(../images/btn_clozepanel.png) 0 -48px no-repeat;
+}
+
+.mt-usermarker-label .mt-usermarker-label-body{
+    min-height:54px;
+    line-height: 18px;
+    color:#666;
+    padding: 0 5px;
+    word-wrap: break-word;
+    word-break:break-all; 
+    white-space: normal;
+}
+.mt-usermarker-label .mt-usermarker-label-body .body-time{
+    font-size:11px;
+}
+
+.mt-usermarker-label .mt-usermarker-label-footer{
+    height: 32px;
+}
+.mt-usermarker-label-footer button{
+    display: inline-block;
+    width: 50%;
+    height: 32px;
+    background-color: #fff;
+    color:#0057ad;
+    vertical-align:top;
+}
+.mt-usermarker-label-footer button:hover{
+    background-color: #c1c1d1;
+}
+.mt-usermarker-label-footer button.disabled{
+    color: #afb1b3;
+}

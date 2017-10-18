@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %> - MicroBlog</title>
+    <link rel="stylesheet" href="/lib/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/lib/jquery-1.11.1.min.js"></script
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">
+                    MicroBlog
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="<%= nav=='index'?'active':'' %>"><a href="/">首页</a></li>
+                    <% if(!getUser(req)){ %>
+                        <li class="<%= nav=='login'?'active':'' %>"><a href="/login">登入</a></li>
+                    <% }else{  %>
+                        <li class="<%= nav=='user'?'active':'' %>"><a href="<%= '/u/'+getUser(req).name %>">用户</a></li>
+                        <li class="<%= nav=='logout'?'active':'' %>"><a href="/logout">登出</a></li>
+                    <% } %>
+                    <li class="<%= nav=='reg'?'active':'' %>"><a href="/reg">注册</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid main-content">
+        <%- body %>
+    </div>
+    <footer>
+        <p>版权所有 2017</p>
+    </footer>
+    <script src="/lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/layout.js"></script>
+</body>
+</html>

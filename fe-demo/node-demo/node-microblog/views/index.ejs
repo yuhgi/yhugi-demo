@@ -1,0 +1,14 @@
+<div class="jumbotron">
+    <% if(!getUser(req)){ %>
+        <h1>欢迎来到MicroBlog!</h1>
+        <p>MicroBlog是一个基于NodeJS的微博系统</p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="/login" role="button">登录</a>
+            <a class="btn btn-primary btn-lg" href="/reg" role="button">立即注册</a>
+        </p>
+    <% }else{ %>
+        <%- include('user/say') %>
+    <% } %>
+    <%- include('user/posts',{posts:posts}) %>
+</div>
+<script src="/js/user.js"></script>

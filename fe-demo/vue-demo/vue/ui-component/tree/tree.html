@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Tree</title>
+    <script src="../lib/vue.js"></script>
+    <script src="./checkbox.js"></script>
+    <link rel="stylesheet" href="./checkbox.css">
+    <script src="./tree.js"></script>
+    <link rel="stylesheet" href="./tree.css">
+    <style>
+        #example-1{
+            width: 200px;
+            height: 600px;
+            border: 1px solid #008888;
+        }
+    </style>
+</head>
+<body>
+    <div id="example-1">
+        <tree :tree-data="treeData"></tree>
+    </div>
+    <script>
+        var treeData = {
+            name:'root',
+            checked:true,// 是否被选中
+            open:true,// 是否展开
+            count:1222,// 警员数量
+            children:[{
+                name:'item-1'
+            },{
+                name:'item-2'
+            },{
+                name:'item-3'
+            },{
+                name:'item-4',
+                children:[{
+                    name:'item-4-1'
+                },{
+                    name:'item-4-2'
+                },{
+                    name:'item-4-3'
+                }]
+            },{
+                name:'item-5'
+            }]
+        };
+        new Vue({
+            data:{
+                'treeData':treeData
+            },
+            el:'#example-1',
+            components:{
+                'tree':Tree
+            }
+        });
+    </script>
+</body>
+</html>

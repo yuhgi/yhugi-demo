@@ -1,0 +1,20 @@
+{
+  "name": "express-demo",
+  "version": "1.0.0",
+  "description": "express demo project",
+  "main": "express-demo.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "express",
+    "demo",
+    "test"
+  ],
+  "author": "dang4",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}

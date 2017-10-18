@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>react生命周期</title>
+  <style>
+    input{
+      margin-top:10px;
+    }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+  <div id="container"></div >
+  <script type="text/babel">
+    var ParentComponent = React.createClass({
+      render:function(){
+        return (
+          <div id={false}>{false}</div>
+        )
+      }
+    })
+    ReactDOM.render(<ParentComponent/>,document.getElementById('container'));
+  </script>
+</body>
+</html>

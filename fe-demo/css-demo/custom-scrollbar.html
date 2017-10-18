@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>自定义滚动条</title>
+</head>
+<style>
+  .webkit,.ms,.firefox{
+    width:300px;
+    height:150px;
+    background-color:#008888;
+    overflow-y:scroll;
+    margin-bottom:20px;
+  }
+
+  .webkit::-webkit-scrollbar{
+    width:6px;
+    height:6px;
+    background-color:#EDEDED;
+  }
+
+  .webkit::-webkit-scrollbar-button{
+    display:none;
+  }
+
+  .webkit::-webkit-scrollbar-thumb{
+    background-color:rgba(0, 0, 0, 0.16);
+    border-radius:4px;
+  }
+  .webkit::-webkit-scrollbar-thumb:hover{
+    background-color:rgba(0, 0, 0, 0.26);
+    border-radius:4px;
+  }
+  table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    height:120px;
+    overflow:auto;
+  }
+  .table-container{
+
+    overflow: auto;
+  }
+  td{
+    border:1px solid #000;
+  }
+
+</style>
+<body>
+  <div class="webkit">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi et nisi ut est venenatis viverra. Aenean pede orci, blandit quis, faucibus quis, egestas ut, mi. Pellentesque enim purus, venenatis dignissim, tincidunt a, ullamcorper eget, nibh. Nullam ut sem adipiscing orci vehicula interdum. Proin a enim. Phasellus sollicitudin, magna vitae vestibulum facilisis, tellus nunc iaculis arcu, in molestie sem velit tempus est. In eleifend velit at sem adipiscing sodales. Nunc sapien felis, aliquam et, volutpat rhoncus, condimentum ut, tortor. Integer est. Quisque viverra. Praesent sed arcu. Maecenas id lorem a leo lobortis condimentum.
+    Cras commodo rutrum augue. Vivamus iaculis. Nullam est. Maecenas consequat. Sed id dui. Vivamus a nisl. Donec pretium sapien. Proin et ligula et ligula placerat pulvinar. Aliquam erat volutpat. Proin id est. Suspendisse cursus, magna at hendrerit consequat, mauris est imperdiet neque, a ultrices arcu urna non nunc. Quisque tellus. Nulla nulla justo, vehicula nec, pellentesque eu, iaculis et, ligula. Praesent mattis ante vel sem. Suspendisse porta rhoncus urna. Phasellus felis. Praesent viverra convallis libero. Maecenas non augue. Donec hendrerit lectus id enim.
+    Nulla ligula dui, euismod et, sodales quis, sollicitudin quis, elit. In adipiscing est sed enim. Fusce at massa vitae metus semper hendrerit. Integer vitae urna. Nulla eget ligula. Etiam libero. Maecenas nisi nibh, convallis a, feugiat vitae, pulvinar et, mi. Curabitur arcu pede, adipiscing sed, egestas nec, commodo in, elit. Nulla facilisi. Proin varius pede et dui lacinia dapibus. Morbi nec augue. Proin imperdiet lacus eu tellus.
+  </div>
+  <div class="ms">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi et nisi ut est venenatis viverra. Aenean pede orci, blandit quis, faucibus quis, egestas ut, mi. Pellentesque enim purus, venenatis dignissim, tincidunt a, ullamcorper eget, nibh. Nullam ut sem adipiscing orci vehicula interdum. Proin a enim. Phasellus sollicitudin, magna vitae vestibulum facilisis, tellus nunc iaculis arcu, in molestie sem velit tempus est. In eleifend velit at sem adipiscing sodales. Nunc sapien felis, aliquam et, volutpat rhoncus, condimentum ut, tortor. Integer est. Quisque viverra. Praesent sed arcu. Maecenas id lorem a leo lobortis condimentum.
+    Cras commodo rutrum augue. Vivamus iaculis. Nullam est. Maecenas consequat. Sed id dui. Vivamus a nisl. Donec pretium sapien. Proin et ligula et ligula placerat pulvinar. Aliquam erat volutpat. Proin id est. Suspendisse cursus, magna at hendrerit consequat, mauris est imperdiet neque, a ultrices arcu urna non nunc. Quisque tellus. Nulla nulla justo, vehicula nec, pellentesque eu, iaculis et, ligula. Praesent mattis ante vel sem. Suspendisse porta rhoncus urna. Phasellus felis. Praesent viverra convallis libero. Maecenas non augue. Donec hendrerit lectus id enim.
+    Nulla ligula dui, euismod et, sodales quis, sollicitudin quis, elit. In adipiscing est sed enim. Fusce at massa vitae metus semper hendrerit. Integer vitae urna. Nulla eget ligula. Etiam libero. Maecenas nisi nibh, convallis a, feugiat vitae, pulvinar et, mi. Curabitur arcu pede, adipiscing sed, egestas nec, commodo in, elit. Nulla facilisi. Proin varius pede et dui lacinia dapibus. Morbi nec augue. Proin imperdiet lacus eu tellus.
+  </div>
+  <div class="firefox">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi et nisi ut est venenatis viverra. Aenean pede orci, blandit quis, faucibus quis, egestas ut, mi. Pellentesque enim purus, venenatis dignissim, tincidunt a, ullamcorper eget, nibh. Nullam ut sem adipiscing orci vehicula interdum. Proin a enim. Phasellus sollicitudin, magna vitae vestibulum facilisis, tellus nunc iaculis arcu, in molestie sem velit tempus est. In eleifend velit at sem adipiscing sodales. Nunc sapien felis, aliquam et, volutpat rhoncus, condimentum ut, tortor. Integer est. Quisque viverra. Praesent sed arcu. Maecenas id lorem a leo lobortis condimentum.
+    Cras commodo rutrum augue. Vivamus iaculis. Nullam est. Maecenas consequat. Sed id dui. Vivamus a nisl. Donec pretium sapien. Proin et ligula et ligula placerat pulvinar. Aliquam erat volutpat. Proin id est. Suspendisse cursus, magna at hendrerit consequat, mauris est imperdiet neque, a ultrices arcu urna non nunc. Quisque tellus. Nulla nulla justo, vehicula nec, pellentesque eu, iaculis et, ligula. Praesent mattis ante vel sem. Suspendisse porta rhoncus urna. Phasellus felis. Praesent viverra convallis libero. Maecenas non augue. Donec hendrerit lectus id enim.
+    Nulla ligula dui, euismod et, sodales quis, sollicitudin quis, elit. In adipiscing est sed enim. Fusce at massa vitae metus semper hendrerit. Integer vitae urna. Nulla eget ligula. Etiam libero. Maecenas nisi nibh, convallis a, feugiat vitae, pulvinar et, mi. Curabitur arcu pede, adipiscing sed, egestas nec, commodo in, elit. Nulla facilisi. Proin varius pede et dui lacinia dapibus. Morbi nec augue. Proin imperdiet lacus eu tellus.
+  </div>
+  <div class="table-container">
+    <table>
+    <thead>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+      <tr>
+        <td>名字</td>
+        <td>性别</td>
+        <td>专业</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</body>
+</html>

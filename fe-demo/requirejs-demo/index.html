@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>requirejs</title>
+    <script src="./js/lib/require.js"></script>
+</head>
+<body>
+    <script>
+        require.config({
+            baseUrl:"./",
+            paths:{
+                "jquery":"./js/lib/jquery.min"
+            }
+        });
+
+        require(["jquery","js/app/app"],function($,app){
+
+        });
+    </script>
+
+</body>
+</html>

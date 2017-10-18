@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-If</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="example-1">
+        <div v-if="ok">Yes</div>
+        <div v-else>No</div>
+    </div>
+    <script>
+        // 单个元素
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{
+                ok:false
+            }
+        });
+    </script>
+</body>
+
+</html>

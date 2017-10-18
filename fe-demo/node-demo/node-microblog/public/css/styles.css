@@ -1,0 +1,7 @@
+.main-content{
+    margin-top:60px;
+}
+
+.post-form input[type="text"]{
+    width:800px !important;
+}

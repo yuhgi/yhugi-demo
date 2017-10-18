@@ -1,0 +1,20 @@
+{
+  "name": "requirejs-demo",
+  "version": "1.0.0",
+  "description": "use gulp construct an amd project",
+  "main": "dist/inext.html",
+  "scripts": {
+    "test": "echo ''"
+  },
+  "keywords": [
+    "r.js",
+    "require.js",
+    "gulp"
+  ],
+  "author": "renwc",
+  "license": "MIT",
+  "devDependencies": {
+    "amd-optimize": "^0.6.1",
+    "gulp-concat": "^2.6.1"
+  }
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>详解事件对象与HTML元素的各种位置和宽高定义</title>
+  <style>
+  body{
+    margin: 0;
+    padding: 0;
+  }
+  div{
+    margin: 0;
+    padding: 0;
+  }
+  .rect{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 5px;
+    border: 2px solid green;
+    outline: 1px solid red;
+    background-color: yellow;
+  }
+  .rect1{
+    left: 100px;
+    top: 100px;
+  }
+  .rect2{
+    left: 100px;
+    top: 1000px;
+    overflow: scroll;
+  }
+  </style>
+</head>
+<body>
+  <div class="rect rect1"></div>
+  <div class="rect rect2">
+    1234567890123456789012345678901234567890
+    1234567890123456789012345678901234567890
+    1234567890123456789012345678901234567890
+    1234567890123456789012345678901234567890
+  </div>
+  <script>
+    var rect1 = document.querySelector('.rect1');
+    var rect2 = document.querySelector('.rect2');
+    console.log("rect1.clientWidth:"+rect1.clientWidth);
+    console.log("rect1.clientHeight:"+rect1.clientHeight);
+    console.log("rect1.clientLeft:"+rect1.clientLeft);
+    console.log("rect1.clientTop:"+rect1.clientTop);
+
+    console.log("rect1.offsetWidth:"+rect1.offsetWidth);
+    console.log("rect1.offsetHeight:"+rect1.offsetHeight);
+    console.log("rect1.offsetLeft:"+rect1.offsetLeft);
+    console.log("rect1.offsetTop:"+rect1.offsetTop);
+
+    console.log("rect1.scrollWidth:"+rect1.scrollWidth);
+    console.log("rect1.scrollHeight:"+rect1.scrollHeight);
+    console.log("rect1.scrollLeft:"+rect1.scrollLeft);
+    console.log("rect1.scrollTop:"+rect1.scrollTop);
+
+    console.log("rect1.clientWidth:"+rect1.clientWidth);
+    console.log("rect1.clientHeight:"+rect1.clientHeight);
+    console.log("rect1.clientLeft:"+rect1.clientLeft);
+    console.log("rect1.clientTop:"+rect1.clientTop);
+
+    console.log("rect2.offsetWidth:"+rect2.offsetWidth);
+    console.log("rect2.offsetHeight:"+rect2.offsetHeight);
+    console.log("rect2.offsetLeft:"+rect2.offsetLeft);
+    console.log("rect2.offsetTop:"+rect2.offsetTop);
+
+    console.log("rect2.scrollWidth:"+rect2.scrollWidth);
+    console.log("rect2.scrollHeight:"+rect2.scrollHeight);
+    console.log("rect2.scrollLeft:"+rect2.scrollLeft);
+    console.log("rect2.scrollTop:"+rect2.scrollTop);
+    console.log("rect1.getBoundingClientRect().left:"+rect1.getBoundingClientRect().left);
+    console.log("rect1.getBoundingClientRect().right:"+rect1.getBoundingClientRect().right);
+    console.log("rect1.getBoundingClientRect().top:"+rect1.getBoundingClientRect().top);
+    console.log("rect1.getBoundingClientRect().bottom:"+rect1.getBoundingClientRect().bottom);
+    rect1.onclick = function(e){
+      e = window.event||e;
+      console.log("event.pageX:"+e.pageX);
+      console.log("event.pageY:"+e.pageY);
+      console.log("event.clientX:"+e.clientX);
+      console.log("event.clientY:"+e.clientY);
+      console.log("event.screenX:"+e.screenX);
+      console.log("event.screenY:"+e.screenY);
+      console.log("event.layerX:"+e.layerX);
+      console.log("event.layerY:"+e.layerY);
+      console.log("event.movementX:"+e.movementX);
+      console.log("event.movementY:"+e.movementY);
+      console.log("event.offsetX:"+e.offsetX);
+      console.log("event.offsetY:"+e.offsetY);
+      console.log("event.x:"+e.x);
+      console.log("event.y:"+e.y);
+      console.log(e);
+    }
+  </script>
+</body>
+</html>

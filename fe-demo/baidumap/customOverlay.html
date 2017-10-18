@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义标注</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+    <script src="js/userMarker.js"></script>
+    <link rel="stylesheet" href="css/userMarker.css">
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        html,body,div,p,button,img{
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+        button{
+            border:none;
+            outline: 0;
+        }
+        #map-container{
+            width:1000px;
+            height: 800px;
+            border:1px solid gray;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="map-container"></div>
+    <button id="addMarkerBtn">添加marker</button>
+    <button id="showMarkerBtn">显示marker</button>
+    <button id="hideMarkerBtn">隐藏marker</button>
+    <button id="toggleMarkerBtn">切换显示/隐藏marker</button>
+    <button id="removeMarkerBtn">清除marker</button>
+    <button id="moveMarkerBtn">移动marker</button>
+    <div>
+        <button id="setStateMarkerBtn">设置状态</button>
+        <select name="state-select" id="state-select">
+            <option value="online">在线</option>
+            <option value="offline">离线</option>
+            <option value="calling">呼叫中</option>
+            <option value="emergencyAlarm">紧急告警</option>
+            <option value="crossBorderAlarm">越界告警</option>
+            <option value="offlineAlarm">离线告警</option>
+            <option value="stillAlarm">长时间不动告警</option>
+        </select>
+    </div>
+    
+    <script>
+        var map = new BMap.Map("map-container");    //创建地图容器
+        var point = new BMap.Point(116.404, 39.915);        //创建一个点
+        map.centerAndZoom(point, 15); 
+        var addMarkerBtn = document.getElementById('addMarkerBtn');
+        var showMarkerBtn = document.getElementById('showMarkerBtn');
+        var hideMarkerBtn = document.getElementById('hideMarkerBtn');
+        var toggleMarkerBtn = document.getElementById('toggleMarkerBtn');
+        var setStateMarkerBtn = document.getElementById('setStateMarkerBtn');
+        var removeMarkerBtn = document.getElementById('removeMarkerBtn');
+        var moveMarkerBtn = document.getElementById('moveMarkerBtn');
+
+        var userMarker = null;
+        var addMarker = function(){
+            var point = new BMap.Point(116.404, 39.915);
+            userMarker = new UserMarker(point,{
+                id:'100092349',
+                name:'17302506980',
+                state:'offline',
+                address:'中国江苏省南京市江宁区将军大道6号',
+                //speed:'8km/h',
+                time:'2011-01-23 09:00:09'
+            });     //创建一个标注
+            map.addOverlay(userMarker);
+            userMarker.addEventListener('click',function(e,id){
+                if(e.target.className === 'cancellocate-btn'){
+                    alert('取消定位,id:'+id);
+                }
+                if(e.target.className === 'call-btn'){
+                    alert('呼叫,id:'+id);
+                }
+            })
+            return userMarker;
+        }
+
+        addMarkerBtn.addEventListener('click',function(){
+            if(userMarker){return;}
+            userMarker = addMarker();
+        });
+        showMarkerBtn.addEventListener('click',function(){
+            if(!userMarker){return;}
+            userMarker.show();
+        });
+        hideMarkerBtn.addEventListener('click',function(){
+            if(!userMarker){return;}
+            userMarker.hide();
+        });
+        toggleMarkerBtn.addEventListener('click',function(){
+            if(!userMarker){return;}
+            userMarker.toggle();
+        });
+        setStateMarkerBtn.addEventListener('click',function(){
+            if(!userMarker){return;}
+            var selectEl = document.getElementById('state-select');
+            userMarker.setState(selectEl.value);
+            // do something
+        });
+        removeMarkerBtn.addEventListener('click',function(){
+            userMarker.dispose();
+            map.removeOverlay(userMarker);
+            userMarker = null;
+        });
+        moveMarkerBtn.addEventListener('click',function(){
+            var lng = 116.404;
+            var lat = 39.915;
+            var increment = 0.0002;
+            setInterval(function(){
+                var point = new BMap.Point(lng+increment,lat+increment);
+                increment = increment + 0.0002;
+                userMarker.setPoint(point);
+            },1000);
+        });
+
+        
+    </script>
+</body>
+</html>

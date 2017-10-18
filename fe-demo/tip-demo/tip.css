@@ -1,0 +1,17 @@
+.shanbei-tip{
+    visibility: hidden;
+    position: fixed;
+    padding: 5px 10px;
+    border:1px solid #ddd;
+    background: #fff;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+.shanbei-tip-word{
+
+}
+
+.shanbei-tip-audio{
+
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Template</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app-1">
+        <div v-bind:id="dynamicId">{{text}}</div>
+        <input type="text" v-bind:disabled="isDisabled" v-bind:readonly="isReadOnly">
+        <div :id="dynamicId+'-1'">{{number+1}}</div>
+        <div>{{isDisabled?"Yes":"No"}}</div>
+        <div>{{message.split('').reverse().join('')}}</div>
+        <div>{{message|capatalize}}</div>
+        <a href="http://www.baidu.com" @click.prevent="linkClickHandler">跳转到百度</a>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:document.querySelector("#app-1"),
+            data:{
+                text:"文本插值",
+                dynamicId:"app-1-dynamic",
+                isDisabled:false,
+                isReadOnly:true,
+                number:5,
+                message:"hello world"
+            },
+            filters:{
+                capatalize:function(value){
+                    if(!value){
+                        return "";
+                    }
+                    value = value.toString();
+                    return value.charAt(0).toUpperCase()+value.slice(1);
+                }
+            },
+            methods:{
+                linkClickHandler:function(e){
+                    alert("click a");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

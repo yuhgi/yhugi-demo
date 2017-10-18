@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download</title>
+  <script src="state.js"></script>
+</head>
+<body>
+  <button id="download">下载</button>
+  <button id="pause">暂停</button>
+  <button id="fail">失败</button>
+  <button id="finish">完成</button>
+<script>
+  var oDownload = new Download(),
+      paused = false;
+  document.getElementById('download').onclick = function(){
+    oDownload.download();
+  };
+  document.getElementById('pause').onclick = function(e){
+    if(paused){
+      oDownload.download();
+      e.target.textContent = "暂停";
+    }else{
+      oDownload.pause();
+      e.target.textContent = "恢复";
+    }
+    paused = !paused;
+
+  };
+  document.getElementById('fail').onclick = function(){
+    oDownload.fail();
+  };
+  document.getElementById('finish').onclick = function(){
+    oDownload.finish();
+  };
+</script>
+</body>
+</html>

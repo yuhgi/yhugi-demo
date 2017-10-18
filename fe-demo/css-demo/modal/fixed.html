@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>fixed-modal</title>
+  <style>
+    html,body,div{
+      padding: 0;
+      margin: 0;
+    }
+    .wrapper{
+      height: 2000px;
+      background-color: #efefef;
+    }
+    .modal{
+      display: block;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      opacity: 0.5;
+      z-index: 99999;
+    }
+    .modal .dialog{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 500px;
+      height: 300px;
+      background-color: #FFF;
+    }
+    .modal-hide{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+    <p>这里是内容</p>
+  </div>
+  <div class="modal modal-hide">
+    <div class="dialog"></div>
+  </div>
+</body>
+</html>

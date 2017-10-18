@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>MCPTT调度</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/ico/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" type="text/css" href="http://www.skylead.com.cn/smap/smap-1.0.1.css" />
+    <script type="text/javascript" src="http://www.skylead.com.cn/smap/smap-1.0.1.js"></script>
+    <script src="js/lib/require.js"></script>
+</head>
+<body>
+    <div id='vue-app'>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+    <div id='vue-modal'>
+    </div>
+    <script>
+        require.config({
+            baseUrl:"./",
+            paths:{
+                "jquery":"./js/lib/jquery.min",
+                "vue":"./js/lib/vue",
+                "vue-router":"./js/lib/vue-router"
+            }
+        });
+
+        require(["js/app/app"]);
+    </script>
+</body>
+</html>

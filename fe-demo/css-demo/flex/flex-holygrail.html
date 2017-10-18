@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex-holygrail</title>
+    <style>
+        html,body,div{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            width:100%;
+            height: 100%;
+        }
+        .holygrail{
+            width:100%;
+            height: 100%;
+            display:flex;
+            flex-direction: column;
+        }
+        .holygrail header,.holygrail footer{
+            flex-basis: 200px;
+        }
+        .holygrail .holygrail-body{
+            flex:1;
+            display: flex;
+            justify-content: space-between;
+        }
+        .holygrail .holygrail-body .holygrail-nav{
+            order:0;
+            flex:0 0 20em;
+        }
+        .holygrail .holygrail-body .holygrail-content{
+            order:1;
+            flex:1;
+        }
+        .holygrail .holygrail-body .holygrail-ads{
+            order:2;
+            flex:0 0 20em;
+        }
+
+        @media (max-width:768px){
+            .holygrail-body{
+
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="holygrail">
+        <header>header</header>
+        <div class="holygrail-body">
+            <main class="holygrail-content">content</main>
+            <aside class="holygrail-ads">ads</aside>
+            <nav class="holygrail-nav">nav</nav>
+        </div>
+        <footer>footer</footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-infinite-scroll</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-infinite-scroll.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="500">
+            <p v-for="item in list">{{item.name}}</p>
+        </div>
+        <p v-show="loading">正在加载中</p>
+    </div>
+    <script>
+        Vue.use(infiniteScroll);
+        var count = 0;
+        var app = new Vue({
+            el:'#app',
+            data:{
+                list:[],
+                loading:false
+            },
+            methods:{
+                loadMore:function(){
+                    console.log('loadMore')
+                    this.loading = true;
+                    var vm = this;
+                    setTimeout(function() {
+                        for(var i=0;i<20;i++){
+                            vm.list.push({
+                                name:count++
+                            });
+                        }
+                        this.loading = false;
+                    },300);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

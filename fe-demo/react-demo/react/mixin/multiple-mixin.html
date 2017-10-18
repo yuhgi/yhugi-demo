@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mixin</title>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var AMixin = {
+    logA:function(){
+      return "Hello"
+    }
+  };
+
+  var BMixin = {
+    logB:function(){
+      return "World"
+    }
+  }
+  var Hello = React.createClass({
+    mixins:[AMixin,BMixin],
+    render:function(){
+      return (
+        <h1>{this.logA()+","+this.logB()}</h1>
+      )
+    }
+  });
+
+  ReactDOM.render(<Hello/>,document.getElementById('container'))
+</script>
+</body>
+</html>

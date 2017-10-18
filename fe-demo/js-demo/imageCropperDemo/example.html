@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图片切割测试</title>
+  <script src="imageCropper.js"></script>
+  <style>
+  .srcPic{
+    width:300px;
+    height:300px;
+    float: left;
+    margin-right: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  .viewPic{
+    width: 128px;
+    height: 128px;
+    float: left;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  #showBtn{
+    clear: both;
+  }
+  </style>
+</head>
+<body>
+  <div class="srcPic"></div>
+  <div class="viewPic"></div>
+  <button id="showBtn">显示位置</button>
+  <script>
+  var ic = new ImageCropper(
+    "http://view.jqueryfuns.com/%E9%A2%84%E8%A7%88-/2014/4/3/745_198025f457261d30d1187c21b84fb914/images/r_xx2.jpg",
+    document.querySelectorAll('.srcPic')[0],
+    document.querySelectorAll('.viewPic')[0]);
+
+  var btn = document.getElementById('showBtn');
+  btn.onclick = function(e){
+    var pos = ic.getPos();
+    alert("top:"+pos.top+" left:"+pos.left+" width:"+pos.width+" height:"+pos.height);
+  };
+  </script>
+</body>
+</html>

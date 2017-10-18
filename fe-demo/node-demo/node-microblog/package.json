@@ -1,0 +1,28 @@
+{
+  "name": "node-microblog",
+  "version": "1.0.0",
+  "description": "a micro blog using nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "microblog"
+  ],
+  "author": "dang4",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "compression": "^1.6.2",
+    "connect-mongo": "^1.3.2",
+    "ejs": "^2.5.6",
+    "errorhandler": "^1.5.0",
+    "express": "^4.15.2",
+    "express-ejs-layouts": "^2.3.0",
+    "express-session": "^1.15.2",
+    "method-override": "^2.3.8",
+    "mongodb": "^2.2.26"
+  }
+}

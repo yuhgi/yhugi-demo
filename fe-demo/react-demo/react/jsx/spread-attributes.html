@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spread Attributes</title>
+  <style>
+    input{
+      margin-top:10px;
+    }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+  <div id="container"></div >
+  <script type="text/babel">
+    var Component = React.createClass({
+      render:function(){
+        return (
+          <div>{this.props.x+","+this.props.y}</div>
+        )
+      }
+    });
+    var props ={
+      x:1,
+      y:2
+    }
+    ReactDOM.render(<Component {...props}/>,document.getElementById('container'));
+  </script>
+</body>
+</html>

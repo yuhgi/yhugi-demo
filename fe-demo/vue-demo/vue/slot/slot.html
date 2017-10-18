@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slot Demo</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <custom-comp>
+            <template slot="header">Title</template>
+            <div>Say hi to marry.</div>
+            <div slot="footer">Goodbye!</div>
+        </custom-comp>
+    </div>
+    <script>
+        var Compo = {
+            template:'\
+                <div>\
+                    <div className="header">\
+                        <slot name="header"></slot>\
+                    </div>\
+                    <div className="content">\
+                        <slot></slot>\
+                    </div>\
+                    <div className="footer">\
+                        <slot name="footer"></slot>\
+                    </div>\
+                </div>\
+            ',
+            created:function(){
+                console.log('Compo ---------------')
+                console.log('created');
+                console.log('this.$children',this.$children);
+                console.log('this.$slots',this.$slots);
+            },
+            mounted:function(){
+                console.log('Compo ---------------')
+                console.log('mounted');
+                console.log('this.$children',this.$children);
+                console.log('this.$slots',this.$slots);
+            }
+        }
+        var vm1 = new Vue({
+            el:'#app',
+            components:{
+                'custom-comp':Compo
+            },
+            created:function(){
+                console.log('App ---------------')
+                console.log('create');
+                console.log('this.$children',this.$children);
+                console.log('this.$slots',this.$slots);
+            },
+            mounted:function(){
+                console.log('App ---------------')
+                console.log('mounted');
+                console.log(this);
+                console.log('this.$children',this.$children);
+                console.log('this.$slots',this.$slots);
+            }
+        });
+    </script>
+</body>
+</html>

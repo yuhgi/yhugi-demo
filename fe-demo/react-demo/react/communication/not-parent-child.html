@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>not-parent-child</title>
+  <style>
+  input{
+    padding:5px;
+  }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var NameComponent = React.createClass({
+    changeHandler:function(e){
+      this.props.nameChange&&this.props.nameChange(e.target.value)
+    },
+    render:function(){
+      return (
+        <input type="text" onChange={this.changeHandler}/>
+      )
+    }
+  });
+
+  var DisplayComponent = React.createClass({
+    render:function(){
+      return (
+        <div>Hello,{this.props.name}</div>
+      )
+    }
+  });
+
+  var GreetingComponent = React.createClass({
+    getInitialState:function(){
+      return {
+        name:''
+      }
+    },
+    nameChangeHandler:function(name){
+      this.setState({
+        name:name
+      })
+    },
+    render:function(){
+      return (
+        <div>
+          <NameComponent name={this.state.name} nameChange={this.nameChangeHandler}/>
+          <DisplayComponent name={this.state.name}/>
+        </div>
+
+      )
+    }
+  });
+
+  ReactDOM.render(<GreetingComponent/>,document.getElementById('container'))
+</script>
+</body>
+</html>

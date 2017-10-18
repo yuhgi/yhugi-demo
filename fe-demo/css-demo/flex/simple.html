@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS-flex</title>
+    <style>
+        #main{
+            width:220px;
+            height: 300px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap:wrap;
+            justify-content: space-around;
+            align-items:stretch;
+            align-content:stretch;
+            border:1px solid #000;
+        }
+        #main div{
+            width:100px;
+            flex-grow:1;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div style="background-color:#f00">red</div>
+        <div style="background-color:#0f0">green</div>
+        <div style="background-color:#00f">blue</div>
+    </div>
+</body>
+</html>

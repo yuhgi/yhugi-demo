@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>profile-model</title>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="../js/react-with-addons.js"></script>
+   <script src="../js/underscore.js"></script>
+  <script src="../js/backbone.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var StudentModel = Backbone.Model.extend({
+    defaults:{
+      id:'1',
+      name:'Mary',
+      age:24,
+      sex:'female',
+      major:'computer science',
+      phone:{
+        home:13812341234,
+        job:17112341234
+      }
+    }
+  });
+
+  var model = new StudentModel();
+
+  /*model.on("change",function(model){
+    alert("change")
+  });*/
+  var i,len,times=10000,startTime,endTime;
+  startTime = new Date().getMilliseconds();
+  for(i=0;i<times;i++){
+    model.set("age",i);
+  }
+  endTime = new Date().getMilliseconds();
+  console.log("model写入%d次的时间为:%d毫秒",times,endTime-startTime);
+
+  var record = {
+    id:'1',
+    name:'Mary',
+    age:24,
+    sex:'female',
+    major:'computer science',
+    phone:{
+      home:13812341234,
+      job:17112341234
+    }
+  };
+  startTime = new Date().getMilliseconds();
+  for(i=0;i<times;i++){
+    record.age=i;
+  }
+  endTime = new Date().getMilliseconds();
+  console.log("js对象写入%d次的时间为:%d毫秒",times,endTime-startTime);
+
+  var immutableRecord = Immutable.Map({
+    id:'1',
+    name:'Mary',
+    age:24,
+    sex:'female',
+    major:'computer science',
+    phone:{
+      home:13812341234,
+      job:17112341234
+    }
+  });
+  startTime = new Date().getMilliseconds();
+  for(i=0;i<times;i++){
+    immutableRecord.set("age",i);
+  }
+  endTime = new Date().getMilliseconds();
+  console.log("Immutable Map写入%d次的时间为:%d毫秒",times,endTime-startTime);
+
+
+</script>
+</body>
+</html>

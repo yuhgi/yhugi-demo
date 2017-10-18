@@ -1,0 +1,17 @@
+{
+  "name": "getting-started",
+  "version": "1.0.0",
+  "description": "gulp getting started",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "gulp"
+  ],
+  "author": "dang4",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

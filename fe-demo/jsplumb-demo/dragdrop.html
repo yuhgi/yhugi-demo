@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dragdrop</title>
+  <script src="./js/jsPlumb-2.1.7.js"></script>
+  <style>
+  .container{
+    padding: 80px;
+    position: relative;
+  }
+  .elem{
+    width: 100px;
+    height: 100px;
+    background-color: #00ff88;
+  }
+  #element1{
+    position: absolute;
+    top: 0;
+    left: 100px;
+  }
+  #element2{
+    position: absolute;
+    top: 200px;
+    left: 100px;
+  }
+  #element3{
+    position: absolute;
+    top: 0;
+    left: 300px;
+  }
+  #source{
+    position: absolute;
+    top: 200px;
+    left: 300px;
+  }
+  #target{
+    position: absolute;
+    top: 200px;
+    left: 500px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="elem" id="element1">item1</div>
+    <div class="elem" id="element2">item2</div>
+    <div class="elem" id="element3">item3</div>
+    <div class="elem" id="source">source</div>
+    <div class="elem" id="target">target</div>
+  </div>
+  <script>
+  jsPlumb.ready(function(){
+    var endpointOptions = {isSource:true};
+    var exampleGreyEndpointOptions = {
+      endpoint:"Rectangle",
+      paintStyle:{width:15,height:11,fillStyle:'#666'},
+      isSource:true,
+      connectorStyle:{strokeStyle:'#666'},
+      isTarget:true,
+      connectorOverlays:[["Arrow",{location:0.5}]],
+      anchor:[ "TopCenter","RightMiddle","BottomCenter","LeftMiddle" ],
+      scope:"exampleGreyConnection"
+    }
+    var endpoint = jsPlumb.addEndpoint("element2",endpointOptions)
+    jsPlumb.addEndpoint("element1",exampleGreyEndpointOptions)
+
+    var targetEndpointOptions = {
+      isTarget:true,
+      endpoint:"Rectangle",
+      paintStyle:{width:15,height:11,fillStyle:'#666'},
+    }
+
+    jsPlumb.addEndpoint("element3",{anchor:"Bottom"},exampleGreyEndpointOptions)
+
+    jsPlumb.makeSource("source",{
+      paintStyle:{fillStyle:'#666'},
+      endpoint:'Blank',
+      anchor:'BottomCenter'
+    })
+    jsPlumb.draggable("element1")
+    jsPlumb.makeTarget("target",{
+      paintStyle:{fillStyle:'#666'},
+      endpoint:'Blank',
+      anchor:'BottomCenter'
+    })
+
+    console.log(jsPlumb.isTarget("target"))
+    //console.log(jsPlumb.setTargetEnabled("target"));
+    //jsPlumb.setTargetEnabled("target")
+  })
+
+
+  </script>
+</body>
+</html>

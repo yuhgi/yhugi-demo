@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>pubsub</title>
+</head>
+<body>
+<script src="pubSub.js"></script>
+<script>
+  function extend(target,src){
+    var key;
+    for(key in src){
+      if(src.hasOwnProperty(key)){
+        target[key]=src[key];
+      }
+    }
+    return target;
+  }
+  var obj ={};
+  extend(obj,EventEmitter);
+</script>
+</body>
+</html>

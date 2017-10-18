@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>pubsub-performance</title>
+  <style>
+  input{
+    padding:5px;
+  }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var PubSub = {};
+
+  (function(p){
+    var _events = {};
+
+    p.publish = function(event){
+      var args = Array.prototype.slice.call(arguments,1);
+      if(!_events[event]) return;
+      _events[event].forEach(function(callback){
+        callback.apply(callback,args);
+      });
+    };
+
+    p.subscribe = function(event,callback){
+      if(!_events[event]){
+        _events[event]=[];
+      }
+      _events[event].push(callback);
+    };
+
+    p.unsubscribe = function(event,callback){
+
+      var funcArr = _events[event],
+          len = funcArr.length,
+          i;
+      if(!funcArr||len==0)return;
+      for(i=0,len=funcArr.length;i<len;i++){
+        if(funcArr[i]==callback){
+          funcArr.splice(i,1);
+        }
+      }
+    };
+  })(PubSub);
+
+  var NameComponent = React.createClass({
+    changeHandler:function(e){
+      PubSub.publish('namechange',e.target.value);
+    },
+    render:function(){
+      console.count("NameComponent render")
+      return (
+        <div><label>name:</label><input type="text" onChange={this.changeHandler}/></div>
+      )
+    }
+  });
+
+  var AgeComponent = React.createClass({
+    changeHandler:function(e){
+      PubSub.publish('agechange',e.target.value);
+    },
+    render:function(){
+      console.count("AgeComponent render")
+      return (
+        <div><label>age:</label><input type="text" onChange={this.changeHandler}/></div>
+      )
+    }
+  });
+
+  var SexComponent = React.createClass({
+    changeHandler:function(e){
+      PubSub.publish('sexchange',e.target.value);
+    },
+    render:function(){
+      console.count("SexComponent render")
+      return (
+        <div>
+          <label>sex:</label>
+          <select onChange={this.changeHandler} defaultValue="female">
+            <option value="male">male</option>
+            <option value="female">female</option>
+          </select>
+        </div>
+      )
+    }
+  });
+
+  var MajorComponent = React.createClass({
+    changeHandler:function(e){
+      PubSub.publish('majorchange',e.target.value);
+    },
+    render:function(){
+      console.count("MajorComponent render")
+      return (
+        <div><label>major:</label><input type="text" onChange={this.changeHandler}/></div>
+      )
+    }
+  });
+
+  var DisplayComponent = React.createClass({
+    getInitialState:function(){
+      return {
+        name:'',
+        age:0,
+        sex:'male',
+        major:''
+      }
+    },
+    componentDidMount:function(){
+      PubSub.subscribe('namechange',this.nameChangeHandler)
+      PubSub.subscribe('agechange',this.ageChangeHandler)
+      PubSub.subscribe('sexchange',this.sexChangeHandler)
+      PubSub.subscribe('majorchange',this.majorChangeHandler)
+    },
+    nameChangeHandler:function(name){
+      this.setState({
+        name:name
+      })
+    },
+    ageChangeHandler:function(age){
+      this.setState({
+        age:age
+      })
+    },
+    sexChangeHandler:function(sex){
+      this.setState({
+        sex:sex
+      })
+    },
+    majorChangeHandler:function(major){
+      this.setState({
+        major:major
+      })
+    },
+    componentWillUnmount:function(){
+      PubSub.unsubscribe('namechange');
+      PubSub.unsubscribe('agechange');
+      PubSub.unsubscribe('sexchange');
+      PubSub.unsubscribe('majorchange');
+    },
+    render:function(){
+      console.count("DisplayComponent render")
+      return (
+        <div>
+          <div>Hello,My name is {this.state.name}</div>
+          <div>{this.state.sex}</div>
+          <div>{this.state.age} years old</div>
+          <div>my major is {this.state.major}</div>
+        </div>
+      )
+    }
+  });
+
+  var GreetingComponent = React.createClass({
+    render:function(){
+      console.count("GreetingComponent render")
+      return (
+        <div>
+          <NameComponent/>
+          <AgeComponent/>
+          <SexComponent/>
+          <MajorComponent/>
+          <DisplayComponent/>
+        </div>
+      )
+    }
+  });
+
+  ReactDOM.render(<GreetingComponent/>,document.getElementById('container'))
+</script>
+</body>
+</html>

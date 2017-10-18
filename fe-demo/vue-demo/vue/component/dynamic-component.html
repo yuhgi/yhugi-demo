@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-component-动态组件</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="example-1">
+        <div class="title">
+            <button @click="click">切换</button>
+        </div>
+        <div class="body">
+            <keep-alive>
+                <component :is="currentView"></component>
+            </keep-alive>
+        </div>
+    </div>
+    <script>
+        var Home = {
+            template:'<div>Home</div>'
+        };
+        var About = {
+            template:'<div>About</div>'
+        };
+        var Contact = {
+            template:'<div>Contact</div>'
+        };
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{
+                currentView:'home'
+            },
+            components:{
+                home:Home,
+                about:About,
+                contact:Contact
+            },
+            methods:{
+                click:function(){
+                    if(this.currentView === 'home'){
+                        this.currentView = 'about';
+                    }else if(this.currentView === 'about'){
+                        this.currentView = 'contact';
+                    }else if(this.currentView === 'contact'){
+                        this.currentView = 'home';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

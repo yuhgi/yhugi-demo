@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-lazyload</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-lazyload.js"></script>
+    <script src="../lib/vue-infinite-scroll.js"></script>
+    <style>
+        ul.img-list{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+        ul.img-list li{
+            position: relative;
+            flex:1 0 33.22%;
+            min-width: 340px;
+            background: #fff;
+            padding: .5rem;
+            box-shadow: 0 0 1rem #ccc;
+            margin: .5%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        img[lazy="loaded"]{
+            animation: fadeIn 1s;
+        }
+        img[lazy="loading"] {
+            background: #DDD;
+        }
+        
+        @keyframes fadeIn {
+            from {
+            opacity: 0;
+            }
+            to {
+            opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <ul class="img-list" v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="50">
+            <li v-for="img in list">
+                <img v-lazy="img.src" alt="" style="width:100%;height:400px">
+            </li>
+        </ul>
+        <p v-show="loading">{{tip}}</p>
+    </div>
+    <script>
+        Vue.use(VueLazyload,{
+            preLoad:1.3,
+            error:'images/404.png',
+            //loading:'http://placehold.it/350x150',
+            attempt:3
+        });
+        var count = 0;
+        var app = new Vue({
+            el:'#app',
+            data:{
+                nomore:false,
+                loading:false,
+                list:[]
+            },
+            methods:{
+                loadMore:function(){
+                    var vm = this;
+                    vm.loading = true;
+                    setTimeout(function(){
+                        var i,src;
+                        if(count>20){
+                            vm.nomore = true;
+                            return;
+                        }
+                        
+                        for(i=0;i<3;i++){
+                            if(count<=12){
+                                src = 'images/test'+ count++ +'.jpg';
+                            }else if(count<=20){
+                                src = 'http://covteam.u.qiniudn.com/test'+ count++ +'.jpg?imageView2/2/format/webp';
+                            }
+                            vm.list.push({src:src});
+                        }
+                        vm.loading = false;
+                    },1000);
+                }
+            },
+            computed:{
+                tip:function(){
+                    if(this.nomore){
+                        return '已全部加载完毕';
+                    }else if(this.loading){
+                        return '正在加载中...';
+                    }else{
+                        return '';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

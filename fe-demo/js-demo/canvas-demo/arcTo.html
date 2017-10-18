@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>arcTo绘制圆角</title>
+  <style>
+  .container{
+    width: 500px;
+    height: 500px;
+    border: 1px solid #CCC;
+  }
+  </style>
+</head>
+<body>
+  <canvas class="container" width="500" height="500"></canvas>
+  <script>
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    var minSize = Math.min(w,h);
+    if(r > minSize/2) {r = minSize/2;}
+    this.beginPath();
+    this.moveTo(x+r,y);
+    this.arcTo(x+w,y,x+w,y+h,r);
+    this.arcTo(x+w,y+h,x,y+h,r);
+    this.arcTo(x,y+h,x,y,r);
+    this.arcTo(x,y,x+w,y,r);
+    this.closePath();
+    return this;
+  }
+  window.onload = function(){
+    let containerEl = document.getElementsByClassName('container')[0];
+    console.log(containerEl)
+    let context = containerEl.getContext('2d');
+
+    context.strokeStyle='#0000ff';
+    context.lineWidth = 2;
+    //context.translate(1,1);
+    context.beginPath();
+    context.moveTo(20,20);
+    context.lineTo(100,20);
+    //context.lineTo(120,20);
+    context.arcTo(120,20,120,40,20);
+    context.lineTo(120,80);
+    context.stroke();
+    context.closePath();
+
+    context.roundRect(150,150,100,100,20);
+    context.fillStyle='#ff0000';
+    context.fill();
+
+    context.roundRect(300,300,100,100,20);
+    context.strokeStyle='#00ff00';
+    context.lineWidth=2;
+    context.stroke();
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>profile-tojson</title>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="../js/react-with-addons.js"></script>
+   <script src="../js/underscore.js"></script>
+  <script src="../js/backbone.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var studentRecord = {
+    id:'1',
+    name:'Mary',
+    age:24,
+    sex:'female',
+    major:'computer science'
+  };
+
+  var PureRenderMixin = React.addons.PureRenderMixin;
+  var Profile = React.createClass({
+    mixins:[PureRenderMixin],
+    getInitialState:function(){
+      var data = studentRecord;
+      return {
+        data:data
+      }
+    },
+    changeData:function(){
+      var newRecord = {
+        id:'1',
+        name:'Mary',
+        age:24,
+        sex:'female',
+        major:'computer science'
+      };
+      this.setState({
+        data:newRecord
+      });
+    },
+    render:function(){
+      alert('Profile render');
+      var data = this.state.data;
+      return (
+        <div>
+          <div>name:{data.name}</div>
+          <div>age:{data.age}</div>
+          <div>sex:{data.sex}</div>
+          <div>major:{data.major}</div>
+          <button onClick={this.changeData}>重新渲染</button>
+        </div>
+      )
+    }
+  });
+
+  ReactDOM.render(<Profile/>,document.getElementById('container'));
+</script>
+</body>
+</html>

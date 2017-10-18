@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>shouldComponentUpdate-value</title>
+  <script src="../../js/react.js"></script>
+  <script src="../../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var DisplayComponent = React.createClass({
+    propTypes:{
+      value:React.PropTypes.string.isRequired
+    },
+    shouldComponentUpdate:function(nextProps,nextState){
+      return nextProps.value !== this.props.value
+    },
+    render:function(){
+      alert("DisplayComponent render")
+      return <div>{this.props.value}</div>
+    }
+  })
+
+  var IncreaseComponent = React.createClass({
+    getInitialState:function(){
+      return {
+        value:'babybear',
+        clickFlag:true
+      }
+    },
+    clickHandler:function(){
+      var value = this.state.value;
+      if(this.state.clickFlag){
+        value+="babybear";
+      }
+      this.setState({
+        value:value,
+        clickFlag:!this.state.clickFlag
+      })
+    },
+    render:function(){
+      return (
+        <div>
+          <DisplayComponent value={this.state.value}/>
+          <button onClick={this.clickHandler}>Click Me!</button>
+        </div>
+
+      )
+    }
+  })
+
+  ReactDOM.render(<IncreaseComponent/>,document.getElementById('container'))
+</script>
+</body>
+</html>

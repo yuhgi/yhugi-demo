@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-单元素/组件渲染</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+
+        .fade-enter-active,.fade-leave-active{
+            transition: opacity .5s;
+        }
+
+        .fade-enter,.fade-leave-active{
+            opacity: 0;
+        }
+
+        .slide-fade-enter-active{
+            transition: all .3s ease;
+        }
+        .slide-fade-leave-active{
+            transition: all .8s cubic-bezier(1.0,0.5,0.8,1.0);
+        }
+        .slide-fade-enter,.slide-fade-leave-active{
+            opacity: 0;
+            transform: translateX(10px);
+        }
+
+        .bounce-enter-active{
+            animation: bounce-in .5s;
+        }
+
+        .bounce-leave-active{
+            animation: bounce-out .5s;
+        }
+
+        @keyframes bounce-in{
+            0%{
+                transform: scale(0);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce-out{
+            0%{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="example-1">
+        <button @click="show = !show">
+            Toggle
+        </button>
+        <transition name="fade">
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+    <div id="example-2">
+        <button @click="show = !show">
+            Toggle Render
+        </button>
+        <transition name="slide-fade">
+            <p v-show="show">hello</p>
+        </transition>
+    </div>
+    <div id="example-3">
+        <button @click="show = !show">
+            Toggle bounce
+        </button>
+        <transition name="bounce">
+            <p v-show="show">Look at me</p>
+        </transition>
+    </div>
+    <div id="example-4">
+        <button @click="show = !show">
+            Toggle
+        </button>
+        <transition name="fade"
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+            @enter-cancelled="enterCancelled"
+            @before-leave="beforeLeave"
+            @leave="leave"
+            @after-leave="afterLeave"
+            @leave-cancelled="leaveCancelled"
+        >
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+    <div id="example-5">
+        <button @click="show = !show">
+            Toggle bounce
+        </button>
+        <transition name="bounce"
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+            @enter-cancelled="enterCancelled"
+            @before-leave="beforeLeave"
+            @leave="leave"
+            @after-leave="afterLeave"
+            @leave-cancelled="leaveCancelled"
+        >
+            <p v-show="show">Look at me</p>
+        </transition>
+    </div>
+    <div id="example-6">
+        <transition
+            appear
+            appear-class="fade-enter"
+            appear-active-class="fade-enter-active"
+            @before-enter="beforeEnter"
+            @before-appear="beforeAppear",
+            @appear="appear",
+            @after-appear="afterAppear"
+        >
+            <p v-show="show">Look at me</p>
+        </transition>
+    </div>
+    <div id="example-7">
+        <button @click="show = !show">
+            Toggle Table
+        </button>
+        <transition name="fade">
+            <table v-if="show">
+                <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>专业</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>张三1</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>张三2</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>张三3</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>张三4</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>张三5</td>
+                        <td>男</td>
+                        <td>22</td>
+                        <td>计算机</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p v-else>Sorry, no items found.</p>
+        </transition>
+    </div>
+    <script>
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{
+                show:true
+            }
+        });
+
+        var vm2 = new Vue({
+            el:'#example-2',
+            data:{
+                show:true
+            }
+        });
+        var vm3 = new Vue({
+            el:'#example-3',
+            data:{
+                show:true
+            }
+        });
+
+        var vm4 = new Vue({
+            el:'#example-4',
+            data:{
+                show:true
+            },
+            methods:{
+                beforeEnter:function(el){
+                    debugger
+                    console.log("before-enter");
+                },
+                enter:function(el,done){
+                    debugger
+                    done();
+                },
+                afterEnter:function(el){
+                    debugger
+                    console.log("after-enter");
+                },
+                enterCancelled:function(el){
+                    debugger
+                    console.log("enterCancelled");
+                },
+                beforeLeave:function(el){
+                    debugger
+                    console.log("before-leave");
+                },
+                leave:function(el,done){
+                    debugger
+                    console.log("leave");
+                    done();
+                },
+                afterLeave:function(el){
+                    debugger
+                    console.log("after-leave");
+                },
+                leaveCancelled:function(el){
+                    debugger
+                    console.log("leave-cancelled");
+                }
+            }
+        });
+
+        var vm5 = new Vue({
+            el:'#example-5',
+            data:{
+                show:true
+            },
+            methods:{
+                beforeEnter:function(el){
+                    debugger
+                    console.log("before-enter");
+                },
+                enter:function(el,done){
+                    debugger
+                    done();
+                },
+                afterEnter:function(el){
+                    debugger
+                    console.log("after-enter");
+                },
+                enterCancelled:function(el){
+                    debugger
+                    console.log("enterCancelled");
+                },
+                beforeLeave:function(el){
+                    debugger
+                    console.log("before-leave");
+                },
+                leave:function(el,done){
+                    debugger
+                    console.log("leave");
+                    done();
+                },
+                afterLeave:function(el){
+                    debugger
+                    console.log("after-leave");
+                },
+                leaveCancelled:function(el){
+                    debugger
+                    console.log("leave-cancelled");
+                }
+            }
+        });
+        var vm6 = new Vue({
+            el:'#example-6',
+            data:{
+                show:true
+            },
+            methods:{
+                beforeEnter:function(el){
+                    debugger
+                    console.log("before-enter");
+                },
+                beforeAppear:function(el){
+                    debugger
+                    console.log("before-appear");
+                },
+                appear:function(el,done){
+                    debugger
+                    console.log("appear");
+                    done();
+                },
+                afterAppear:function(el){
+                    debugger
+                    console.log("after-appear");
+                }
+            }
+        });
+
+        var vm7 = new Vue({
+            el:'#example-7',
+            data:{
+                show:true
+            }
+        });
+    </script>
+</body>
+</html>

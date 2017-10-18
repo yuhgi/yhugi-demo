@@ -1,0 +1,30 @@
+.mt-checkbox{
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+}
+
+.mt-checkbox .mt-checkbox-icon{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: url(./images/icon.png) 0px -296px no-repeat;
+}
+
+.mt-checkbox .mt-checkbox-icon:hover{
+    background: url(./images/icon.png) -16px -296px no-repeat;
+}
+
+
+.mt-checkbox .mt-checkbox-icon .mt-checkbox-field{
+    display: none;
+}
+
+.mt-checkbox.mt-checkbox-checked .mt-checkbox-icon{
+    background: url(./images/icon.png) -32px -296px no-repeat;
+}
+
+.mt-checkbox.mt-checkbox-checked .mt-checkbox-icon:hover{
+    background: url(./images/icon.png) -48px -296px no-repeat;
+}

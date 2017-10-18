@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>child-parent</title>
+  <style>
+    html,body{
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    div{
+      padding: 0;
+      margin: 0;
+    }
+    #container{
+      width: 100%;
+      height: 100%;
+    }
+    .context-layer{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+    }
+    .contextmenu{
+      display: block;
+      list-style: none;
+      position: fixed;
+      border: 1px solid #ddd;
+      width: 100px;
+      max-height: 200px;
+      box-sizing: border-box;
+      transition: width 0.25s ease-in,max-height 0.2s linear;
+      padding: 0;
+      margin: 0;
+      background: #fff;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .contextmenu li{
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      text-align: center;
+      border-top:1px solid #ccc;
+      height: 20px;
+      box-sizing: border-box;
+    }
+    .contextmenu li:first-child{
+      border: none;
+    }
+    .contextmenu-hide{
+      width: 0;
+      max-height: 0;
+    }
+
+    .tree-item{
+      width: 150px;
+      cursor: default;
+    }
+    .tree-item:hover{
+      background: #CCC;
+    }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="../js/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+
+  //右键菜单管理
+  var ContextManager = new function(){
+    this.contextMenus = [];
+    this.registerContextMenu = function(contextmenu){
+      if(contextmenu.hide && typeof contextmenu.hide === 'function'){
+        this.contextMenus.push(contextmenu);
+      }
+      else{
+        throw new Error('try to register a wrong contextmenu');
+      }
+    }
+    this.unRegisterContextMenu = function(contextmenu){
+      var index = this.contextMenus.indexOf(contextmenu);
+      if(index >= 0){
+        this.contextMenus.splice(index,1);
+      }
+    }
+    this.isContextMenuRegistered = function(contextmenu){
+      return this.contextMenus.indexOf(contextmenu) >=0?true:false;
+    }
+    this.hide = function(){
+      this.contextMenus.forEach(function(contextmenu){
+        contextmenu.hide();
+      });
+    }
+  };
+  var ContextMenu = React.createClass({
+    getInitialState:function(){
+      return {
+        isShow:false,
+        left:0,
+        top:0
+      }
+    },
+    componentDidMount:function(){
+      if(!ContextManager.isContextMenuRegistered(this)){
+        ContextManager.registerContextMenu(this);
+      }
+    },
+    componentWillUnMount:function(){
+      ContextManager.unRegisterContextMenu(this);
+    },
+    showAt:function(x,y){
+      this.setState({
+        isShow:true,
+        left:x,
+        top:y
+      });
+    },
+    hide:function(){
+      this.setState({
+        isShow:false
+      });
+    },
+    destroy:function(){
+      ContextManager.unRegisterContextMenu(this);
+    },
+    clickHandler:function(e){
+
+    },
+    render:function(){
+      var cls = "contextmenu";
+      if(!this.state.isShow){
+        cls += " contextmenu-hide"
+      }
+      var contextStyle = {
+        top:this.state.top,
+        left:this.state.left
+      }
+      return (
+        <ul className={cls} style={contextStyle} onClick={this.clickHandler}>
+          <li>item1</li>
+          <li>item2</li>
+          <li>item3</li>
+          <li>item4</li>
+        </ul>
+      );
+    }
+  });
+
+  var Label = React.createClass({
+    getInitialState:function(){
+      return {
+        isShow:false
+      };
+    },
+    contextMenuHandler:function(e){
+      console.log(e.pageX)
+      console.log(e.pageY)
+      console.log(e.clientX)
+      console.log(e.clientY)
+      this.refs.contextmenu.showAt(e.clientX,e.clientY);
+      e.preventDefault();
+    },
+    renderContextMenu:function(){
+      return <ContextMenu ref="contextmenu"/>;
+    },
+    render:function(){
+      return (
+        <div>
+          <div className="tree-item" onContextMenu={this.contextMenuHandler}>
+            右键显示菜单
+          </div>
+          <div className="tree-item" onContextMenu={this.contextMenuHandler}>
+            右键显示菜单
+          </div>
+          <div className="tree-item" onContextMenu={this.contextMenuHandler}>
+            右键显示菜单
+          </div>
+          <div className="tree-item" onContextMenu={this.contextMenuHandler}>
+            右键显示菜单
+          </div>
+          {this.renderContextMenu()}
+        </div>
+
+      )
+    }
+  });
+
+  var ContextLayer = React.createClass({
+    getInitialState:function(){
+      this.contextMenus = [];
+      return {};
+    },
+    clickHandler:function(e){
+      ContextManager.hide();
+    },
+    render:function(){
+      return (
+        <div className="context-layer" onClick={this.clickHandler}>
+          <Label />
+        </div>
+      );
+    }
+  });
+
+  var contextManager = ReactDOM.render(<ContextLayer />,document.getElementById('container'))
+</script>
+</body>
+</html>

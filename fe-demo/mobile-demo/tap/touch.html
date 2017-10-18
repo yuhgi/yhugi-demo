@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>touch</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script src="./tap.js"></script>
+  <script src="./facade.js"></script>
+  <style>
+  body{
+    margin: 0;
+    height: 0;
+  }
+  .btn{
+    border: 0;
+    color: #FFF;
+    border-radius: 10px;
+    background-color: #ff8888;
+    padding: 0.4em 0.5em ;
+  }
+  .btn.active{
+    background-color: #ff88ff;
+  }
+  .container{
+    margin-top: 2em;
+    width: 100%;
+    height: 100px;
+    background-color: red;
+  }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+  <button class="btn" id='toggle-btn'>切换按钮</button>
+  <div class="container"></div>
+  </div>
+  <script>
+
+  var btn = document.getElementById('toggle-btn');
+
+  //会有300ms的延迟触发
+  /*btn.addEventListener('click',function(e){
+    toggleColor();
+  });*/
+
+  // 原生的touch方法
+  /*btn.addEventListener('touchstart',function(e){
+    e.preventDefault();
+    e.target.className='active btn';
+    toggleColor();
+  });
+  btn.addEventListener('touchend',function(e){
+    e.target.className='btn';
+  });*/
+
+  //使用封装的tap事件
+
+  /*addTapListener(btn,function(e){
+    e.preventDefault();
+    e.target.className='active btn';
+    toggleColor();
+  });
+
+  btn.addEventListener('tapend',function(e){
+    e.target.className='btn';
+  });*/
+
+  $('#toggle-btn').on('tap',function(e){
+    e.preventDefault();
+    e.target.className='active btn';
+    toggleColor();
+  }).on('tapend',function(e){
+    e.target.className='btn';
+  });
+
+  function toggleColor(){
+    var h = document.querySelector('.container');
+    if(h.style.display == 'none'){
+      h.style.display = 'block';
+    }else{
+      h.style.display = 'none';
+    }
+  }
+  </script>
+</body>
+</html>

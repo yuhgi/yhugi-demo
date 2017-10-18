@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Component-Slot</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="example-1">
+        <h1>父组件的标题</h1>
+        <my-component>
+            <div>父组件传递的模板</div>
+        </my-component>
+    </div>
+    <div id="example-2">
+        <app-layout>
+            <h1 slot="header">这里可能是一个页面标题</h1>
+            <p>主要内容的一个段落。</p>
+            <p>另一个主要段落。</p>
+            <p slot="footer">这里有一些联系信息</p>
+        </app-layout>
+    </div>
+    <div id="example-3">
+        <child>
+            <template scope="props">
+                <span>hello from parent</span>
+                <span>{{props.text}}</span>
+            </template>
+        </child>
+    </div>
+    <div id="example-4">
+        <my-list :items="items">
+            <template slot="item" scope="props">
+                <li class="my-fancy-item">{{props.text}}</li>
+            </template>
+        </my-list>
+    </div>
+    <script>
+        // 单个slot
+        Vue.component('my-component',{
+            template:'\
+                <div>\
+                    <h2>子组件的标题</h2>\
+                    <slot>\
+                        只有在没有分发内容时显示\
+                    </slot>\
+                </div>\
+            '
+        });
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{}
+        });
+        // 具名slot
+        Vue.component('app-layout',{
+            template:'\
+                <div class="container">\
+                    <header>\
+                        <slot name="header"></slot>\
+                    </header>\
+                    <main>\
+                        <slot></slot>\
+                    </main>\
+                    <footer>\
+                        <slot name="footer"></slot>\
+                    </footer>\
+                </div>\
+            '
+        });
+        var vm2 = new Vue({
+            el:'#example-2'
+        });
+        //作用域插槽
+        Vue.component('child',{
+            template:'\
+                <div class="child">\
+                    <slot text="hello from child"></slot>\
+                </div>\
+            '
+        });
+        var vm3 = new Vue({
+            el:'#example-3'
+        });
+
+        // 列表组件
+        Vue.component('my-list',{
+            template:'\
+                <ul>\
+                    <slot name="item"\
+                        v-for="item in items"\
+                        :text="item.text"\
+                    >\
+                    </slot>\
+                </ul>\
+            ',
+            props:['items'],
+            mounted:function(){
+                console.log(this.items)
+            }
+
+        });
+        var vm4 = new Vue({
+            el:'#example-4',
+            data:{
+                items:[{
+                    text:'item-1'
+                },{
+                    text:'item-2'
+                },{
+                    text:'item-3'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hammerjs-simple</title>
+    <script src="./lib/hammer.min.js"></script>
+    <style>
+        #container{
+            width:300px;
+            height: 200px;
+            background: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        var myElement = document.getElementById('container');
+        var hammmertime = new Hammer(myElement);
+        hammmertime.on('tap doubletap press pan swipe pinch rotate',function(ev){
+            alert(ev.type + 'trigger')
+        });
+
+        // hammmertime.get('pinch').set({
+        //     enable:true
+        // });
+        // hammmertime.get('rotate').set({
+        //     enable:true,
+        //     pointers:2,
+        //     threshold:50
+        // });
+
+    </script>
+    
+</body>
+</html>

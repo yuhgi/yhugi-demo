@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>pubsub</title>
+</head>
+<body>
+<script src="pubSub.js"></script>
+<script>
+  var handler = function(arg1,arg2){
+    console.log(arg1,arg2);
+  };
+  PubSub.subscribe("event1",handler);
+
+  PubSub.publish("event1",{
+    a:1,
+    b:2
+  },3);
+
+  PubSub.unsubscribe("event1",handler);
+</script>
+</body>
+</html>

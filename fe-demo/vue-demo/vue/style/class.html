@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Class</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .static{
+            width: 200px;
+            height: 200px;
+            background-color: #008888;
+        }
+        .active{
+            background-color: #0088ff;
+        }
+        .text-danger{
+            color: #ff8888;
+        }
+
+        .panel{
+            width: 200px;
+            border: 1px solid #ddd;
+            margin-top: 40px;
+        }
+        .panel-collapse .panel-content{
+            height: 0;
+        }
+        .panel-title{
+            height: 30px;
+            font-size: 14px;
+            color: #fff;
+            background: #0088ff;
+            line-height: 30px;
+            position: relative;
+        }
+        .panel-title-arrow{
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #00ffff;
+            position: absolute;
+            right: 5px;
+            top: 7px;
+            cursor: pointer;
+        }
+        .panel-content{
+            height: 350px;
+            overflow:auto;
+        }
+
+        .tabpanel{
+            display: inline-block;
+            border: 1px solid #ccc;
+        }
+
+        .tabpanel .tabpanel-switch:after{
+            content: ' ';
+            height: 0;
+            clear: both;
+            display:block;
+            visibility: hidden;
+        }
+
+        .tabpanel .tabpanel-switch .tabpanel-tab{
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #ddd;
+            border-right: 1px solid #aaa;
+            float: left;
+            cursor: default;
+        }
+
+        .tabpanel .tabpanel-switch .tabpanel-tab:last-child{
+            border-right:none;
+        }
+
+        .tabpanel .tabpanel-switch .tabpanel-tab.tabpanel-tab-active{
+            background-color: #0088ff;
+        }
+
+        .tab-tree-hide{
+            display: none;
+        }
+        .tab-history-hide{
+            display: none;
+        }
+        .tab-log-hide{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="static"
+        v-bind:class="{active:isActive,'text-danger':hasError}">
+        class for vue
+    </div>
+
+    <div :class="panelCls" id="panel">
+        <div class="panel-title">
+            <span class="panel-title-text">title</span>
+            <span class="panel-title-arrow" @click="arrowClickHandler"></span>
+        </div>
+        <div class="panel-content">
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+            <p>测试内容</p>
+        </div>
+    </div>
+
+    <div class="tabpanel" id="tabpanel">
+        <div class="tabpanel-switch">
+            <span class="tabpanel-tab"
+                v-bind:class="{'tabpanel-tab-active':tabActive===1?true:false}"
+                @click="tabClickHandler(1)">
+                第一页
+            </span>
+            <span class="tabpanel-tab"
+                v-bind:class="{'tabpanel-tab-active':tabActive===2?true:false}"
+                @click="tabClickHandler(2)">
+                第二页
+            </span>
+            <span class="tabpanel-tab"
+                v-bind:class="{'tabpanel-tab-active':tabActive===3?true:false}"
+                @click="tabClickHandler(3)">
+                第三页
+            </span>
+        </div>
+        <div class="tabpanel-content">
+            <tab-tree :is-show="tabActive===1?true:false"></tab-tree>
+            <tab-history :is-show="tabActive===2?true:false"></tab-history>
+            <tab-log :is-show="tabActive===3?true:false"></tab-log>
+        </div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:document.querySelector(".static"),
+            data:{
+                isActive:true,
+                hasError:false
+            }
+        });
+
+        var panelVM = new Vue({
+            el:"#panel",
+            data:{
+                isExpanded:true
+            },
+            computed:{
+                panelCls:function(){
+                    return {
+                        "panel":true,
+                        "panel-collapse":!this.isExpanded
+                    };
+                }
+            },
+            methods:{
+                arrowClickHandler:function(){
+                    this.isExpanded = !this.isExpanded;
+                }
+            }
+        });
+
+        Vue.component("tab-tree",{
+            template:"<div v-bind:class='cls'>tab-tree</div>",
+            props:["isShow"],
+            computed:{
+                cls:function(){
+                    return {
+                        "tab-tree":true,
+                        "tab-tree-hide":!this.isShow
+                    };
+                }
+            }
+        });
+        Vue.component("tab-history",{
+            template:"<div v-bind:class='cls'>tab-history</div>",
+            props:["isShow"],
+            computed:{
+                cls:function(){
+                    return {
+                        "tab-history":true,
+                        "tab-history-hide":!this.isShow
+                    };
+                }
+            }
+        });
+        Vue.component("tab-log",{
+            template:"<div v-bind:class='cls'>tab-log</div>",
+            props:["isShow"],
+            computed:{
+                cls:function(){
+                    return {
+                        "tab-log":true,
+                        "tab-log-hide":!this.isShow
+                    };
+                }
+            }
+        });
+
+        var tabVM = new Vue({
+            el:"#tabpanel",
+            data:{
+                tabActive:1
+            },
+            methods:{
+                tabClickHandler:function(tab){
+                    this.tabActive = tab;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

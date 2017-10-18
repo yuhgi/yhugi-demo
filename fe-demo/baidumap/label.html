@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>label制作</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+    <style>
+    div,p,button{
+        margin: 0;
+        padding: 0;
+        outline: 0;
+    }
+    button{
+        border:none;
+        outline: 0;
+    }
+        .mt-maplabel-header{
+            height: 28px;
+            padding: 0 8px;
+            line-height: 28px;
+            font-weight: bold;
+            color: #333;
+            background-color: #fff;
+        }
+        /* 紧急 */
+        .mt-maplabel-header.emergency{
+            background-color: #E52233;
+        }
+        /* 呼叫 */
+        .mt-maplabel-header.calling{
+            background-color: #F39800;
+        }
+        /* 越界 */
+        .mt-maplabel-header.outrange{
+            background-color: #FFF100;
+        }
+        /* 长时间不动 */
+        .mt-maplabel-header.holdstill{
+            background-color: #7ECEF4;
+        }
+        /* 离线 */
+        .mt-maplabel-header.offline{
+            background-color: #AFB1B3;
+        }
+        .mt-maplabel-header .header-desc{
+            display: inline-block;
+            float: left;
+        }
+        .mt-maplabel-header .header-alarm{
+            display: inline-block;
+            float: right;
+        }
+        .mt-maplabel-header .header-close{
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            right: -12px;
+            top:-10px;
+            background: url(./images/btn_clozepanel.png) 0 0 no-repeat;
+        }
+        .mt-maplabel-header .header-close:hover{
+            background: url(./images/btn_clozepanel.png) 0 -24px no-repeat;
+        }
+        .mt-maplabel-header .header-close:active{
+            background: url(./images/btn_clozepanel.png) 0 -48px no-repeat;
+        }
+        .mt-maplabel-body{
+            height: 54px;
+            line-height: 18px;
+            color:#666;
+            padding-left: 8px;
+        }
+        .mt-maplabel-footer{
+            height: 32px;
+        }
+        .mt-maplabel-footer button{
+            display: inline-block;
+            float: left;
+            width: 50%;
+            height: 32px;
+            background-color: #fff;
+            color:#0057ad;
+            cursor: pointer;
+        }
+        .mt-maplabel-footer button.disabled{
+            color: #afb1b3;
+        }
+    </style>
+</head>
+<body>
+<div style="width:800px;height:500px;border:1px solid gray" id="container"></div>
+</body>
+</html>
+<script type="text/javascript">
+var map = new BMap.Map("container");    //创建地图容器
+var point = new BMap.Point(116.404, 39.915);        //创建一个点
+map.centerAndZoom(point, 15);                       //设立中心点和地图级别，就是初始化地图
+var myLabel = new BMap.Label('\
+        <div class="mt-maplabel">\
+            <div class="mt-maplabel-header emergency">\
+                <span class="header-desc">警员D</span>\
+                <span class="header-alarm">越界告警</span>\
+                <span class="header-close"></span>\
+            </div>\
+            <div class="mt-maplabel-body">\
+                <p>18809752681</p>\
+                <p>白石路学府路口</p>\
+                <p>56km/h</p>\
+            </div>\
+            <div class="mt-maplabel-footer">\
+                <button class="call-btn">呼叫</button>\
+                <button class="locate-btn">取消定位</button>\
+            </div>\
+        </div>\
+    ',
+    {
+        offset:new BMap.Size(-60,-60),
+        position:point
+    }
+);                                //label的位置
+myLabel.setStyle({                                   //给label设置样式，任意的CSS都是可以的
+    fontSize:"13px",               //字号
+    border:"1px solid #0057ad",                    //边
+    height:"114px",                //高度
+    width:"125px"                 //宽
+});
+myLabel.setTitle("我是文本标注label");               //为label添加鼠标提示
+map.addOverlay(myLabel);                             //把label添加到地图上
+
+
+var infoWindow = new BMap.InfoWindow("<p style='font-size:12px;lineheight:1.8em;'>我是lable打开的信息窗口  <img src='http://dev.baidu.com/wiki/static/static/img/new.gif' /></p>");  // 创建信息窗口对象
+myLabel.addEventListener("click", function(e){
+    var cls = e.domEvent.target.className;
+    if(cls === 'call-btn'){
+        console.log('call')
+    }else if(cls === 'locate-btn'){
+        console.log('cancel locate')
+    }else if(cls === 'header-close'){
+        console.log('close')
+    }else {
+
+    }
+    e.domEvent.stopPropagation();
+    e.domEvent.preventDefault();
+});
+
+// var btn = myLabel.querySelector('.call-btn')
+// btn.onclick = function(){
+//     alert('呼叫')
+// }
+</script>

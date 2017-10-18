@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>immutablejs-map</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.js"></script>
+</head>
+<body>
+<script>
+  var map1 = Immutable.Map({a:1,b:2,c:3});
+  var map2 = map1.set('b',2);
+  console.log(map1.get('b'));
+  console.log(map2.get('b'));
+  console.assert(map1===map2);
+  console.log(map1.equals(map2));
+</script>
+</body>
+</html>

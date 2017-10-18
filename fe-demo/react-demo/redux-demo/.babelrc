@@ -1,0 +1,16 @@
+{
+    "presets": [
+        "env",
+        "stage-2",
+        "react"
+    ],
+    "plugins": [
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                "istanbul"
+            ]
+        }
+    }
+}

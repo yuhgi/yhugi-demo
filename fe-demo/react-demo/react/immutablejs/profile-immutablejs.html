@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>profile-tojson</title>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="../js/react-with-addons.js"></script>
+   <script src="../js/underscore.js"></script>
+  <script src="../js/backbone.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var StudentModel = Backbone.Model.extend({
+    defaults:{
+      id:'-1',
+      info:{
+        name:'',
+        age:0,
+        sex:'male',
+        major:''
+      }
+    },
+    idAttribute:'id',
+    fetch:function(){
+      this.set({
+        id:'1',
+        info:{
+          name:'Mary',
+          age:24,
+          sex:'female',
+          major:'computer science'
+        }
+      });
+      this.trigger()
+    },
+    refresh:function(){
+      var age = this.get('info').age;
+      this.set({
+        id:'1',
+        info:{
+          name:'Mary',
+          age:age+1,
+          sex:'female',
+          major:'computer science'
+        }
+      });
+    }
+  });
+
+  var PureRenderMixin = React.addons.PureRenderMixin;
+  var Profile = React.createClass({
+    mixins:[PureRenderMixin],
+    getInitialState:function(){
+      var model = new StudentModel(),
+          data = model.toJSON();
+      return {
+        model:model,
+        data:data
+      }
+    },
+    componentDidMount:function(){
+      this.state.model.on('change',function(model){
+        console.log(this.state.data === model.toJSON())
+        this.setState({
+          data:model.toJSON()
+        });
+      }.bind(this));
+      setInterval(function(){
+        this.state.model.refresh();
+      }.bind(this),2000)
+
+    },
+    render:function(){
+      console.log('Profile render');
+      var info = this.state.data.info;
+      return (
+        <div>
+          <div>name:{info.name}</div>
+          <div>age:{info.age}</div>
+          <div>sex:{info.sex}</div>
+          <div>major:{info.major}</div>
+        </div>
+      )
+    }
+  });
+
+  ReactDOM.render(<Profile/>,document.getElementById('container'));
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>props-performance</title>
+  <style>
+  input{
+    padding:5px;
+  }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var NameComponent = React.createClass({
+    changeHandler:function(e){
+      this.props.nameChange&&this.props.nameChange(e.target.value)
+    },
+    render:function(){
+      console.count("NameComponent render")
+      return (
+        <div><label>name:</label><input type="text" onChange={this.changeHandler}/></div>
+      )
+    }
+  });
+
+  var AgeComponent = React.createClass({
+    changeHandler:function(e){
+      this.props.ageChange&&this.props.ageChange(e.target.value)
+    },
+    render:function(){
+      console.count("AgeComponent render")
+      return (
+        <div><label>age:</label><input type="text" onChange={this.changeHandler}/></div>
+      )
+    }
+  });
+
+  var SexComponent = React.createClass({
+    changeHandler:function(e){
+      this.props.sexChange&&this.props.sexChange(e.target.value)
+    },
+    render:function(){
+      console.count("SexComponent render")
+      return (
+        <div>
+          <label>sex:</label>
+          <select onChange={this.changeHandler} defaultValue="female">
+            <option value="male">male</option>
+            <option value="female">female</option>
+          </select>
+        </div>
+      )
+    }
+  });
+
+  var MajorComponent = React.createClass({
+    changeHandler:function(e){
+      this.props.majorChange&&this.props.majorChange(e.target.value)
+    },
+    render:function(){
+      console.count("MajorComponent render")
+      return (
+        <div><label>major:</label><input type="text" onChange={this.changeHandler}/></div>
+      )
+    }
+  });
+
+  var DisplayComponent = React.createClass({
+    render:function(){
+      console.count("DisplayComponent render")
+      return (
+        <div>
+          <div>Hello,My name is {this.props.name}</div>
+          <div>{this.props.sex}</div>
+          <div>{this.props.age} years old</div>
+          <div>my major is {this.props.major}</div>
+        </div>
+      )
+    }
+  });
+
+  var GreetingComponent = React.createClass({
+    getInitialState:function(){
+      return {
+        name:'',
+        age:0,
+        sex:'male',
+        major:''
+      }
+    },
+    nameChangeHandler:function(name){
+      this.setState({
+        name:name
+      })
+    },
+    ageChangeHandler:function(age){
+      this.setState({
+        age:age
+      })
+    },
+    sexChangeHandler:function(sex){
+      this.setState({
+        sex:sex
+      })
+    },
+    majorChangeHandler:function(major){
+      this.setState({
+        major:major
+      })
+    },
+    render:function(){
+      console.count("GreetingComponent render")
+      return (
+        <div>
+          <NameComponent name={this.state.name} nameChange={this.nameChangeHandler}/>
+          <AgeComponent age={this.state.age} ageChange={this.ageChangeHandler}/>
+          <SexComponent sex={this.state.sex} sexChange={this.sexChangeHandler}/>
+          <MajorComponent major={this.state.major} majorChange={this.majorChangeHandler}/>
+          <DisplayComponent name={this.state.name} age={this.state.age}
+            sex={this.state.sex} major={this.state.major}/>
+        </div>
+      )
+    }
+  });
+
+  ReactDOM.render(<GreetingComponent/>,document.getElementById('container'))
+</script>
+</body>
+</html>

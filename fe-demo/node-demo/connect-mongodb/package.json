@@ -1,0 +1,21 @@
+{
+  "name": "connect-mongodb",
+  "version": "1.0.0",
+  "description": "a simple example using nodejs connect to mongodb",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "bushilibai",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^2.2.22"
+  },
+  "devDependencies": {
+    "node-inspector": "^0.12.8"
+  }
+}

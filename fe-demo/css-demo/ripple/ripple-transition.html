@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ripple</title>
+    <style>
+        .list-item {
+            position: relative;
+            background: #fff;
+            width: 100px;
+            height: 30px;
+            transition: background-color 200ms;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            
+        }
+
+        .list-item-active {
+            background: #ddd;
+        }
+
+        .ripple {
+            width: 120px;
+            height: 40px;
+
+            position: absolute;
+            background: #ccc;
+            display: inline-block;
+            overflow: hidden;
+            border-radius: 100%;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            transform: scale(0);
+        }
+
+        .ripple-animate {
+            background-color: hsla(0, 0%, 62%, .2);
+            animation: ripple 1s linear;
+        }
+
+        @keyframes ripple {
+            100% {
+                opacity: 0;
+                transform: scale(2.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="list-item">
+            <div class="ripple"></div>
+        </div>
+    </div>
+    <script>
+        var itemEl = document.getElementsByClassName('list-item')[0];
+        var rippleEl = document.getElementsByClassName('ripple')[0];
+        itemEl.addEventListener('click', (e) => {
+            itemEl.className += ' list-item-active';
+            rippleEl.style.display = '';
+            rippleEl.className += ' ripple-animate';
+            rippleEl.style.width = itemEl.offsetWidth + 'px';
+            rippleEl.style.height = itemEl.offsetWidth + 'px';
+            var rect = itemEl.getBoundingClientRect();
+            var left = (e.clientX - rect.left - itemEl.offsetWidth / 2) + 'px';
+            var top = (e.clientY - rect.top - itemEl.offsetWidth / 2) + 'px';
+            rippleEl.style.left =left;
+            rippleEl.style.top = top;
+
+            setTimeout(() => {
+                itemEl.className = itemEl.className.replace(' list-item-active', '');
+
+            }, 100);
+            setTimeout(function () {
+                
+                rippleEl.style.display = "none";
+                rippleEl.style.width = 0;
+                rippleEl.style.height = 0;
+                rippleEl.left = left;
+                rippleEl.top = top;
+
+                rippleEl.className = rippleEl.className.replace(' ripple-animate', '');
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

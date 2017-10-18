@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ghost-click</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            width: 300px;
+            height: 300px;
+            background-color: rgba(255, 0, 0, 0.25);
+        }
+
+        #div2 {
+            width: 240px;
+            height: 240px;
+            background-color: yellow;
+            position: absolute;
+            left: 30px;
+            top: 30px;
+            z-index: -1;
+        }
+
+        #console {
+            margin-top: 310px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <div id="div2">
+        <a href="https://www.baidu.com">www.baidu.com</a>
+    </div>
+    <div id="console"></div>
+</body>
+<script>
+    var el1 = document.querySelector('#div1');
+    var el2 = document.querySelector('#div2');
+
+
+
+    var log = function (text) {
+        var consoleEl = document.querySelector('#console');
+        var p = document.createElement('p');
+        p.textContent = text;
+        consoleEl.appendChild(p);
+    };
+
+
+    var handle = function (e) {
+        log('target: ' + e.target.id + ', event: ' + e.type);
+        if (e.target.id === 'div1') {
+            el1.style.display = "none";
+        }
+    };
+
+    el1.addEventListener('touchstart', handle);
+    el2.addEventListener('click',handle);
+    el2.addEventListener('touchstart',handle);
+</script>
+
+</html>

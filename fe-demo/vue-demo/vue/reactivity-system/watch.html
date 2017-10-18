@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-watch</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="example-1"></div>
+    <script>
+        var SubComponent = {
+            props:['obj'],
+            template:'<div>{{message}}</div>',
+            data:function(){
+                return {
+                    
+                }
+            },
+            computed:{
+                message:function(){
+                    return this.obj.message;
+                }
+            },
+            watch:{
+                obj:function(val,oldVal){
+                    console.log('obj changed');
+                }
+            }
+        }
+        var vm = new Vue({
+            el:'#example-1',
+            template:'\
+                <div>\
+                    <sub-component :obj="obj" />\
+                    <button @click="clickHandler">改变子组件</button>\
+                    <input type="text" v-model = "text"/>\
+                </div>\
+            ',
+            data:function(){
+                return {
+                    obj:{
+                        message:'hello world'
+                    },
+                    text:''
+                }
+            },
+            methods:{
+                clickHandler:function(){
+                    this.obj = {
+                        message:this.text
+                    }
+                }
+            },
+            components:{
+                'sub-component':SubComponent
+            }
+        });
+    </script>
+</body>
+</html>

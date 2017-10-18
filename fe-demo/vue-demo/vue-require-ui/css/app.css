@@ -1,0 +1,101 @@
+/* login */
+.login{
+    width: 100%;
+    height: 100%;
+    min-width: 1200px;
+    position: relative;
+}
+.login-header{
+    width:100%;
+    height: 100px;
+    background-color: #ddd;
+}
+.login-body{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100px;
+    bottom: 60px;
+    background-color: #ccc;
+}
+.login-box{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 50px;
+    top: 200px;
+}
+.login-footer{
+    height: 60px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #008888;
+}
+
+
+/* schedule */
+.schedule{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.schedule-map{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.schedule-leftpanel{
+    width: 200px;
+    background: #fff;
+    position: absolute;
+    top:20px;
+    left:20px;
+    z-index: 2;
+}
+
+.schedule-bottompanel{
+    width: 1000px;
+    height: 60px;
+    background: #ff0000;
+    position: absolute;
+    bottom:0;
+    left:50%;
+    margin-left: -500px;
+    z-index: 2;
+}
+
+/* 可伸缩面板 */
+.panel{
+    width: 200px;
+    border: 1px solid #ddd;
+    margin-top: 40px;
+}
+.panel-collapse .panel-content{
+    height: 0;
+}
+.panel-title{
+    height: 30px;
+    font-size: 14px;
+    color: #fff;
+    background: #0088ff;
+    line-height: 30px;
+    position: relative;
+}
+.panel-title-arrow{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #00ffff;
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    cursor: pointer;
+}
+.panel-content{
+    height: 350px;
+    overflow:auto;
+}

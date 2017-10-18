@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-alert-transition</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        div,span{
+            margin: 0;
+            padding: 0;
+        }
+        .notify{
+            position: fixed;
+            top: 0;
+            width: 320px;
+            left: 50%;
+            margin-left: -160px;
+        }
+
+        .notify .notify-item{
+            margin: 10px auto;
+            width: 320px;
+            height: 32px;
+            line-height: 32px;
+            font-size: 0px;
+            color: #fff;
+            padding: 0 10px;
+            border-radius: 16px;
+            transition: all 1s;
+        }
+        .notify .notify-item.notify-item-call{
+            background-color: #f39800;
+        }
+        .notify .notify-item.notify-item-alert{
+            background-color: #E52233;
+        }
+
+        .notify .notify-item .notify-item-desc{
+            float: left;
+            font-size: 14px;
+        }
+        .notify .notify-item .notify-item-state{
+            float: left;
+            font-size: 14px;
+        }
+        .notify .notify-item .notify-item-time{
+            float: right;
+            font-size: 14px;
+        }
+        .notify .notify-item .notify-item-mute{
+            float: right;
+            font-size: 14px;
+        }
+
+        .slide-fade-enter,.slide-fade-leave-active{
+            opacity: 0;
+            transform:translateY(-20px);
+        }
+
+        .slide-fade-leave-active{
+            position: absolute;
+        }
+
+        .slide-fade-move{
+            transition: transform 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="example-1">
+    </div>
+    <script>
+        var NotifyItem = {
+            template:'\
+                <div :class="notifyCls">\
+                    <span class="notify-item-desc">[{{itemData.area}}][{{itemData.name}}]</span>\
+                    <i class="notify-item-mute" v-if="itemData.type === \'call\'"></i>\
+                    <span class="notify-item-time">00:01</span>\
+                    <span class="notify-item-state">讲话</span>\
+                </div>\
+            ',
+            props:{
+                itemData:{
+                    default:{
+                        type:'call', // 'call'-讲话 'alert':告警
+                        id:'1',
+                        area:'xx警务区',
+                        name:'xx警员'
+                    }
+                }
+            },
+            computed:{
+                notifyCls:function(){
+                    return {
+                        "notify-item":true,
+                        "notify-item-call":this.itemData.type === 'call',
+                        "notify-item-alert":this.itemData.type === 'alert'
+                    };
+                }
+            }
+        };
+
+        var Notify = {
+            template:'\
+                <div class="notify">\
+                    <transition-group name="slide-fade" tag="div">\
+                        <notify-item v-for="itemData in notifyData" :itemData="itemData" :key="itemData.id">\
+                        </notify-item>\
+                    </transition-group>\
+                </div>\
+            ',
+            props:["notifyData"],
+            components:{
+                'notify-item':NotifyItem
+            }
+        };
+
+        var vm = new Vue({
+            el:'#example-1',
+            template:'\
+                <div>\
+                    <button @click="addClick">Add</button>\
+                    <button @click="removeClick">Remove</button>\
+                    <custom-notify :notifyData="notifyData" />\
+                </div>\
+            ',
+            data:{
+                notifyData:[{
+                    id:'1',
+                    type:'call',
+                    area:'黄兴警务区',
+                    name:'警员1'
+                },{
+                    id:'2',
+                    type:'call',
+                    area:'黄兴警务区',
+                    name:'警员2'
+                },{
+                    id:'3',
+                    type:'call',
+                    area:'黄兴警务区',
+                    name:'警员3'
+                },{
+                    id:'4',
+                    type:'alert',
+                    area:'黄兴警务区',
+                    name:'警员4'
+                },{
+                    id:'5',
+                    type:'alert',
+                    area:'黄兴警务区',
+                    name:'警员5'
+                }],
+                nextId:6
+            },
+            components:{
+                'custom-notify':Notify
+            },
+            methods:{
+                randomIndex:function(){
+                    return Math.floor(Math.random() * this.notifyData.length);
+                },
+                randomType:function(){
+                    return Math.random()*2 > 1?'alert':'call';
+                },
+                randomId:function(){
+                    return this.nextId++;
+                },
+                randomName:function(){
+                    return '警员'+this.nextId;
+                },
+                randomArea:function(){
+                    return Math.random()*2 > 1?'开福警务区':'黄兴警务区';
+                },
+                addClick:function(){
+                    var itemData = {
+                        id:this.randomId(),
+                        name:this.randomName(),
+                        area:this.randomArea(),
+                        type:this.randomType()
+                    };
+                    this.notifyData.splice(this.randomIndex(),0,itemData);
+                },
+                removeClick:function(){
+                    this.notifyData.splice(this.randomIndex(),1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

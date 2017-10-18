@@ -1,0 +1,26 @@
+.slider{
+  width:320px;
+  height:200px;
+  overflow: hidden;
+}
+.area{
+  display: inline-block;
+  width: 320px;
+  height: 200px;
+}
+
+.area1{
+  background-color: #ff0088;
+}
+.area2{
+  background-color: #ff0;
+}
+.area3{
+  background-color: #ff8800;
+}
+.area4{
+  background-color: #00ffff;
+}
+.area5{
+  background-color: #00ff88;
+}

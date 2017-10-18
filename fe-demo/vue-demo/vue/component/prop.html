@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Component-Prop</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="example-1">
+        <child my-message="Mary"></child>
+        <child my-message="Jim"></child>
+        <child my-message="Tom"></child>
+    </div>
+    <div id="example-2">
+        <input type="text" v-model="parentMsg">
+        <br>
+        <child v-bind:my-message="parentMsg"></child>
+    </div>
+    <div id="example-3">
+        <child my-message="1"></child>
+        <child v-bind:my-message="1"></child>
+    </div>
+    <script>
+        // html中的kebab-case转换为props中的camelCase
+        Vue.component('child',{
+            props:['myMessage'],
+            template:'<p>{{"Hello " + myMessage}}</p>',
+            mounted:function(){
+                console.log(this.myMessage + ', type:' + typeof this.myMessage);
+            }
+        });
+        var vm1 = new Vue({
+            el:'#example-1',
+            data:{}
+        });
+
+        // 动态绑定prop
+        var vm2 = new Vue({
+            el:'#example-2',
+            data:{
+                parentMsg:""
+            }
+        });
+
+        // 字面量prop与动态prop
+        var vm3 = new Vue({
+            el:'#example-3',
+            data:{}
+        });
+    </script>
+</body>
+</html>

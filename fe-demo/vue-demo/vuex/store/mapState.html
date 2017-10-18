@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vuex.js"></script>
+    <title>mapState</title>
+</head>
+<body>
+    <div id="app">
+    </div>
+    <script>
+        const store = new Vuex.Store({
+            state:{
+                count:0
+            }
+        });
+        let computedObj = {
+            localComputed: state => state.count +3
+        };
+        let mapObj = Vuex.mapState({
+            count:state => state.count,
+            countAlias:'count',
+            countPlusLocalState(state){
+                return state.count + this.localCount;
+            }
+        });
+        // 融合本地computed属性于mapState对象，ES6可使用...扩展符
+        for(let key in mapObj){
+            if(mapObj.hasOwnProperty(key)){
+                computedObj[key] = mapObj[key];
+            }
+        }
+        const Counter = {
+            template:'<div>count:{{count}}, countAlias:{{\`count\`}}, countPlus:{{countPlusLocalState}}, localComputed:{{localComputed}}</div>',
+            data(){
+                return {
+                    localCount:1
+                };
+            },
+            computed:computedObj
+        };
+        const app = new Vue({
+            el:'#app',
+            store,
+            components:{
+                Counter
+            },
+            template:'\
+                <div class="app">\
+                    <counter></counter>\
+                </div>\
+            '
+        });
+
+        
+    </script>
+</body>
+</html>

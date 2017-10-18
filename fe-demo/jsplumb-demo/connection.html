@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>connection</title>
+  <script src="./js/jsPlumb-2.1.7.js"></script>
+  <style>
+  .container{
+    padding: 80px;
+    position: relative;
+  }
+  .elem{
+    width: 100px;
+    height: 100px;
+    background-color: #00ff88;
+  }
+  #element1{
+    position: absolute;
+    top: 0;
+    left: 100px;
+  }
+  #element2{
+    position: absolute;
+    top: 200px;
+    left: 100px;
+  }
+  #element3{
+    position: absolute;
+    top: 0;
+    left: 300px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="elem" id="element1">item1</div>
+    <div class="elem" id="element2">item2</div>
+    <div class="elem" id="element3">item3</div>
+  </div>
+  <script>
+  jsPlumb.ready(function(){
+    var firstInstance = jsPlumb.getInstance();
+    /*firstInstance.importDefaults({
+      Connector : [ "Bezier", { curviness: 150 } ],
+      Anchors : [ "TopCenter", "BottomCenter" ]
+    });*/
+
+    firstInstance.connect({
+      source:"element1",
+      target:"element2",
+      anchor:["Continuous",{faces:["top","bottom"]}],
+      endpoint:["Dot",{
+        cssClass:"myEndpoint",
+        hoverClass:"myEndpointHover"
+      }],
+      connector:[ "Bezier", { curviness:100,cssClass:"myConnector" }],
+      overlays:[
+        ["Arrow",{foldback:0.5}],
+        ["Label",{cssClass:"myLabel"}]
+      ]
+    });
+
+    firstInstance.connect({
+      source:"element1",
+      target:"element3",
+      endpoint:["Rectangle",{
+        cssClass:"myEndpoint",
+        hoverClass:"myEndpointHover",
+        width:30,
+        height:10
+      }]
+    })
+
+    firstInstance.connect({
+      source:"element2",
+      target:"element3",
+      anchors:["Right","Bottom"],
+      endpoint:["Rectangle",{
+        width:10,
+        height:10
+      }],
+      endpointStyle:{
+        fillStyle:"yellow"
+      },
+      deleteEndpointOnDetach:true,
+      detachable:false
+    })
+  })
+  </script>
+</body>
+</html>

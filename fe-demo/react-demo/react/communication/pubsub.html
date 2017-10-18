@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>pubsub</title>
+  <style>
+  input{
+    padding:5px;
+  }
+  </style>
+  <script src="../js/react.js"></script>
+  <script src="../js/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+  var PubSub = {};
+
+  (function(p){
+    var _events = {};
+
+    p.publish = function(event){
+      var args = Array.prototype.slice.call(arguments,1);
+      if(!_events[event]) return;
+      _events[event].forEach(function(callback){
+        callback.apply(callback,args);
+      });
+    };
+
+    p.subscribe = function(event,callback){
+      if(!_events[event]){
+        _events[event]=[];
+      }
+      _events[event].push(callback);
+    };
+
+    p.unsubscribe = function(event,callback){
+
+      var funcArr = _events[event],
+          len = funcArr.length,
+          i;
+      if(!funcArr||len==0)return;
+      for(i=0,len=funcArr.length;i<len;i++){
+        if(funcArr[i]==callback){
+          funcArr.splice(i,1);
+        }
+      }
+    };
+  })(PubSub);
+
+  var NameComponent = React.createClass({
+    changeHandler:function(e){
+      PubSub.publish('namechange',e.target.value);
+    },
+    render:function(){
+      return (
+        <input type="text" onChange={this.changeHandler}/>
+      )
+    }
+  });
+
+  var DisplayComponent = React.createClass({
+    getInitialState:function(){
+      return {
+        name:''
+      }
+    },
+    componentDidMount:function(){
+      PubSub.subscribe('namechange',this.nameChangeHandler)
+    },
+    nameChangeHandler:function(name){
+      this.setState({
+        name:name
+      })
+    },
+    componentWillUnmount:function(){
+      PubSub.unsubscribe('namechange');
+    },
+    render:function(){
+      return (
+        <div>Hello,{this.state.name}</div>
+      )
+    }
+  });
+
+  var GreetingComponent = React.createClass({
+    render:function(){
+      return (
+        <div>
+          <NameComponent/>
+          <DisplayComponent/>
+        </div>
+      )
+    }
+  });
+
+  ReactDOM.render(<GreetingComponent/>,document.getElementById('container'))
+</script>
+</body>
+</html>

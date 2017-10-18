@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Checkbox</title>
+    <script src="../lib/vue.js"></script>
+    <script src="./checkbox.js"></script>
+    <link rel="stylesheet" href="./checkbox.css">
+
+</head>
+<body>
+    <div id="example-1">
+
+    </div>
+    <script>
+        var vm1 = new Vue({
+            el:'#example-1',
+            template:'\
+                <div>\
+                    <checkbox name="mary" value="Mary" id="mary1" v-model="isCheck" />\
+                    <label for="mary1">mary</label>\
+                    <p>{{isCheck}}</p>\
+                </div>\
+            ',
+            data:{
+                isCheck:''
+            },
+            components:{
+                checkbox:Checkbox
+            }
+        });
+    </script>
+</body>
+</html>

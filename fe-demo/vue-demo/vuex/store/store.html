@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vuex.js"></script>
+    <title>Store</title>
+</head>
+<body>
+    <div id="app">
+    </div>
+    <script>
+        const store = new Vuex.Store({
+            state:{
+                count:0
+            }
+        });
+        const Counter = {
+            template:'<div>{{count}}</div>',
+            computed:{
+                count(){
+                    return this.$store.state.count;
+                }
+            }
+        };
+        const app = new Vue({
+            el:'#app',
+            store,
+            components:{
+                Counter
+            },
+            template:'\
+                <div class="app">\
+                    <counter></counter>\
+                </div>\
+            '
+        });
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+.trace-dialog{
+    width: 300px;
+    padding: 20px 40px;
+    position: absolute;
+    left: 50%;
+    top:40%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+}
+
+.trace-dialog-header{
+  height: 32px;
+}
+
+.trace-dialog-header .header-close{
+  display: inline-block;
+  width:24px;
+  height: 24px;
+  float: right;
+  margin-top: 4px;
+  margin-right: 5px;
+  vertical-align: top;
+  background:#00ffff;
+}
+
+.trace-dialog-body{
+
+}
+
+.trace-dialog-footer{
+  height: 40px;
+}

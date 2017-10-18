@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EventBus</title>
+    <script src="eventbus.js"></script>
+</head>
+<body>
+    <button id="fire">fire</button>
+    <button id="off">off</button>
+    <script>
+        var eventBus = new EventBus();
+        var handler = function(){
+            var arr = Array.prototype.slice.call(arguments,0);
+            alert(arr.toString());
+        };
+        eventBus.on("cusEvent",handler);
+        window.onload = function(){
+            document.getElementById("fire").onclick = function(){
+                eventBus.fire("cusEvent",1,2,3,Math.random());
+            };
+            document.getElementById("off").onclick = function(){
+                eventBus.off("cusEvent",handler);
+            };
+        }
+
+
+
+    </script>
+</body>
+</html>

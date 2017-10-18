@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="js/ajax.js"></script>
+</head>
+<body>
+  <button id="getButton">
+    发送get请求
+  </button>
+  <br>
+  <button id="postButton">
+    发送post请求
+  </button>
+
+</body>
+<script>
+  document.getElementById('getButton').onclick = function(){
+    console.log(Utils.xhrUtil)
+    Utils.xhrUtil.ajax({
+      type:'get',
+      url:'hello/jp',
+      success:function(responseText){
+        alert(responseText);
+      },
+      fail:function(responseText){
+        alert(responseText);
+      },
+      error:function(responseText){
+        alert(responseText);
+      }
+    })
+  }
+
+  document.getElementById('postButton').onclick = function(){
+    console.log(Utils.xhrUtil)
+    Utils.xhrUtil.ajax({
+      type:'post',
+      url:'greet/jp',
+      dataType:'text',
+      data:{
+        a:1,
+        b:2
+      },
+      success:function(responseText){
+        alert(responseText);
+      },
+      fail:function(responseText){
+        alert(responseText);
+      },
+      error:function(responseText){
+        alert(responseText);
+      }
+    })
+  }
+  </script>
+</html>
