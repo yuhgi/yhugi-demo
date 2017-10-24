@@ -47,7 +47,7 @@
             "always"//必须使用;结尾
         ],
         "arrow-body-style": 0,// 要求箭头函数体使用大括号
-        "arrow-parens": 2,// 要求箭头函数的参数使用圆括号
+        "arrow-parens": 0,// 要求箭头函数的参数使用圆括号
         "eqeqeq":"error",//不能使用==
         "curly":"warn",//使用if else while时要加{}
         "camelcase":"error",//必须使用驼峰命名法

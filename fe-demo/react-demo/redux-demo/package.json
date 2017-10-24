@@ -30,10 +30,14 @@
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1"
+  },
+  "dependencies": {
+    "react-redux": "^5.0.6"
   }
 }
