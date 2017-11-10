@@ -1,12 +1,13 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
-import Home from './components/Home';
-import DrawNavigation from './components/DrawNavigation';
+import Home from './src/components/Home';
+import DrawNavigation from './src/components/DrawerNavigation/index.js';
+import NestingNavigation from './src/components/NestingNavigation';
 
 
 const RootNavigatorConfig = {
-    headerMode: 'float'
+    headerMode:'none'
 };
 
 export default StackNavigator({
@@ -15,5 +16,8 @@ export default StackNavigator({
     },
     DrawNavigation: {
         screen: DrawNavigation 
+    },
+    NestingNavigation:{
+        screen:NestingNavigation
     }
 }, RootNavigatorConfig);
