@@ -9,11 +9,12 @@ class RecentChats extends React.Component {
     }
     render() {
         const {navigate,goBack} = this.props.navigation;
+        console.log(this.props.navigation)
         return (
             <View>
                 <Text>List of recent chats</Text>
-                <Button title="Chat with Lucy" onPress={() => {navigate('Chat',{user:'Lucy'})}} />
-                <Button title="Back Home" onPress={() => {console.log(this.props.navigation);;goBack('Home')}} />
+                <Button title="Chat with Lucy" onPress={() => {navigate('Chat',{user:'Lucy'});}} />
+                <Button title="Back Home" onPress={() => {goBack('DrawerNavigation');}} />
             </View>
         );
     }

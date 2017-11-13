@@ -12,6 +12,9 @@ export default class Home extends React.Component{
         return (
             <View>
                 <Button title="Nesting navigation" onPress={this._navigate.bind(this,'NestingNavigation')} />
+                <Button title="Drawer navigation" onPress={this._navigate.bind(this,'DrawerNavigation')} />
+                <Button title="EditInfo" onPress={this._navigate.bind(this,'EditInfo')} />
+                
             </View>
         );
     }    
