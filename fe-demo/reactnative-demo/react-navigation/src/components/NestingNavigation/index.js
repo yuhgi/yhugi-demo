@@ -1,20 +1,20 @@
 import React from 'react';
-import { View, Text ,Button } from 'react-native';
-import {TabNavigator,StackNavigator} from 'react-navigation';
+import { View, Text, Button } from 'react-native';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import Chat from './Chat';
 
 class RecentChats extends React.Component {
     static navigationOptions = {
-        title:'Recent Chats'
+        title: 'Recent Chats'
     }
     render() {
-        const {navigate,goBack} = this.props.navigation;
         console.log(this.props.navigation)
+        const {navigate,goBack} = this.props.navigation;
         return (
             <View>
                 <Text>List of recent chats</Text>
-                <Button title="Chat with Lucy" onPress={() => {navigate('Chat',{user:'Lucy'});}} />
-                <Button title="Back Home" onPress={() => {goBack('DrawerNavigation');}} />
+                <Button title="Chat with Lucy" onPress={() => { navigate('Chat', { user: 'Lucy' }); }} />
+                <Button title="Back Home" onPress={() => { goBack(null); }} />
             </View>
         );
     }
@@ -22,34 +22,35 @@ class RecentChats extends React.Component {
 
 class AllContacts extends React.Component {
     static navigationOptions = {
-        title:'All Chats'
+        title: 'All Chats'
     }
     render() {
-        const {navigate} = this.props.navigation;
+        const { navigate, goBack } = this.props.navigation;
         return (
             <View>
                 <Text>List of all contacts</Text>
-                <Button title="Chat with Jane" onPress={() => {navigate('Chat',{user:'Jane'})}} />
+                <Button title="Chat with Jane" onPress={() => { navigate('Chat', { user: 'Jane' }) }} />
+                <Button title="Back Home" onPress={() => { goBack(null); }} />
             </View>
         );
     }
 }
 
 const MainScreenNavigator = TabNavigator({
-    Rencent:{
-        screen:RecentChats
+    Rencent: {
+        screen: RecentChats
     },
-    All:{
-        screen:AllContacts
+    All: {
+        screen: AllContacts
     }
 });
 
 const NestingNavigator = StackNavigator({
-    ChatRoom:{
-        screen:MainScreenNavigator
+    ChatRoom: {
+        screen: MainScreenNavigator
     },
-    Chat:{
-        screen:Chat
+    Chat: {
+        screen: Chat
     }
 })
 

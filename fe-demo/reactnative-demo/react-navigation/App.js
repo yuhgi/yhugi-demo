@@ -17,8 +17,7 @@ const RootNavigatorConfig = {
 
 export default StackNavigator({
     Home: {
-        screen: Home,
-        key:'Home'
+        screen: Home
     },
     DrawNavigation: {
         screen: DrawNavigation 
