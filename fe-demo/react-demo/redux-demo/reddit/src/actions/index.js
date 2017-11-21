@@ -38,14 +38,11 @@ export function receivePosts(subreddit,json){
 }
 
 
-export function fetchPosts(subreddit){
+function fetchPosts(subreddit){
     return function(dispatch){
         dispatch(requestPosts(subreddit));
         return axios.get(`https://www.reddit.com/r/${subreddit}.json`)
-            .then(response => {
-                console.log(response);
-                return response;
-            },error => {
+            .then(response => response.data,error => {
                 console.log('An error occurred.',error);
             })
             .then(json => {
@@ -54,8 +51,23 @@ export function fetchPosts(subreddit){
     };
 }
 
+function shouldFetchPosts(state,subreddit){
+    const posts = state.postsBySubreddit[subreddit];
+    if(!posts){
+        return true;
+    }else if(posts.isFetching){
+        return false;
+    }else {
+        return posts.didInvalidate;
+    }
+}
+
 export function fetchPostsIfNeeded(subreddit){
     return (dispatch,getState) => {
-        return dispatch(fetchPosts(subreddit));
+        if(shouldFetchPosts(getState(),subreddit)){
+            return dispatch(fetchPosts(subreddit));
+        }else{
+            return Promise.resolve();
+        }
     };
 }
