@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 配置实体类的别名，在mapping文件中就可以使用别名了 -->
+    <typeAliases>
+        <typeAlias alias="Employee" type="com.racer.mybatis.model.Employee"/>
+    </typeAliases>
+	<!-- 配置数据库环境，可使用environment配置多数据库 -->
+    <environments default="development">
+        <environment id="development">
+        	<!-- 配置事务管理 -->
+        	<transactionManager type="JDBC"/>
+        	<!-- 配置数据源 -->
+            <dataSource type="POOLED">
+            <property name="driver" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://127.0.0.1:3306/learnjava" />
+            <property name="username" value="root"/>
+            <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 配置实体的映射文件 -->
+    <mappers>
+        <mapper resource="mapper/Employee.xml"/>
+    </mappers>
+</configuration>

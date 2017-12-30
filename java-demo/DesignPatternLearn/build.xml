@@ -1,0 +1,131 @@
+﻿<?xml version="1.0"?>
+<project name="com.racer.headfirstdesignpattern" basedir="." default="init">
+	<!-- 通过property标签设置路径 -->
+	<property name="build.dir" value="build/classes"/>
+	<property name="src.dir" value="src/main"/>
+	<property name="testsrc.dir" value="src/test"/>
+	<property name="testbuild.dir" value="build/test-classes"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="dist.dir" value="dist"/>
+	<property name="jarname" value="test.jar"/>
+	<property name="mainclass" value="com.racer.mvc.dj.DJTestDrive"/>
+	<property name="junitcore" value="org.junit.runner.JUnitCore"/>
+	<property name="testmainclass" value="com.racer.junitlearn.test.AssertTest"/>
+
+	<!-- 编译路径设置 -->
+	<!-- 1.通过path标签设置classpath，path属性使用绝对路径 -->
+	<path id="buildpath">
+		<pathelement path="${basedir}/${build.dir}"/>
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+
+	<!-- 2.通过path标签设置classpath，location属性使用相对路径 -->
+	<!--
+		<pathelement location="${lib}/junit-4.10.jar"/>
+	-->
+
+	<!-- 3.通过filelist引用几个不同路径的jar包 -->
+	<!--
+		<filelist id="file" dir="${basedir}/${lib}">
+			<file name="a.jar"/>
+			<file name="d:/lib/b.jar"/>
+		</filelist>
+	-->
+
+	<!-- 4.通过fileset进行设置，可以采用匹配模式导入jar -->
+	<!--
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	-->
+	</path>
+
+	<!-- 第三方jar包的路径 -->
+	<path id="libpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- 运行路径设置 -->
+	<path id="runpath">
+		<pathelement path="${basedir}/${build.dir}"/>
+		<pathelement path="${basedir}/${testbuild.dir}"/>
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- 初始化，建立文件目录 -->
+	<target name="init">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${src.dir}"/>
+		<mkdir dir="${testbuild.dir}"/>
+		<mkdir dir="${testsrc.dir}"/>
+		<mkdir dir="${lib.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<!-- 清除编译文件 -->
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="${testbuild.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+	<!-- 编译源文件 -->
+	<target name="compile" depends="init">
+		
+		<javac srcdir="${src.dir}" destdir="${build.dir}" encoding="utf-8" includeAntRuntime="false"/> 
+	</target>
+	<!-- 编译测试文件 -->
+	<target name="compiletest" depends="compile">
+		<javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" encoding="utf-8" includeAntRuntime="false" fork="true">
+			<classpath refid="buildpath">	
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- 运行 -->
+	<target name="run" depends="compile">
+		<java classname="${mainclass}" fork="true">
+			<classpath refid="runpath"/>
+		</java>
+	</target>
+
+	<!-- 运行测试 -->
+	<target name="runtest" depends="compiletest">
+		<java classname="${junitcore}" fork="true">
+			<arg value="${testmainclass}"/>
+			<classpath refid="runpath"/>
+		</java>
+	</target>
+
+	<!-- jar打包 -->
+	<target name="jar" depends="compile">
+		<!-- 拷贝jar包 -->
+		<copy todir="${dist.dir}/lib">
+			<fileset dir="${lib.dir}"/>
+		</copy>
+		<!-- 创建一个property，这个property的value包括所有的jar文件
+			 这些jar文件使用lib/前缀并且以空格“ ”分离 -->
+		<pathconvert property="mf.classpath" pathsep=" ">
+			<mapper>
+				<chainedmapper>
+					<!-- jar包只保留文件名，去掉目录信息 -->
+					<flattenmapper/>
+					<!-- 添加lib/前缀 -->
+					<globmapper from="*" to="lib/*"/>
+				</chainedmapper>
+			</mapper>
+			<path refid="libpath"/>
+		</pathconvert>
+		<!-- 使用jar命令打包 -->
+		<jar destfile="${dist.dir}/${jarname}" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-class" value="${mainclass}"/>
+				<attribute name="Class-path" value="${mf.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
