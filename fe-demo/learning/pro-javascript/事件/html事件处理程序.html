@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="text/javascript">
+    function showMessage(){
+      //全局作用域
+      console.log(this);
+      console.log(event)
+      console.log(this == event.target)
+    }
+  </script>
+  <form>
+
+    <input type="text" name="username" value=" "/>
+    <input type="button" value="click me" onclick="showMessage()"></input>
+  </form>
+
+</body>
+</html>

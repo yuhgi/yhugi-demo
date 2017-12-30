@@ -1,0 +1,18 @@
+.table>caption{
+  text-align: center;
+  background: #123456 no-repeat left top;
+  padding: 10px;
+  line-height: 20px;
+}
+
+.table{
+  width:100%;
+  color: #FFF;
+  border-collapse: collapse;
+  border: 1px solid #FFF;
+}
+
+.table>tbody>tr,.table>tbody>tr>td{
+  border-top: 1px solid #FFF;
+  text-align: center;
+}

@@ -1,0 +1,24 @@
+.dropList {
+    display: table-cell;
+    width: 400px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+#racers, #volunteers {
+    height: 200px;
+}
+
+#members li {
+    cursor: move;
+}
+
+.highlighted {
+    background-color: yellow;
+}
+
+.validtarget {
+    background-color: lightblue;
+}

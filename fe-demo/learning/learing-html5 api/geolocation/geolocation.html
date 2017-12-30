@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>geolocation api</title>
+  <link rel="stylesheet" href="geolocation.css">
+</head>
+<body>
+  <header>
+    <h1>Geolocation Demo</h1>
+    <h4>Live Race Data!</h4>
+  </header>
+  <div id="container">
+    <section>
+      <header>
+        <h1>Your Location</h1>
+      </header>
+      <p id="status" class="info">Geolocation is not supported in your browser.</p>
+
+      <div class="geostatus">
+        <p id="latitude">Latitude:</p>
+        <p id="longitude">Longitude:</p>
+        <p id="accuracy">Accuracy:</p>
+        <p id="timestamp">Timestamp:</p>
+      </div>
+    </section>
+    <footer><h2>Power by HTML5</h2></footer>
+  </div>
+  <script>
+    window.onload = function loadDemo(){
+      if(navigator.geolocation){
+        document.getElementById('status').innerHTML = "HTML5 Geolocation is supported in your browser.";
+        navigator.geolocation.getCurrentPosition(updateLocation,handleLocationError,{timeout:10000});
+      }else{
+        document.getElementById('status').innerHTML = "HTML5 Geolocation is not supported in your browser.";
+      }
+    };
+
+    function updateLocation(position){
+      console.log(position);
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      var accuracy = position.coords.accuracy;
+      var timestamp = position.timestamp;
+
+      if (!latitude || !longitude) {
+        document.getElementById("status").innerHTML =
+          "HTML5 Geolocation is supported in your browser, but your location is currently not available.";
+        return;
+      }
+      document.getElementById("latitude").innerHTML = "Latitude: " + latitude;
+      document.getElementById("longitude").innerHTML = "Longitude: " +  longitude;
+      document.getElementById("accuracy").innerHTML = "Accuracy: " + accuracy + " meters";
+      document.getElementById("timestamp").innerHTML = "Timestamp: " + timestamp;
+    }
+
+    function handleLocationError(error){
+      console.log(error);
+      switch(error.code){
+        case 0:
+        updateStatus("There was an error while retrieving your location. Additional details: " + error.message);
+        break;
+        case 1:
+        updateStatus("The user opted not to share his or her location.");
+        break;
+        case 2:
+        updateStatus("The browser was unable to determine your location. Additional details: " + error.message);
+        break;
+        case 3:
+        updateStatus("The browser timed out before retrieving the location.");
+        break;
+      }
+    }
+
+    function updateStatus(message){
+      document.getElementById('status').innerHTML = "<strong>Error</strong>:"+message
+    }
+  </script>
+</body>
+</html>

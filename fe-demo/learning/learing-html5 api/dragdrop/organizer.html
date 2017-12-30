@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tahoe 216</title>
+  <link rel="stylesheet" href = "html5.css">
+  <link rel="stylesheet" href="organizer.css">
+</head>
+<body>
+<div id="container">
+  <header>
+    <h1>Tahoe 216</h1>
+    <h4>Live  Results Now!</h4>
+  </header>
+  <nav>
+    <h2>Links</h2>
+    <a href="index.html" title="Home">Home</a>
+    <a href="signup.html" title="Are you crazy enough?">Sign Up</a>
+    <a href="about.html" title="Learn more about the T216">About the Race</a>
+  </nav>
+  <section>
+    <article>
+      <h2>Race Organization</h2>
+      <p>Drag members to either the Racers or Volunteers list.</p>
+      <ul id="members">
+        <li draggable="true" data-age="38">Brian Albers</li>
+        <li draggable="true" data-age="25">Frank Salim</li>
+        <li draggable="true" data-age="47">Jennifer Clark</li>
+        <li draggable="true" data-age="18">John Kemble</li>
+        <li draggable="true" data-age="20">Lorraine Gaunce</li>
+        <li draggable="true" data-age="30">Mark Wang</li>
+        <li draggable="true" data-age="41">Morgan Stephen</li>
+        <li draggable="true" data-age="39">Peter Lubbers</li>
+        <li draggable="true" data-age="33">Vanessa Combs</li>
+        <li draggable="true" data-age="54">Vivian Lopez</li>
+      </ul>
+      <div id="dropLists" style="display: table">
+        <div style="display: table-row">
+          <div class="dropList">
+            <fieldset id="racersField">
+              <legend>Racers (by Age):</legend>
+              <ul id="racers"></ul>
+            </fieldset>
+          </div>
+          <div class="dropList">
+            <fieldset id="volunteersField">
+              <legend>Volunteers (by Name):</legend>
+              <ul id="volunteers"></ul>
+            </fieldset>
+         </div>
+        </div>
+      </div>
+    </article>
+  </section>
+  <aside>
+    <h2>Sponsors</h2>
+    <p align="center">Happy Trails Running Club</p>
+    <p align="center"><img id="happyTrails" src="happy-trails-rc.gif" alt="Happy Trails Running Club" width="149" height="207"></p>
+  </aside>
+  <footer>
+    <p>Powered by HTML5</p>
+  </footer>
+  <script>
+    var racersList,
+        volunteersList,
+        racers = [],
+        volunteers = [];
+    function handleDragStart(evt){
+      evt.effectAllowed = "copy";
+      evt.dataTransfer.setData("text/plain",evt.target.textContent);
+      evt.dataTransfer.setData("text/html",evt.target.dataset.age);
+
+      racersList.className = "validtarget";
+      volunteersList.className = "validtarget";
+      return true;
+    }
+
+    function handleDragEnter(evt){
+      evt.stopPropagation();
+      evt.preventDefault();
+      return false;
+    }
+    function handleDragLeave(evt){
+      return false;
+    }
+
+    function handleDragOverOuter(evt){
+      if (evt.target.id == "racersField"){
+        racersList.className = "validtarget";
+      }
+      else if (evt.target.id == "volunteersField"){
+        volunteersList.className = "validtarget";
+      }
+
+      evt.stopPropagation();
+      return false;
+    }
+    function handleDragOverRacers(evt) {
+        evt.dataTransfer.dropEffect = "copy";
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        racersList.className = "highlighted";
+        return false;
+    }
+
+    function handleDragOverVolunteers(evt) {
+        evt.dataTransfer.dropEffect = "copy";
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        volunteersList.className = "highlighted";
+        return false;
+    }
+    function handleDragEnd(evt){
+      racersList.className = null;
+      volunteersList.className = null;
+      return false;
+    }
+    function handleDrop(evt){
+      evt.preventDefault();
+      evt.stopPropagation();
+      var dropTarget = evt.target;
+
+      var text = evt.dataTransfer.getData('text/plain'),
+          group = volunteers,
+          list = volunteersList;
+
+      if((dropTarget.id != "volunteers")&&
+        (dropTarget.parentNode.id!="volunteers")){
+        text = evt.dataTransfer.getData("text/html")+":"+text;
+        group = racers;
+        list = racersList;
+      }
+
+      if(group.indexOf(text) == -1){
+        group.push(text);
+        group.sort();
+        while(list.hasChildNodes()){
+          list.removeChild(list.lastChild);
+        }
+
+        [].forEach.call(group,function(person){
+          var newChild = document.createElement("li");
+          newChild.textContent = person;
+          list.appendChild(newChild);
+        });
+      }
+
+      return false;
+    }
+
+
+    function handleDragOver(evt){
+      return false;
+    }
+
+    function loadDemo(){
+      racersList = document.getElementById("racers");
+      volunteersList = document.getElementById("volunteers");
+      var lists = [racersList,volunteersList];
+
+      [].forEach.call(lists,function(list){
+        list.addEventListener("dragenter",handleDragEnter,false);
+        list.addEventListener("dragleave",handleDragLeave,false);
+        list.addEventListener("drop",handleDrop,false);
+      });
+
+      racersList.addEventListener("dragover", handleDragOverRacers, false);
+      volunteersList.addEventListener("dragover", handleDragOverVolunteers, false);
+
+      var fieldsets = document.querySelectorAll("#racersField, #volunteersField");
+       [].forEach.call(fieldsets, function(fieldset) {
+           fieldset.addEventListener("dragover", handleDragOverOuter, false);
+       });
+
+      var members = document.querySelectorAll("#members li");
+      [].forEach.call(members,function(member){
+        member.addEventListener("dragstart", handleDragStart, false);
+        member.addEventListener("dragend", handleDragEnd, false);
+      });
+    }
+    window.addEventListener("load",loadDemo,false);
+  </script>
+</div>
+</body>
+</html>

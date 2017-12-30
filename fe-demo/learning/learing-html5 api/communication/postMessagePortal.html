@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal [http://localhost:11233]</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Cross-Origin Portal</h1>
+  <p><b>Origin</b>: http://localhost:11233</p>
+  Status <input type="text" id="statusText" value="Online">
+  <button id="sendButton">Change Status</button>
+  <p>
+  This uses postMessage to send a status update to the widget iframe contained in the portal page.
+  </p>
+  <iframe id="widget" src="http://localhost:11349/ProHTML5/communication/postMessageWidget.html"></iframe>
+  <p>
+      <button id="stopButton">Stop Blinking Title</button>
+  </p>
+  <script>
+    var trustedOrigin = "http://localhost:11349";
+        defaultTitle = "Portal [http://localhost:11233]";
+        notificationTimer = null;
+    function messageHandler(e) {
+        if (e.origin == trustedOrigin) {
+            notify(e.data);
+        } else {
+            // ignore messages from other origins
+        }
+    }
+
+    function notify(message) {
+        stopBlinking();
+        blinkTitle(message, defaultTitle);
+    }
+
+    function stopBlinking() {
+        if (notificationTimer !== null) {
+            clearTimeout(notificationTimer);
+        }
+        document.title = defaultTitle;
+    }
+
+    function blinkTitle(m1, m2) {
+        document.title = m1;
+        notificationTimer = setTimeout(blinkTitle, 1000, m2, m1);
+    }
+
+    function sendString(s) {
+      //contentWindow，子窗口的window对象
+      document.getElementById("widget").contentWindow.postMessage(s, trustedOrigin);
+    }
+
+    //发送状态信息
+    function sendStatus() {
+      var statusText = document.getElementById("statusText").value;
+      sendString(statusText);
+    }
+
+    function loadDemo() {
+      document.getElementById("sendButton").addEventListener("click", sendStatus, true);
+      document.getElementById("stopButton").addEventListener("click", stopBlinking, true);
+      sendStatus();
+    }
+    window.addEventListener("load", loadDemo, true);
+    window.addEventListener("message", messageHandler, true);
+  </script>
+</body>
+</html>

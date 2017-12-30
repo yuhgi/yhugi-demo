@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用JS触发CSS3动画</title>
+  <style type="text/css">
+    html,body{
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .example{
+      height: 200px;
+    }
+    .anim-container{
+      margin-top:20px;
+      position: relative;
+      border:1px solid #000000;
+      padding: 10px;
+    }
+    .rect{
+      width: 75px;
+      height: 75px;
+      color: #f9f6f2;
+      background: #f2b179;
+      border-radius: 4px;
+      line-height: 75px;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+    }
+    .anim-container .rect{
+      transition:transform 500ms linear;
+    }
+    @keyframes zoomInout{
+      0%{
+        transform:scale(1,1);
+      }
+      50%{
+        transform:scale(1.2,1.2);
+      }
+      100%{
+        transform:scale(1,1);
+      }
+    }
+
+    @keyframes my-move{
+      0%{
+        left:0;
+      }
+      80%{
+        left: 200px;
+      }
+      100%{
+        transform:scale(1.2,1.2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="example transform">
+      <h1>使用transform</h1>
+      <input type="button" value="开始动画">
+      <div class="anim-container">
+        <div class="rect num1">128</div>
+      </div>
+    </div>
+    <div class="example animation">
+      <h1>使用animation</h1>
+      <input type="button" value="开始动画">
+      <div class="anim-container">
+        <div class="rect">128</div>
+      </div>
+    </div>
+    <div class="example css-rule">
+      <h1>使用CssRule</h1>
+      <input type="button" value="开始动画">
+      <div class="anim-container">
+        <div class="rect">128</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onload=function(){
+      var transBtn = document.querySelectorAll('.transform input')[0],
+          animBtn = document.querySelectorAll('.animation input')[0],
+          cssBtn = document.querySelectorAll('.css-rule input')[0],
+          transRect = document.querySelectorAll('.transform .rect')[0],
+          animRect = document.querySelectorAll('.animation .rect')[0],
+          cssRect = document.querySelectorAll('.css-rule .rect')[0];
+      transBtn.addEventListener('click',function(){
+        transRect.style.transform = "translate(300px,0)"
+
+      },false)
+
+      animBtn.addEventListener('click',function(){
+        animRect.style.animation = "my-move 500ms"
+        animRect.addEventListener('animationend',function(){
+          animRect.style.animation="none";
+        });
+      },false)
+
+      cssBtn.addEventListener('click',function(){
+        var rule = getRule("my-move");
+        console.log(rule)
+        rule.cssRules[1].style.left="300px"
+        cssRect.style.animation = "my-move 500ms"
+        cssRect.addEventListener('animationend',function(){
+          this.style.animation="none";
+        });
+      })
+    }
+
+
+    function getRule(name){
+      var rule;
+      var ss = document.styleSheets;
+      console.log(ss);
+      for(var i=0;i<ss.length;i++){
+        for(var j=0;j<ss[i].cssRules.length;j++){
+          rule = ss[i].cssRules[j];
+          if(rule.name == name){
+            break;
+          }
+        }
+      }
+      return rule;
+    }
+  </script>
+</body>
+</html>

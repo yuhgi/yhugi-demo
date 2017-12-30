@@ -1,0 +1,89 @@
+.container{
+  background-color: #00FF00;
+  width: 200px;
+  height: 200px;
+}
+
+.container .block-horizon-center{
+  background-color: #FFFF00;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.pos-container{
+  position: relative;
+}
+
+.container .block-center{
+  background-color: #FFFF00;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left:-25px;
+  margin-top:-25px;
+}
+
+.font-center{
+  background-color: #00FF00;
+  width: 200px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+}
+
+.img-container{
+  line-height: 200px;
+}
+
+.img-container img{
+ vertical-align: middle;
+}
+
+.tab-container{
+  display: table;
+}
+
+.tab-container .tab-center{
+  background-color: #FFFF00;
+  display: table-cell;/* 低版本IE使用display:inline-block */
+  vertical-align: middle;
+}
+
+.tab-container .tab-center .child{
+  width: 50px;
+  height: 50px;
+  background-color: #ff00ff;
+}
+
+/* IE7以下不支持 */
+.abs-container{
+  position: relative;
+}
+.abs-container .abs-center{
+  background-color: #FFFF00;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.floater{
+  float: left;
+  width: 100%;
+  height: 50%;
+  margin-bottom: -25px;
+}
+
+.float-center{
+  background-color: #FFFF00;
+  clear: both;
+  height: 50px;
+  width: 50px;
+}

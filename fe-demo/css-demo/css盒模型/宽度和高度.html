@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>宽度和高度</title>
+  <link rel="stylesheet" href="css/size.css">
+</head>
+<body>
+  <h2>标准盒模型</h2>
+  <div class="rect"></div>
+  <h2>box-sizing:content-box</h2>
+  <div class="rect rect-content-box"></div>
+  <h2>box-sizing:border-box</h2>
+  <div class="rect rect-border-box"></div>
+  <h2>行内框</h2>
+  <div class="">
+    <span class="inline-element">测试</span><span class="inline-element">测试2</span>
+  </div>
+  <div class="">
+    <span class="inline-element">测试</span><span class="inline-element">测试2</span>
+  </div>
+  <h2>inline-block</h2>
+  <div class="">
+    <span class="inline-block">测试</span><span class="inline-block">测试2</span>
+  </div>
+  <div class="">
+    <span class="inline-block">测试</span><span class="inline-block">测试2</span>
+  </div>
+  <h2>相对定位</h2>
+  <div class="container">
+    <div class="child"></div>
+    <div class="child relative"></div>
+    <div class="child"></div>
+  </div>
+  <h2>绝对定位</h2>
+  <div class="container">
+    <div class="child"></div>
+    <div class="child absolute"></div>
+    <div class="child"></div>
+  </div>
+  <h2>浮动</h2>
+  <div class="container">
+    <div class="child float-left"></div>
+    <div class="child float-left"></div>
+    <div class="">
+    测试文字测试文字测试文字测试文字测试文字测试文字
+    测试文字测试文字测试文字测试文字测试文字测试文字
+    测试文字测试文字测试文字测试文字测试文字测试文字
+    </div>
+  </div>
+  <h2>浮动-清理浮动</h2>
+  <div class="container">
+    <div class="child float-left"></div>
+    <div class="child float-left"></div>
+    <div class="clear">
+    测试文字测试文字测试文字测试文字测试文字测试文字
+    测试文字测试文字测试文字测试文字测试文字测试文字
+    测试文字测试文字测试文字测试文字测试文字测试文字
+    </div>
+  </div>
+</body>
+</html>

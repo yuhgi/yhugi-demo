@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="text/javascript">
+    window.onload = function(){
+      var btn = document.getElementById('myBtn');
+      btn.onclick = function(e){
+        console.log(e)
+        console.log(this)
+        console.log(this.value)
+      }
+    }
+  </script>
+  <button id="myBtn" value="click me">click</button>
+
+</body>
+</html>

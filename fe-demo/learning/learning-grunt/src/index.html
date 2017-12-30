@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用grunt进行前端项目管理</title>
+  <link rel="stylesheet" href="css/core/base.css">
+  <link rel="stylesheet" href="css/app/main.css">
+  <link rel="stylesheet" href="css/lib/table.css">
+  <script src="js/lib/require.js" data-main="js/main.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+
+  </div>
+  <div class="content">
+    <div class="primary">
+      <table class="table" data-ng-controller="tableCtrl">
+        <caption>企业人员表格</caption>
+        <tr>
+          <th>序号</th>
+          <th>名字</th>
+          <th>年龄</th>
+          <th>性别</th>
+        </tr>
+        <tr data-ng-repeat = "record in records">
+        <td>{{$index}}</td>
+        <td>{{record.name}}</td>
+        <td>{{record.age}}</td>
+        <td>{{record.sex}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="secondary">
+      <h1></h1>
+    </div>
+  </div>
+  <div class="footer">
+
+  </div>
+</div>
+<script></script>
+</body>
+</html>

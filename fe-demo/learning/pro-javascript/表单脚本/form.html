@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>表单提交</title>
+  <script type="text/javascript" src="js/EventUtil.js"></script>
+  <style>
+    form{
+      background-color: #DDD;
+      border-radius:5px;
+      width: 300px;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <form action="service/Handler.ashx" method="POST">
+    <label>用户</label><input type="text" name="user" id="user" autofocus/>
+    <br/>
+    <label>密码</label><input type="password" name="password" id="password"/>
+    <br/>
+    <label>男</label>
+    <input type="radio" name="radio" id="maleradio">
+    <label>女</label>
+    <input type="radio" name="radio" id="femaleradio">
+    <br>
+    <label>爱好</label>
+    <br>
+    <label for="">唱歌</label><input type="checkbox" name="checkbox" id="checkbox">
+    <label for="">跳舞</label><input type="checkbox" name="checkbox" id="checkbox">
+    <label for="">乐器</label><input type="checkbox" name="checkbox" id="checkbox">
+    <label for="">读书</label><input type="checkbox" name="checkbox" id="checkbox">
+    <br>
+    <label for="">年龄</label>
+    <select name="select" id="year">
+      <option value="1" selected="selected">1970</option>
+      <option value="2">1971</option>
+      <option value="3">1972</option>
+    </select>
+    <select name="select" id="month">
+      <option value="1" selected="selected">01</option>
+      <option value="2">02</option>
+      <option value="3">03</option>
+    </select>
+    <select name="select" id="day">
+      <option value="1" selected="selected">06</option>
+      <option value="2">07</option>
+      <option value="3">08</option>
+    </select>
+    <br>
+    <label for="">日期</label><input type="date" name="age" id="">
+    <br>
+    <label for="">数字</label><input type="number" name="number" id="number">
+    <br>
+    <label>邮箱</label><input type="email" name="email" id="email">
+    <br>
+    <label>主页</label><input type="url" name="url" id="url">
+    <br>
+    <label for="">0</label>
+    <input type="range" name="range" id="range" min="0" max="100">
+    <label for="">100</label>
+    <br>
+    <label for="">事件</label><input type="time" name="" id="">
+    <br>
+    <label for="">备注</label><textarea name="textarea" id="textarea" cols="30" rows="10"></textarea>
+    <br>
+    <input type="submit" value="提交" name="submit"/>
+    <label>图片按钮</label>
+    <input type="image" src="image/reset.gif" alt="重置" name="reset"/>
+  </form>
+  <script>
+   var form = document.getElementsByTagName('form')[0];
+   EventUtil.addHandler(form,'submit',function(event){
+    event = EventUtil.getEvent(event);
+    EventUtil.preventDefault(event);
+   })
+
+   var userBox = form.elements.user;
+   var passwordBox = form.elements.password;
+   validate(userBox);
+   validate(passwordBox)
+   function validate(textbox){
+    EventUtil.addHandler(textbox,'focus',function(event){
+      event = EventUtil.getEvent(event);
+      var target = EventUtil.getTarget(event);
+      if(target.style.backgroundColor!='red')
+        target.style.backgroundColor='yellow';
+    });
+    EventUtil.addHandler(textbox,'blur',function(event){
+      event = EventUtil.getEvent(event);
+      var target = EventUtil.getTarget(event);
+      if(/[^\d]/.test(target.value)){
+        target.style.backgroundColor='red'
+      }else{
+        target.style.backgroundColor='';
+      }
+
+    });
+    EventUtil.addHandler(textbox,'change',function(event){
+      event = EventUtil.getEvent(event);
+      var target = EventUtil.getTarget(event);
+      if(/[^\d]/.test(target.value)){
+        target.style.backgroundColor='red'
+      }else{
+        target.style.backgroundColor='';
+      }
+    })
+   }
+
+   function getSelectedText(textbox){
+    if(typeof textbox.selectionStart == 'number'){
+      return textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
+    }else if(document.selection){
+      return document.selection.createRange().text;
+    }
+   }
+
+   function selectText(textbox,startIndex,stopIndex){
+    if(textbox.setSelectionRange){
+      textbox.setSelectionRange(startIndex,stopIndex);
+    }else if(textbox.createTextRange){
+      var range = textbox.createTextRange();
+      range.collapse(true);
+      range.moveStart("character",startIndex);
+      range.moveEnd("character",stopIndex-startIndex);
+      range.select();
+    }
+    textbox.focus();
+   }
+
+
+   function serialize(form){
+    var parts=[],
+        field = null,
+        i,
+        j,
+        len,
+        optLen,
+        option,
+        optValue;
+    for(i=0;i<form.elements.length;i++){
+      field = form.elements[i];
+      switch(field.type){
+        case "select-one":
+        case "select-multiple":
+          if(field.name.length){
+            for(j=0,optLen = field.options.length;j<optLen;j++){
+              option = field.options[i];
+              if(option.selected){
+                optValue="";
+                if(option.hasAttribute){
+
+                }
+              }
+            }
+          }
+      }
+    }
+   }
+  </script>
+</body>
+</html>

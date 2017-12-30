@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pattern List</title>
+</head>
+<body>
+  <form name="listForm">
+    <p><label for="patternList">Select from the list:</label>
+    <input type="text" id="patternChoice" list="fullList" onkeydown="filterList(this)"></p>
+    <datalist id="fullList">
+        <option value="one">
+        <option value="two">
+        <option value="three">
+        <option value="four">
+        <option value="five">
+        <option value="six">
+        <option value="seven">
+        <option value="eight">
+        <option value="nine">
+        <option value="ten">
+    </datalist>
+    <span>Type in the field to filter the options.</span>
+  </form>
+  <script>
+  function filterList(field){
+    var currVal = field.value;
+
+    // escape any regular expression characters from the entered text
+    currVal = currVal.replace(/([.*+?|(){}[\]\\])/ig, "\\$1");
+
+    field.pattern = currVal + ".*";
+    console.log(field.pattern)
+  }
+  </script>
+</body>
+</html>

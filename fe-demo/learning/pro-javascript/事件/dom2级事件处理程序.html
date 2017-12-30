@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="text/javascript">
+    "use strict";
+    window.onload = function(){
+      var btn = document.getElementById('myBtn');
+      /*btn.addEventListener("click", function(e){
+        alert("Clicked")
+      })*/
+      btn.attachEvent("onclick", function(e){
+        console.log(this)
+        console.log(e.srcElement)
+      })
+      btn.attachEvent("onclick", function(e){
+        alert("Hello World")
+      })
+    }
+  </script>
+  <button id="myBtn" value="click me">click</button>
+
+</body>
+</html>

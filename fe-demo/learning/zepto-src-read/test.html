@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+
+
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>
+	<script type="text/javascript" src="zepto-source.js"></script>
+	<style>
+		body{
+			background-color: #FFFFFF;/* 所有浏览器 */
+			background-color: #FF0000\9;/* IE6,7,8 */
+			*background-color: #0066FF;/* IE6,7 */
+			_background-color: #009933;/* IE6 */
+		}
+
+		div.test{
+			margin: 0 auto;
+			width:50px;
+		}
+	</style>
+</head>
+<body>
+	<div id="testdiv" style="width:200px;height:200px;background-color:#ff0000;position:relative">
+		<div style="border:1px solid #000;margin:-25px 0 0 -50px;width:100px;height:50px;position:absolute;top:50%;left:50%">居中</div>
+	</div>
+	<script type="text/javascript">
+	"use strict";
+	function logSplit(text){
+		console.log("---------------------------------------"+text
+								+"---------------------------------------")
+	}
+	logSplit("type()测试")
+		console.log($)
+		function Person(name,age,sex){
+			this.name = name;
+			this.age = age;
+			this .sex = sex;
+		}
+		var p = new Person("Jack",21,"male");
+
+		var class2type = {}, toString = class2type.toString;
+		console.log(toString.call(p))
+		console.log(toString.call(Person))
+		console.log(toString.call("hello world"))
+		console.log(toString.call(true))
+		console.log(toString.call(new Array()))
+		console.log(toString.call(null))
+		console.log(toString.call(1))
+		console.log(toString.call(undefined))
+		console.log(toString.call(/^d{3}$/))
+		console.log(toString.call(new Date()))
+		console.log(toString.call(new Error()))
+
+    //将类型存储入class2type中
+    $.each("Boolean Number String Function Object Array Date RegExp Error".split(" "),function(i,name){
+        class2type["[object " + name + "]"] = name.toLowerCase();
+    })
+    console.log(class2type);
+
+		console.log(typeof(p))
+		console.log(typeof(Person))
+		console.log(typeof("hello world"))
+		console.log(typeof(true))
+		console.log(typeof(new Array()))
+		console.log(typeof(null))
+		console.log(typeof(1))
+		console.log(typeof(undefined))
+		console.log(typeof(new RegExp(/^d{3}$/)))
+		console.log(typeof(new Date()))
+		console.log(typeof(new Error()))
+
+		function type(obj){
+			return String(obj);
+		}
+		console.log(type(null))
+		console.log(type(undefined))
+		console.log(undefined == null)
+
+		logSplit("RegExp测试")
+		var simpleSelectorRE = /^[\w-]*$/;
+		console.log(simpleSelectorRE.test('*'))
+		var a=[1,2,3];
+		console.log(a.slice(1))
+		console.log(document.querySelectorAll('.dfd'))
+		console.log(Array.prototype.slice.call(document.querySelectorAll('.dfd')))
+
+		var fragmengRE = /^\s*<(\w+|!)[^>]*>/
+		console.log(fragmengRE.test('  <!docment fdg> df'))
+
+		var singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/
+		console.log(singleTagRE.test('<area />'))
+
+		var tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig
+		console.log(tagExpanderRE.test('<div/>'))
+		console.log(RegExp.$1,RegExp.$2)
+
+		var classRE = new RegExp('(^|\\s)'+'footer'+'(\\s|$)');
+		console.log(classRE.test('dfooter '))
+
+		logSplit("&&与||测试")
+		console.log(true&&{"name":"Marry"})
+		console.log({"name":"Marry"}&&false)
+
+		console.log(false||{"name":"Marry"})
+		console.log({"name":"Marry"}||false)
+
+
+		console.log({"name":"Marry"}||{"name":"Bob"})
+		console.log({"name":"Marry"}&&{"name":"Bob"})
+		logSplit("~,$(document).ready()与slice测试")
+		console.log(~(-1))
+		console.log(~(2))
+		$(document).ready(function(){
+			//console.log("DOM is Ready")
+		})
+
+		var arr1 = [1,2,3,4,5];
+		console.log(arr1.slice(-1))
+
+		logSplit('style与getComputedStyle测试')
+		var testdiv = document.getElementById('testdiv');
+		console.log(testdiv.style)
+		console.log(getComputedStyle(testdiv,''));
+		testdiv.style.backgroundColor = "#00FFFF"
+		logSplit("width,height方法测试")
+		;['width','height'].forEach(function(dimension){
+	    var dimensionProperty =//将第一个字母变为大写
+	      dimension.replace(/./,function(m){
+	      	return m[0].toUpperCase()
+	      });
+	      console.log(dimension)
+	    $.fn[dimension] = function(value){
+
+	    }
+
+	  })
+		console.log(0 in [])
+		console.log(0 in [1])
+		console.log(0 in {a:0})
+	  console.log(0 in {0:0})
+
+	  logSplit('事件测试')
+	  var returnTrue = function(){return true;},
+      returnFalse = function(){return false;},
+      ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$)/,
+      eventMethods = {
+        preventDefault:'isDefaultPrevented',
+        stopImmediatePropagation:'isImmediatePropagationStopped',
+        stopPropagation:'isPropagationStopped'
+      };
+
+    function matcherFor(ns) {
+	    return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)')
+	  }
+	  console.log(matcherFor(''))
+	  console.log(matcherFor('').test('    '))
+	  function createProxy(event){
+	    var key,proxy = {originalEvent:event}
+	    for(key in event){
+	      if(!ignoreProperties.test(key)&&event[key]!==undefined) {proxy[key]=event[key];}
+	    }
+	    return proxy;
+	  }
+	  function parse(event){
+	    var parts = (''+event).split('.');//将event拆分成数组
+	    return {e:parts[0],ns:parts.slice(1).sort().join(' ')}
+	  }
+
+
+	  document.getElementById('testdiv').addEventListener('click',function(e){
+	  	console.log(e);
+	  	console.log(createProxy(e))
+	  	console.log(parse(e))
+	  })
+
+	  logSplit('前端题')
+	  function A(){
+
+	  }
+
+	  function B(a){
+	  	this.a = a
+	  }
+
+	  function C(a){
+	  	if(a){
+	  		this.a = a
+	  	}
+	  }
+	  A.prototype.a = 1;
+	  B.prototype.a = 1;
+	  C.prototype.a = 1;
+	  console.log(new A());
+	  console.log(new B());
+	  console.log(new C(2));
+
+	  var a = 1;
+	  function b(){
+	  	var a=2;
+	  	function c(){
+	  		console.log(a)
+	  	}
+	  	return c;
+	  }
+	  b()()
+	</script>
+</body>
+</html>

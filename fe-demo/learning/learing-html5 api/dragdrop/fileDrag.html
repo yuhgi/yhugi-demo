@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Drag-and-Drop Demo</title>
+  <link rel="stylesheet" href = "fileDrag.css">
+</head>
+<body>
+  <div id="droptarget">
+    <div id="status"></div>
+  </div>
+  <script>
+    var droptarget;
+    function setStatus(text) {
+        document.getElementById("status").innerHTML = text;
+    }
+    function handleDragEnter(evt){
+      var files = evt.dataTransfer.files;
+      if(files){
+        setStatus("There are " + evt.dataTransfer.files.length +
+                " files in this drag.");
+      }else{
+        setStatus("There are unknown items in this drag.");
+      }
+      droptarget.className = "highlighted";
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      return false;
+    }
+    function handleDragOver(evt){
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      return false;
+    }
+    function handleDragLeave(evt){
+      setStatus("Drag files into this area.");
+      droptarget.className = "validtarget";
+      return false;
+    }
+    function handleDragDrop(evt){
+      evt.preventDefault();
+      evt.stopPropagation();
+      var filelist = evt.dataTransfer.files;
+      var message = "There were " + filelist.length + " files dropped.";
+      message += "<ol>";
+
+      [].forEach.call(filelist, function(file) {
+          message += "<li>";
+          message += "<strong>" + file.name + "</strong> ";
+          message += "(<em>" + file.type + "</em>) : ";
+          message += "size: " + file.size + " bytes - ";
+          message += "modified: " + file.lastModifiedDate;
+          message += "</li>";
+      });
+
+      message += "</ol>";
+
+      setStatus(message);
+      droptarget.className = "validtarget";
+
+      return false;
+    }
+    function loadDemo(){
+      droptarget = document.getElementById("droptarget");
+      droptarget.className = "validtarget";
+
+      droptarget.addEventListener("dragenter", handleDragEnter, false);
+      droptarget.addEventListener("dragover", handleDragOver, false);
+      droptarget.addEventListener("dragleave", handleDragLeave, false);
+      droptarget.addEventListener("drop", handleDrop, false);
+
+      setStatus("Drag files into this area.");
+    }
+    window.addEventListener("load", loadDemo, false);
+  </script>
+</body>
+</html>

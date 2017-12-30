@@ -1,0 +1,18 @@
+label {
+    text-align: right;
+    width: 90px;
+    float: left;
+}
+
+input {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+fieldset {
+    margin-top: 5px;
+}
+
+#confidenceDisplay {
+    vertical-align: top;
+}

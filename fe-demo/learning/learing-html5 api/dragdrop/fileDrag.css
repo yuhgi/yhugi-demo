@@ -1,0 +1,29 @@
+body {
+    background-color: lightgrey;
+    height: 100%;
+}
+
+#droptarget {
+    background-color: white;
+    font-family: Arial;
+    width: 500px;
+    height: 500px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: medium;
+}
+
+#status {
+    padding: 10px;
+    color: grey;
+}
+
+.highlighted {
+    border-color: green;
+}
+
+.validtarget {
+    border-color: darkgrey;
+}

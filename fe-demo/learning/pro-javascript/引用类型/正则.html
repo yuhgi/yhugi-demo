@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RegExp</title>
+</head>
+<body>
+<script type="text/javascript">
+  var pattern = /.at/g;
+  var text = "cat, bat, sat, fat"
+  var matches = pattern.exec(text);
+  console.log(matches.index);
+  console.log(matches[0]);
+  console.log(matches.input);
+  console.log(pattern.lastIndex);
+
+  matches = pattern.exec(text);
+  console.log(matches.index);
+  console.log(matches[0]);
+  console.log(matches.input);
+  console.log(pattern.lastIndex);
+</script>
+</body>
+</html>

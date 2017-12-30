@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tahoe 216</title>
+  <link rel="stylesheet" href="html5.css">
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+  <div id="container">
+    <header>
+      <h1>Tahoe 216</h1>
+      <h3 align="center">3 Days, 216-Miles, One Crazy Runner's High</h3>
+      <h2>&nbsp;</h2>
+      <h4>Live  Results Now!</h4>
+    </header>
+    <nav>
+      <h2>Links</h2>
+      <a href="index.html" title="Home">Home</a>
+      <a href="signup.html" title="Are you crazy enough?">Sign Up</a>
+      <a href="about.html" title="Learn more about the T216">About the Race</a>
+    </nav>
+    <section>
+      <article>
+        <h2>Sign Up Today</h2>
+        <p><strong>Race fee</strong>: $216 </p>
+        <p>Make check payable to the Happy Trails Running Club</p>
+        <p><strong>Note</strong>: We  recommend that you seek your doctor's and family's approval before you sign up. Race fees are not refundable. </p>
+        <form name="register">
+          <p><label for="runnername">Runner:</label>
+             <input id="runnername"name="runnername" type="text"
+                    placeholder="First and last name" required>
+          </p>
+          <p><label for="phone">Tel #:</label>
+             <input id="phone" name="phone" type="tel"
+                    placeholder="(xxx) xxx-xxx">
+          </p>
+          <p><label for="emailaddress">E-mail:</label>
+             <input id="emailaddress" name="emailaddress" type="email"
+                    placeholder="For confirmation only">
+          </p>
+          <p><label for="dob">DOB:</label>
+             <input id="dob" name="dob" type="date"
+                    placeholder="MM/DD/YYYY">
+          </p>
+          <fieldset>
+            <legend>T-shirt Size: </legend>
+            <p><input id="small" type="radio" name="tshirt" value="small">
+               <label for="small">Small</label></p>
+            <p><input id="medium" type="radio" name="tshirt" value="medium">
+               <label for="medium">Medium</label></p>
+            <p><input id="large" type="radio" name="tshirt" value="large">
+               <label for="large">Large</label></p>
+            <p><label for="style">Shirt style:</label>
+               <input id="style" name="style" type="text" list="stylelist" title="Years of participation"></p>
+            <datalist id="stylelist">
+             <option value="White" label="1st Year">
+             <option value="Gray" label="2nd - 4th Year">
+             <option value="Navy" label="Veteran (5+ Years)">
+            </datalist>
+          </fieldset>
+          <fieldset>
+            <legend>Expectations:</legend>
+            <p>
+            <label for="confidence">Confidence:</label>
+            <input id="confidence" name="level" type="range"
+                   onchange="confidenceDisplay.value=(value +'%')"
+                   min="0" max="100" step="5" value="0">
+            <output id="confidenceDisplay">0%</output></p>
+            <p><label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" spellcheck="false" maxLength="140"></textarea></p>
+         </fieldset>
+         <p><input type="submit" name="register" value="Register"></p>
+        </form>
+      </article>
+    </section>
+    <aside>
+      <h2>Sponsors</h2>
+      <p align="center">Happy Trails Running Club</p>
+      <p align="center"><img src="happy-trails-rc.gif" alt="Happy Trails Running Club" width="149" height="207"></p>
+    </aside>
+
+    <footer>
+        <p>Powered by HTML5</p>
+    </footer>
+  </div>
+  <script>
+  window.onload = function(){
+    document.register.addEventListener("invalid",invalidHandler,true);
+  }
+
+  function invalidHandler(e){
+    var label = e.srcElement.parentElement.getElementsByTagName("label")[0];
+    label.style.color = "#FF0000";
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  </script>
+</body>
+</html>
