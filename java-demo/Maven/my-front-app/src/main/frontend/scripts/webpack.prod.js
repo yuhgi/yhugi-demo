@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const baseWebpackConfig = require('./webpack.base');
 const definePlugin = new webpack.DefinePlugin({
@@ -9,15 +8,7 @@ const definePlugin = new webpack.DefinePlugin({
         NODE_ENV: JSON.stringify('production')
     }
 });
-const uglifyJSPlugin = new webpack.optimize.UglifyJsPlugin({
-    compress: {
-        warnings: false
-    }
-});
-const cleanPlugin = new CleanWebpackPlugin(['dist/production'],{
-    root:path.join(__dirname,'../'),
-    verbose:true
-});
+
 const config = require('../config/config');
 
 const menus = require('../config/menus');
@@ -50,11 +41,10 @@ module.exports = merge(baseWebpackConfig, {
     devtool: 'source-map',
     entry:entry,
     output: {
-        path: path.join(__dirname, '../dist/production'),
+        path: config.javaDistPath,
         filename: '[name]/bundle.js'
     },
     plugins: [
-        cleanPlugin,
         definePlugin
     ]
 });

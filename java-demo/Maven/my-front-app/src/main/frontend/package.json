@@ -33,6 +33,7 @@
     "eslint-plugin-react": "^7.6.1",
     "file-loader": "^1.1.6",
     "less-loader": "^4.0.5",
+    "ora": "^2.0.0",
     "postcss-loader": "^2.1.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -46,9 +47,7 @@
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.5",
     "webpack-hot-middleware": "^2.21.0",
-    "webpack-merge": "^4.1.1"
-  },
-  "dependencies": {
+    "webpack-merge": "^4.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1"
   }

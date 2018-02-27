@@ -58,6 +58,16 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install --registry https://registry.npm.taobao.org</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>npm run build</id>
                         <goals>
                             <goal>npm</goal>
@@ -69,6 +79,7 @@
                 </executions>
                 <configuration>
                     <workingDirectory>src/main/frontend</workingDirectory>
+                    <installDirectory>target</installDirectory>
                 </configuration>
             </plugin>
         </plugins>
