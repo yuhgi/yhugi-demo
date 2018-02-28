@@ -4,7 +4,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const WebpackConfig = require('./webpack.server');
 const ip = 'localhost';
-const port = 8888;
+const port = 88;
 
 // 修改entry
 WebpackConfig.entry.app.unshift('webpack-hot-middleware/client');
@@ -27,5 +27,5 @@ app.listen(port, (err) => {
     if (err) {
         return console.log(err);
     }
-    console.log(`desktop devserver is listening on http://${ip}:${port}, Ctrl+C to stop`);
+    console.log(`futuredomain dev-server is listening on http://${ip}:${port}, Ctrl+C to stop`);
 });
