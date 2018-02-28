@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.json', '.less', '.css'],
         alias: {
-            '@': path.join(__dirname, '../')
+            '@': path.join(__dirname, '../src')
         }
     },
     module: {

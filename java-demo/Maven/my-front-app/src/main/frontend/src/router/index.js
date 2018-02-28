@@ -1,32 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
-const Home = () => (
-    <div>Home</div>
-);
-
-const About = () => (
-    <div>About</div>
-);
-
-const Topics = () => (
-    <div>Topics</div>
-);
+import Login from '@/app/login';
+import Business from '@/app/business'; // 门店运营
+import OA from '@/app/oa'; // 在线办公
+import Report from '@/app/report'; // 报表中心
+import My from '@/app/my'; // 我的面板
+import Config from '@/app/config'; // 系统配置
 
 export default () => (
     <Router>
-        <div>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/topics">Topics</Link></li>
-            </ul>
-
-            <hr />
-
-            <Route exact path="/" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/topics" component={Topics} />
+        <div className="wrapper">
+            <Route exact path="/" component={Login} />
+            <Route path="/business" component={Business} />
+            <Route path="/report" component={Report} />
+            <Route path="/my" component={My} />
+            <Route path="/oa" component={OA} />
+            <Route path="/config" component={Config} />
         </div>
     </Router>
 );

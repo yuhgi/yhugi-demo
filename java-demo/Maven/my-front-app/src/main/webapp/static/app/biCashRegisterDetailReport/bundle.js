@@ -74,12 +74,9 @@ module.exports = __webpack_require__(3);
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-console.log('biCashREgisterDetailReport');
+throw new Error("Module build failed: ReferenceError: Unknown plugin \"import\" specified in \"D:\\\\git\\\\github\\\\yuhgi-demo\\\\java-demo\\\\Maven\\\\my-front-app\\\\src\\\\main\\\\frontend\\\\.babelrc\" at 0, attempted to resolve relative to \"D:\\\\git\\\\github\\\\yuhgi-demo\\\\java-demo\\\\Maven\\\\my-front-app\\\\src\\\\main\\\\frontend\"\n    at D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:180:17\n    at Array.map (native)\n    at Function.normalisePlugins (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:158:20)\n    at OptionManager.mergeOptions (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:234:36)\n    at OptionManager.init (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:368:12)\n    at File.initOptions (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:212:65)\n    at new File (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:135:24)\n    at Pipeline.transform (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-core\\lib\\transformation\\pipeline.js:46:16)\n    at transpile (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-loader\\lib\\index.js:50:20)\n    at Object.module.exports (D:\\git\\github\\yuhgi-demo\\java-demo\\Maven\\my-front-app\\src\\main\\frontend\\node_modules\\babel-loader\\lib\\index.js:175:20)");
 
 /***/ })
 /******/ ]);
