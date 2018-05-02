@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <script src="./lib/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.21.0/moment.min.js"></script>
+    <script src="./lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="./lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="./lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+</head>
+
+<body>
+    <label for="">开始时间</label>
+    <input type="text" id="beginDate">
+    <label for="">结束时间</label>
+    <input type="text" id="endDate">
+    <span id="dateErrorMsg"></span>
+    <script>
+        $(function () {
+            var initialStartDate = moment().subtract(31, 'days').format('YYYY-MM-DD');
+            var initialEndDate =  moment().format('YYYY-MM-DD');
+            var $beginDate = $('#beginDate');
+            var $endDate = $('#endDate');
+            $beginDate.val(initialStartDate);
+            $endDate.val(initialEndDate);
+            $('#beginDate').datetimepicker({
+                language: 'zh-CN',
+                minView: 'month',
+                format: 'yyyy-mm-dd',
+                startView: 2,
+                todayBtn: "linked",
+                todayHighlight: true,
+                showMeridian: true,
+                autoclose: true,
+                initialDate: initialStartDate,
+                endDate: initialEndDate
+            }).on('changeDate', function (e) {
+                var beginDate = $beginDate.val();
+                var endDate = $endDate.val();
+                var mBeginDate = moment(beginDate);
+                var mNow = moment(moment().format('YYYY-MM-DD'))
+                if(mBeginDate > mNow){
+                    $("#endDate").datetimepicker('setStartDate', beginDate);
+                }else{
+                    $("#endDate").datetimepicker('setStartDate', mNow.format('YYYY-MM-DD'));
+                }
+            });
+            $('#endDate').datetimepicker({
+                language: 'zh-CN',
+                minView: 'month',
+                format: 'yyyy-mm-dd',
+                startView: 2,
+                todayBtn: "linked",
+                todayHighlight: true,
+                showMeridian: true,
+                autoclose: true,
+                initialDate: initialEndDate,
+                startDate: initialEndDate
+            }).on('changeDate', function (e) {
+                var endDate = $endDate.val()
+                console.log(endDate);
+                $("#beginDate").datetimepicker('setEndDate', endDate);
+            });
+        })
+
+    </script>
+</body>
+
+</html>
