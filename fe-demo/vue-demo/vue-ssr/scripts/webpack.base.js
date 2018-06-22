@@ -6,8 +6,19 @@ const { VueLoaderPlugin } = require('vue-loader');
 const config = require('../config');
 
 const vueLoaderPlugin = new VueLoaderPlugin();
+const friendlyErrorPlugin = new FriendlyErrorsPlugin();
 const extractCssPlugin = new ExtractTextPlugin({
     filename:'common.[chunkhash].css'
+});
+const uglifyJSPlugin = new webpack.optimize.UglifyJsPlugin({
+    compress: {
+        warnings: false
+    }
+});
+const definePlugin = new webpack.DefinePlugin({
+    'process.env': {
+        NODE_ENV: JSON.stringify('production')
+    }
 });
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -41,7 +52,43 @@ module.exports = {
             {
                 test: /\.(gif|jpg|png|woff|eot|ttf)\??.*$/,
                 loader: 'url-loader?limit=8192'
+            },
+            {
+                test: /\.css$/,
+                use: isProd ? extractCssPlugin.extract({
+                    fallback: 'vue-style-loader',
+                    use: [
+                        {loader:'css-loader?sourceMap'},
+                        {loader:'postcss-loader?sourceMap'}
+                    ],
+                    publicPath:''
+                }):['vue-style-loader','css-loader','postcss-loader']
+            },
+            {
+                test: /\.less$/,
+                use: isProd ? extractCssPlugin.extract({
+                    fallback: 'vue-style-loader',
+                    use: [
+                        {loader:'css-loader?sourceMap'},
+                        {loader:'postcss-loader?sourceMap'},
+                        {
+                            loader:'less-loader?sourceMap',
+                            options:{
+                                javascriptEnabled: true
+                            }
+                        }
+                    ],
+                    publicPath:''
+                }) : ['vue-style-loader','css-loader','postcss-loader','less-loader']
             }
         ]
-    }
+    },
+    plugins:isProd ? [
+        vueLoaderPlugin,
+        uglifyJSPlugin,
+        extractCssPlugin
+    ]:[
+        vueLoaderPlugin,
+        friendlyErrorPlugin
+    ]
 };
