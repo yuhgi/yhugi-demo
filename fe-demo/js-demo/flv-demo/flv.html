@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flv-demo</title>
+    <script src="./lib/flv.min.js"></script>
+
+    <style>
+        .mp4-player{
+            width:800px;
+            height:400px;
+        }
+        .mp4-player video{
+            height: 380px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="mp4-player">
+            <h1>FLV格式</h1>
+            <video id="video-safety" controls="controls"></video>
+        </div>
+    </div>
+    <script>
+        var videoElement = document.getElementById('video-safety');
+        var flvPlayer = flvjs.createPlayer({
+            type: 'flv',
+            url: './resources/safety.flv'
+        });
+        flvPlayer.attachMediaElement(videoElement);
+        flvPlayer.load();
+        flvPlayer.play();
+    </script>
+</body>
+
+</html>
