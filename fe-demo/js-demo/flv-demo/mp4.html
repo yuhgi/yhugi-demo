@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>mp4-demo</title>
+    <script src="./lib/flv.min.js"></script>
     
     <style>
         .mp4-player{
@@ -20,16 +21,17 @@
     <div>
         <div class="mp4-player">
             <h1>MP4格式</h1>
-            <video id="video-safety" controls="controls" src="./resources/safety.mp4" height="380">
-                <source type="video/mp4">
-            </video>
+            <video id="video-safety" controls="controls"></video>
         </div>
     </div>
     <script>
-        var media = document.getElementById('video-safety');
-        setTimeout(() => {
-            media.play();
-        }, 500);
+        var videoElement = document.getElementById('video-safety');
+        var flvPlayer = flvjs.createPlayer({
+            type: 'mp4',
+            url: './resources/1.mp4'
+        });
+        flvPlayer.attachMediaElement(videoElement);
+        flvPlayer.load();
     </script>
 </body>
 </html>

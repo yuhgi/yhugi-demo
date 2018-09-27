@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "start":"http-server -p 3333 -c-1",
+    "start": "http-server -p 3333 -c-1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
