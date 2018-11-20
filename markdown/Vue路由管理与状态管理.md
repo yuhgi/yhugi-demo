@@ -319,6 +319,6 @@ const store = new Vuex.Store({
 
 ## 课后作业
 
-切换分支到`feature/homework`，有完整的一个学生管理的页面。综合使用了`vue，vue-router，vuex`来完成整个页面的交互流程。
+切换到`safetytool/homework`，有完整的一个学生管理的页面。综合使用了`vue，vue-router，vuex`来完成整个页面的交互流程。
 
 > 请参考学生管理页面的代码逻辑，完成教师管理页面的整个流程。
