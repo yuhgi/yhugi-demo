@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>观察者模式实现双向绑定</title>
+</head>
+<body>
+    <input type="text" v-value="value" id="input">
+    <div v-text="value" id="el"></div>
+    <script>
+        function DataBinder(object_id){
+            var pubSub = {
+                callbacks:{},
+                on:function(msg,callback){
+                    this.callbacks[msg] = this.callbacks[msg]||[];
+                    this.callbacks[msg].push(callback);
+                },
+                publish:function(msg){
+                    var i,len;
+                    this.callbacks[msg] = this.callbacks[msg]||[];
+                    for(i=0,len=this.callbacks[msg].length;i<len;i++){
+                        this.callbacks[msg][i].apply(this,arguments);
+                    }
+                }
+            },
+            data_attr = 'data-bind-' + object_id,
+            message = object_id + ":change",
+
+            changeHandler = function(evt){
+                var target = evt.target || evt.srcElement, // IE兼容
+                    prop_name = target.getAttribute(data_attr);
+                if(prop_name&&prop_name!==''){
+                    pubSub.publish(message,prop_name,target.value);
+                }
+            }
+        }
+
+
+        // dom
+        var elems = [document.getElementById('el'),document.getElementById('input')];
+
+        // view model
+        var data = {
+            value:'hello'
+        };
+
+        // 指令v-text和v-value
+        var command = {
+            text:function(str){
+                this.innerHTML = str;
+            },
+            value:function(str){
+                this.setAttribute('value',str);
+            }
+        }
+
+        var scan = function(){
+
+        }
+
+        
+    </script>
+</body>
+</html>
