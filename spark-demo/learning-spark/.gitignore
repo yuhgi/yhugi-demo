@@ -1,0 +1,40 @@
+### maven template ignore
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# intelliJ ignore
+/out/
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# system ignore
+.DS_Store
+Thumbs.db
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# package ignore (optional)
+# *.jar
+# *.war
+# *.zip
+# *.tar
+# *.tar.gz
