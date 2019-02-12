@@ -33,8 +33,20 @@ Thumbs.db
 *.tmp
 
 # package ignore (optional)
-# *.jar
-# *.war
-# *.zip
-# *.tar
-# *.tar.gz
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+*.class
+
+.externalToolBuilders/
+/common.properties
+/common.properties.lock
+/elastic-job.properties
+/elastic-job.properties.lock
+/messageTemplate.properties
+/messageTemplate.properties.lock
+/thirdparty.properties
+/thirdparty.properties.lock
+

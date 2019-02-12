@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>堆叠柱状图</title>
+    <script src="./js/echarts.js"></script>
+    <style>
+        body,div{
+            margin:0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #chart{
+            width:100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chart"></div>
+    <script>
+        var chart = echarts.init(document.getElementById('chart'));
+
+        var option = {
+            backgroundColor: '#fff',
+            color: ['#D70002', '#FF9309', '#FFFB09', '#035EF7'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                bottom: '0%',
+                itemGap: 30,
+                data: ['一级', '二级', '三级', '四级']
+            },
+            grid: { //图表的位置
+                top: 30,
+                left: '3%',
+                right: 100,
+                bottom: 50,
+                containLabel: true
+            },
+            dataZoom: [
+                {
+                    type: 'inside'
+                }, {
+                    type: 'slider',
+                    start: 0,
+                    bottom: 30,
+                    height: '15px',
+                    fillerColor:'rgba(202,223,255,.8)',
+                    borderColor:'#b6d2fc',
+                    handleStyle:{
+                        color:'#b6d2fc'
+                    },
+                    dataBackground:{
+                        lineStyle:{
+                            color:'#b6d2fc'
+                        },
+                        areaStyle:{
+                            color:'rgba(202,223,255,.8)'
+                        }
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '备案个数',
+                    nameTextStyle: {
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                        color: '#454545'
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#B3B3B3'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#454545'
+                    }
+                }
+            ],
+            xAxis: [
+                {
+                    type: 'category',
+                    name: '区县名称',
+                    nameTextStyle: {
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                        color: '#454545'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#B3B3B3'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#454545'
+                    },
+                    data: ['xx区1', 'xx区2', 'xx区3', 'xx区4', 'xx区5', 'xx区6', '产品8', '产品9']
+                }
+            ],
+            series: [
+                {
+                    name: '一级',
+                    type: 'bar',
+                    stack: '总量',
+                    barWidth: '10px',
+                    data: [10, 212, 101, 0, 0, 0, 120, 0]
+                },
+                {
+                    name: '二级',
+                    type: 'bar',
+                    stack: '总量',
+                    barWidth: '10px',
+                    data: [20, 232, 251, 0, 0, 0, 10, 0]
+                },
+                {
+                    name: '三级',
+                    type: 'bar',
+                    stack: '总量',
+                    barWidth: '10px',
+                    data: [30, 232, 231, 134, 190, 0, 110, 0]
+                },
+                {
+                    name: '四级',
+                    type: 'bar',
+                    stack: '总量',
+                    barWidth: '10px',
+                    data: [40, 132, 101, 0, 0, 150, 210, 100]
+                }
+            ]
+        };
+        chart.setOption(option);
+    </script>
+</body>
+
+</html>

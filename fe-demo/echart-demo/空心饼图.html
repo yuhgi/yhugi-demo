@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>空心饼图</title>
+    <script src="./js/echarts.js"></script>
+    <style>
+        body,
+        div {
+            margin: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #chart {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chart"></div>
+    <script>
+        var chart = echarts.init(document.getElementById('chart'));
+
+        var option = {
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['70%', '90%'],
+                    center: ['50%', '50%'],
+                    roseType: false,
+                    color: ['#D70002', '#FF9309', '#FFFB09', '#035EF7'],
+                    data: [
+                        {
+                            value: 45,
+                            name: '极高'
+                        }, {
+                            value: 35,
+                            name: '高'
+                        }, {
+                            value: 20,
+                            name: '较高'
+                        }, {
+                            value: 20,
+                            name: '一般'
+                        }
+                    ],
+                    label: {
+                        fontSize: 14,
+                        color:'#545454',
+                        formatter: function (param) {
+                            return param.name + '(' + Math.round(param.percent) + '%' + ')' 
+                                + '\n' + param.value +  '个';
+                        }
+                    },
+                    labelLine: {
+                        smooth: false,
+                        length2: 60,
+                        lineStyle: {
+                            width: 2
+                        }
+                    },
+                    itemStyle: {
+                        
+                    },
+                }
+            ]
+        };
+        chart.setOption(option);
+    </script>
+</body>
+
+</html>
