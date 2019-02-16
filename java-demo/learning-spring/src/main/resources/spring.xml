@@ -11,7 +11,9 @@
     ">
     <context:component-scan base-package="com.yuhgi.spring" />
 
-    <bean id="zoo" class="com.yuhgi.spring.model.Zoo">
-    </bean>
+    <!-- Autowired注解配合Qualifier注解 -->
+    <bean id="carFactory" class="com.yuhgi.spring.model.CarFactory" />
+    <bean id="bmwCar" class="com.yuhgi.spring.service.impl.BmwCar" />
+    <bean id="benz" class="com.yuhgi.spring.service.impl.BenzCar" />
 
 </beans>
