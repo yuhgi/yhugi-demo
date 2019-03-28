@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/raphael.js"></script>
+    <script src="./js/raphael.draggable.js"></script>
+    <script src="./js/raphael.panzoom.js"></script>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin:0;
+        padding:0;
+      }
+      div{
+        margin:0;
+        padding:0;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+
+    <script>
+      var paper = window.Raphael(
+        document.getElementsByClassName("container")[0],
+        "100%",
+        "100%"
+      );
+      var panzoom = paper.panzoom({});
+      
+      paper.rect(0,0,600,800);
+      let el = paper.circle(0, 0, 10);
+      el.attr('fill','#999');
+      el.draggable(null,null,(dx,dy) => {
+        el.remove();
+        let el2 = paper.circle(dx, dy, 10);
+        el2.attr('fill','#999');
+      });
+    
+    </script>
+  </body>
+</html>
