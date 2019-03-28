@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    ">
+    <context:component-scan base-package="com.yuhgi.spring" />
+
+    <bean id="zoo" class="com.yuhgi.spring.model.Zoo" />
+    <bean id="tiger" class="com.yuhgi.spring.model.Tiger" />
+    <bean id="monkey" class="com.yuhgi.spring.model.Monkey" />
+
+    <!-- Autowired注解配合Qualifier注解 -->
+    <!--<bean id="carFactory" class="com.yuhgi.spring.model.CarFactory" />-->
+    <!--<bean id="bmwCar" class="com.yuhgi.spring.service.impl.BmwCar" />-->
+    <!--<bean id="benzCar" class="com.yuhgi.spring.service.impl.BenzCar" />-->
+
+</beans>
