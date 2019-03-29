@@ -18,17 +18,24 @@
         var container = this.container;
         var {width,height} = this.containerRect;
         this.paper.setSize(width, height);
+
+        this.onScrollHandler = this.onScroll.bind(this);
+        this.onMouseDownHandler = this.onMouseDown.bind(this);
+        this.onMouseMoveHandler = this.onMouseMove.bind(this);
+        this.onMouseUpHandler = this.onMouseUp.bind(this);
         
         mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
         // 监听滚轮事件
         if (container.addEventListener) {
-            container.addEventListener(mouseWheelEvt, this.onScroll.bind(this), false);
+            container.addEventListener(mouseWheelEvt, this.onScrollHandler, false);
         } else if (container.attachEvent) {
-            container.attachEvent('on' + mouseWheelEvt, this.onScroll.bind(this));
+            container.attachEvent('on' + mouseWheelEvt, this.onScrollHandler);
         }
-        container.onmousedown = this.onMouseDown.bind(this);
-        container.onmousemove = this.onMouseMove.bind(this);
-        container.onmouseup = this.onMouseUp.bind(this);
+        
+        container.addEventListener('mousedown',this.onMouseDownHandler);
+        container.addEventListener('mousemove', this.onMouseMoveHandler);
+        window.addEventListener('mouseup',this.onMouseUpHandler);
+        this.repaint();
     }
 
     PanZoom.prototype.onMouseDown = function(e){
@@ -51,11 +58,11 @@
 
         let svgDeltaX,svgDeltaY;
         if(this.curZoomLevel > 0){
-            svgDeltaX = deltaX * (this.curZoomLevel * this.zoomStep);
-            svgDeltaY = deltaY * (this.curZoomLevel * this.zoomStep);
+            svgDeltaX = deltaX / (this.curZoomLevel * this.zoomStep);
+            svgDeltaY = deltaY / (this.curZoomLevel * this.zoomStep);
         }else if(this.curZoomLevel < 0){
-            svgDeltaX = deltaX / Math.abs(this.curZoomLevel * this.zoomStep);
-            svgDeltaY = deltaY / Math.abs(this.curZoomLevel * this.zoomStep);
+            svgDeltaX = deltaX * Math.abs(this.curZoomLevel * this.zoomStep);
+            svgDeltaY = deltaY * Math.abs(this.curZoomLevel * this.zoomStep);
         }else{
             svgDeltaX = deltaX;
             svgDeltaY = deltaY;
@@ -118,11 +125,11 @@
         var newHeight = paper.height;
         var temp;
         if(this.curZoomLevel > 0){
-            newWidth = paper.width * (this.curZoomLevel * this.zoomStep);
-            newHeight = paper.height * (this.curZoomLevel * this.zoomStep);
+            newWidth = paper.width / (this.curZoomLevel * this.zoomStep);
+            newHeight = paper.height / (this.curZoomLevel * this.zoomStep);
         }else if(this.curZoomLevel < 0){
-            newWidth = paper.width / Math.abs(this.curZoomLevel * this.zoomStep);
-            newHeight = paper.height / Math.abs(this.curZoomLevel * this.zoomStep);
+            newWidth = paper.width * Math.abs(this.curZoomLevel * this.zoomStep);
+            newHeight = paper.height * Math.abs(this.curZoomLevel * this.zoomStep);
         }
 
         if(this.limitWidth){
@@ -150,11 +157,11 @@
      */
     PanZoom.prototype.getSvgPoint = function(offsetX,offsetY){
         if(this.curZoomLevel > 0){
-            offsetX = offsetX * (this.curZoomLevel * this.zoomStep);
-            offsetY = offsetY * (this.curZoomLevel * this.zoomStep);
+            offsetX = offsetX / (this.curZoomLevel * this.zoomStep);
+            offsetY = offsetY / (this.curZoomLevel * this.zoomStep);
         }else if(this.curZoomLevel < 0){
-            offsetX = offsetX / Math.abs(this.curZoomLevel * this.zoomStep);
-            offsetY = offsetY / Math.abs(this.curZoomLevel * this.zoomStep);
+            offsetX = offsetX * Math.abs(this.curZoomLevel * this.zoomStep);
+            offsetY = offsetY * Math.abs(this.curZoomLevel * this.zoomStep);
         }
         
         var svgX = offsetX + this.curSvgOffsetX;
@@ -162,6 +169,16 @@
         return {
             x:svgX,y:svgY
         };
+    }
+
+    PanZoom.prototype.destroy = function(){
+        var container = this.container;
+        container.onmousedown = null;
+        container.onmousemove = null;
+        container.onmouseup = null;
+        var {width,height} = this.containerRect;
+        this.paper.setViewBox(0,0,width, height);
+        this.paper.panzoomInst = null;
     }
 
     function extend(target,src){
@@ -181,18 +198,18 @@
         var defaultOptions = {
             limitWidth:600,
             limitHeight:800,
-            zoomStep : 1.1,
+            zoomStep : 1,
             curZoomLevel:0,
-            minZoomLevel:-6,
+            minZoomLevel:-5,
             maxZoomLevel:6,
             curSvgOffsetX:0,
             curSvgOffsetY:0,
         }
-        extend(options,defaultOptions);
+        extend(defaultOptions,options);
         
-        var panzoom =  new PanZoom(paper,options);
-        paper.panzoom = panzoom;
-        return panzoom;
+        var panzoomInst = new PanZoom(paper,defaultOptions);
+        paper.panzoomInst = panzoomInst;
+        return panzoomInst;
     };
 
 })(Raphael);

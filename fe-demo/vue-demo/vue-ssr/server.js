@@ -36,7 +36,7 @@ if(isProd){
     renderer = createRenderer(serverBundle,{
         runInNewContext:false,
         template,
-        clientManifest
+        clientManifest,
     });
 }else{
     readyPromise = '';
