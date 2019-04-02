@@ -1,5 +1,7 @@
 <template>
-    <div>Home</div>
+    <div>Home
+        <a href="./about">About</a>
+    </div>
 </template>
 
 <script>

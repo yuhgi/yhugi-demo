@@ -24,7 +24,7 @@
         this.onMouseMoveHandler = this.onMouseMove.bind(this);
         this.onMouseUpHandler = this.onMouseUp.bind(this);
         
-        mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
+        var mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
         // 监听滚轮事件
         if (container.addEventListener) {
             container.addEventListener(mouseWheelEvt, this.onScrollHandler, false);
@@ -173,9 +173,15 @@
 
     PanZoom.prototype.destroy = function(){
         var container = this.container;
-        container.onmousedown = null;
-        container.onmousemove = null;
-        container.onmouseup = null;
+        var mouseWheelEvt = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
+        if (container.removeEventListener) {
+            container.removeEventListener(mouseWheelEvt, this.onScrollHandler);
+        } else if (container.detachEvent) {
+            container.detachEvent('on' + mouseWheelEvt, this.onScrollHandler);
+        }
+        container.removeEventListener('mousedown',this.onMouseDownHandler);
+        container.removeEventListener('mousemove',this.onMouseMoveHandler);
+        window.removeEventListener('mouseup',this.onMouseUpHandler);
         var {width,height} = this.containerRect;
         this.paper.setViewBox(0,0,width, height);
         this.paper.panzoomInst = null;
@@ -198,9 +204,9 @@
         var defaultOptions = {
             limitWidth:600,
             limitHeight:800,
-            zoomStep : 1,
+            zoomStep : 1.1,
             curZoomLevel:0,
-            minZoomLevel:-5,
+            minZoomLevel:-6,
             maxZoomLevel:6,
             curSvgOffsetX:0,
             curSvgOffsetY:0,

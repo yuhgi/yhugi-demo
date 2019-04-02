@@ -43,7 +43,7 @@
         },{
           radius:80,
           text:'80.2m',
-          color:'#FFFF00'
+          color:'#FF8800'
         },{
           radius:50,
           text:'50.2m',
@@ -68,7 +68,7 @@
       
       const simulation = paper.simulation();
       simulation.concentricCircle({
-        mode:'fill',
+        mode:'line',
         x:300,
         y:200,
         circleList:concentricList
@@ -78,9 +78,22 @@
         mode:'line',
         x:800,
         y:200,
-        circleList:tangentList
+        circleList:tangentList,
+        rotate:30
       })
-    
+
+      simulation.IrregularCircle({
+        mode:'line',
+        x:300,
+        y:500,
+        radiusX1:200,
+        radiusX2:150,
+        radiusY:120,
+        rotate:30
+      })
+
+      simulation.distanceMeasurement()
+      simulation.enableMeasurement();
     </script>
   </body>
 </html>

@@ -42,7 +42,7 @@ if(isProd){
     readyPromise = '';
 }
 
-const serveStatic = (path,cache) => express.static(path.resolve(__dirname,path),{
+const serveStatic = (tPath,cache) => express.static(path.resolve(__dirname,tPath),{
     maxAge:cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
 });
 
@@ -108,6 +108,3 @@ app.listen(port,(err) => {
     }
     console.log(`vue-render-server is listenning at localhost:${port}`);
 });
-
-
-
