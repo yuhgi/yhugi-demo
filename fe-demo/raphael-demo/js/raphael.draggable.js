@@ -20,18 +20,14 @@
                 return;
             }
             var panzoomInst = that.paper.panzoomInst;
+            
             var distanceX = dx - that._draggable.lastDx;
             var distanceY = dy - that._draggable.lastDy;
             that._draggable.lastDx = dx;
             that._draggable.lastDy = dy;
             if(panzoomInst){
-                if(panzoomInst.curZoomLevel > 0){
-                    distanceX = distanceX / (panzoomInst.curZoomLevel * panzoomInst.zoomStep);
-                    distanceY = distanceY / (panzoomInst.curZoomLevel * panzoomInst.zoomStep);
-                }else if(panzoomInst.curZoomLevel < 0){
-                    distanceX = distanceX * Math.abs(panzoomInst.curZoomLevel * panzoomInst.zoomStep);
-                    distanceY = distanceY * Math.abs(panzoomInst.curZoomLevel * panzoomInst.zoomStep);
-                }
+                distanceX = panzoomInst.getSvgDistance(distanceX);
+                distanceY = panzoomInst.getSvgDistance(distanceY);
             }
             that._draggable.onMove(distanceX, distanceY, x, y);
             // that.paper.safari();

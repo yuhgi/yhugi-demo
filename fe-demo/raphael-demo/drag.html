@@ -36,14 +36,21 @@
         "100%",
         "100%"
       );
-      var panzoom = paper.panzoom({});
+      var panzoom = paper.panzoom({
+        initScale:2,
+        onZoom:function(scale){
+          console.log(scale);
+        }
+      });
       
       paper.rect(0,0,600,800);
       let el = paper.circle(0, 0, 10);
       el.attr('fill','#999');
       el.draggable(null,null,(dx,dy) => {
         el.remove();
-        let el2 = paper.circle(dx, dy, 10);
+        var point = panzoom.getSvgPoint(dx,dy);
+        debugger
+        let el2 = paper.circle(point.x, point.y, 10);
         el2.attr('fill','#999');
       });
     

@@ -25,17 +25,25 @@
         height: 100%;
         overflow: hidden;
       }
+      #btn{
+        position: absolute;
+        bottom:10px;
+        right:10px;
+      }
     </style>
   </head>
   <body>
-    <div class="container"></div>
-
+    <div class="container">
+      
+    </div>
+    <button id="btn">比例尺</button>
     <script>
       var paper = window.Raphael(
         document.getElementsByClassName("container")[0],
         "100%",
         "100%"
       );
+      var panzoom = paper.panzoom({});
       const concentricList = [{
           radius:130,
           text:'80.2m',
@@ -75,25 +83,32 @@
       })
 
       simulation.tangentCircle({
-        mode:'line',
+        mode:'fill',
         x:800,
-        y:200,
+        y:600,
         circleList:tangentList,
-        rotate:30
+        rotate:370
       })
 
-      simulation.IrregularCircle({
-        mode:'line',
+      simulation.irregularCircle({
+        mode:'fill',
         x:300,
         y:500,
-        radiusX1:200,
-        radiusX2:150,
-        radiusY:120,
-        rotate:30
+        radiusX1:150,
+        radiusX2:200,
+        radiusY:100,
+        rotate:120,
+        color:'#f00'
       })
 
-      simulation.distanceMeasurement()
-      simulation.enableMeasurement();
+      // simulation.distanceMeasurement(function(distance){
+      //   console.log(distance)
+      // })
+      // simulation.enableMeasurement();
+      // var btn = document.getElementById('btn');
+      // btn.onclick = function(){
+      //   simulation.enableMeasurement();
+      // }
     </script>
   </body>
 </html>
