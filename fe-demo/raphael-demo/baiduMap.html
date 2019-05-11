@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#title{
+			position: fixed;
+			top: 10px;
+			left: 10px;
+
+		}
+		#title li {
+			list-style-type:none;
+			float: left;
+			padding: 0 10px;
+			color: #fff;
+			background: #1d9ed7;
+			cursor: pointer;
+			border-right: 1px solid #fff;
+			height: 40px;
+			line-height: 40px;
+		}
+	</style>
+   
+	<title>安元地图</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<ul id="title">
+		<li onclick="ayMap.drawCircle()">pf、jf、uv、pv、bl、cp</li>
+		<li onclick="ayMap.drawTangentialCircle()">lk(瞬时泄漏)</li>
+		<li onclick="ayMap.drawOval()">lk(连续泄漏)</li>
+	</ul>
+</body>
+
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=GBxFTGWYF0v439Yp40SmjvBL"></script>
+
+<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script>
+	var ayMap = {
+        polylineList: [],
+        labelList: [],
+        LabelAll: [],
+        init: function() {
+            this.map = new BMap.Map("allmap");
+            var point = new BMap.Point(118.799835,32.063429);
+            this.map.centerAndZoom(point, 18);
+            this.setMapEvent();
+//            this.drawCircle();
+//            this.drawTangentialCircle();
+//            this.drawOval();
+		},
+        setMapEvent: function() {
+            this.map.enableDragging();//启动地图拖拽事件，默认启动
+            this.map.enableScrollWheelZoom();//启动地图滚轮放大缩小
+            this.map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用
+            this.map.enableKeyboard();//启用键盘上下左右键移动地图
+        },
+        drawCircle: function() {
+            this.map.clearOverlays();
+            var point, arr = [118.91, 89.00, 67.50, 52.00, 36.50], i, circle, r, j,k,
+                that = this,
+                colorList = ['#fff', '#0000ff', '#ffff00', '#ff0000', '#00ff11'],
+                direction = ['东', '东北', '北', '西北', '西', '西南', '南', '东南'];
+            point = new BMap.Point(118.799835,32.063429);
+            this.map.centerAndZoom(point, 18);
+            for (i = 0; i < arr.length; i++) {
+                if (direction[i].length === 2) {
+                    r = 0.707 * arr[i];
+                } else {
+                    r = arr[i];
+                }
+                circle = new BMap.Circle(point,arr[i],{fillColor: colorList[i], strokeWeight: 1 ,
+                    fillOpacity: 0.4, strokeOpacity: 0.3});
+                this.drawLine(point, colorList[i], r, direction[i]);
+                this.drawTxt(point, colorList[i], r / 2 + 10, direction[i], arr[i] + 'm');
+                this.map.addOverlay(circle);
+            }
+            setTimeout(function() {
+                for (j = 0; j < that.polylineList.length; j++) {
+                    that.map.addOverlay(that.polylineList[j]);
+                }
+            }, 200);
+            setTimeout(function() {
+                for (k = 0; k < that.LabelAll.length; k++) {
+                    that.map.addOverlay(that.LabelAll[k]);
+                }
+            }, 250);
+        },
+        drawLine: function (point, color, r, direction) {
+            var arr, polyline, obj;
+            obj = this.getDirection(r, direction);
+            arr = [
+                {'lng': point.lng, lat: point.lat},
+                {'lng': point.lng + obj.x, lat: point.lat + obj.y}
+            ];
+            polyline = new BMap.Polyline(arr.map(function(item) {
+                return new BMap.Point(item.lng, item.lat)
+            }), {strokeColor: color, strokeWeight: 2, strokeOpacity: 0.8});
+            this.polylineList.push(polyline);
+        },
+        drawTxt: function(point, color, r, direction, txt) {
+            var opts, pot, obj, label;
+            obj = this.getDirection(r, direction);
+            pot = new BMap.Point(point.lng + obj.x, point.lat + obj.y);
+            opts = {
+                position : pot    // 指定文本标注所在的地理位置
+            };
+            label = new BMap.Label(txt, opts);
+            label.setStyle({
+                fontSize: '12px',
+                border: 'none',
+                color: color,
+                background: 'transparent'
+            });
+            this.LabelAll.push(label);
+        },
+        getDirection: function(r, direction) {
+            var x, y, obj = {};
+            x = r * 0.01055 * 0.001;
+            y = r * 0.009 * 0.001;
+            switch (direction) {
+                case '东':
+                    y = 0;
+                    break;
+                case '北':
+                    x = 0;
+                    break;
+                case '西北':
+                    x = -x;
+                    break;
+                case '西':
+                    x = -x;
+                    y = 0;
+                    break;
+                case '西南':
+                    x = -x;
+                    y = -y;
+                    break;
+                case '南':
+                    x = 0;
+                    y = -y;
+                    break;
+                case '东南':
+                    y = -y;
+                    break;
+            };
+            obj.x = x;
+            obj.y = y;
+            return　obj;
+        },
+		drawTangentialCircle: function() {
+            this.map.clearOverlays();
+            var point, pst;
+            pst = {lng: 118.799835, lat: 32.063429};
+            var data = [
+                {"x":8.917,"radius":3.01},
+                {"x":17.352,"radius":5.36},
+                {"x":31.812,"radius":9.01},
+                {"x":55.189,"radius":14.25},
+                {"x":90.37,"radius":20.90},
+                {"x":139.78,"radius":28.40},
+                {"x":203.886,"radius":35.67},
+                {"x":281.00,"radius":41.27},
+                {"x":366.07,"radius":43.62},
+                {"x":451.39,"radius":41.51},
+                {"x":527.54,"radius":34.40},
+                {"x":584.90,"radius":22.75},
+                {"x":615.75,"radius":7.85}
+            ];
+            for (var i = 0; i < data.length; i++) {
+                var obj = this.getDirection(data[i].x, '西');
+                point = new BMap.Point(pst.lng + obj.x, pst.lat + obj.y);
+                var circle = new BMap.Circle(point,data[i].radius,{strokeWeight: 1 ,
+                    strokeColor: '#f00', fillColor: 'transparent'});
+                this.map.addOverlay(circle);
+			}
+		},
+		drawOval: function() {
+            this.map.clearOverlays();
+            var data, pst, obj, point, x1, y, x2, that = this;
+            data = {
+                hfxzdzyjldyx: 200,
+                xfxzdjl: 331,
+                hfxzdjl: 49
+			};
+            pst = {lng: 118.799835, lat: 32.063429}; //装置点位
+            obj = this.getDirection(data.hfxzdzyjldyx, '西');
+            point = new BMap.Point(pst.lng + obj.x, pst.lat + obj.y);
+            x1 = data.hfxzdzyjldyx * 0.01055 * 0.001;
+            y = data.hfxzdjl * 0.009 * 0.001;
+            x2 = (data.xfxzdjl - data.hfxzdzyjldyx)* 0.01055 * 0.001;
+
+            function add_oval(centre,x1,x2,y) {
+                var assemble=new Array();
+                var angle;
+                var dot;
+                var tangent;
+                for(var i=0;i<37;i++) {
+                    angle = (2* Math.PI / 36) * i;
+                    if (i < 19) {
+                        tangent = x1/y;
+					} else {
+                        tangent = x2/y;
+					}
+                    dot = new BMap.Point(centre.lng+Math.sin(angle)*y*tangent, centre.lat+Math.cos(angle)*y);
+                    assemble.push(dot);
+                }
+                return assemble;
+            }
+            var oval = new BMap.Polygon(add_oval(point,x1,x2,y), {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});
+            this.map.addOverlay(oval);
+
+            function add_line(point1, point2) {
+                var polyline = new BMap.Polyline([point1, point2], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});
+                polyline.setStrokeStyle('dashed');
+                that.map.addOverlay(polyline);
+            }
+            var obj = this.getDirection(data.hfxzdjl, '北');
+            var point1 = new BMap.Point(point.lng + obj.x, point.lat + obj.y);
+            var point2 = new BMap.Point(point.lng + obj.x, point.lat - obj.y);
+            add_line(point1, point2);
+
+            var obj = this.getDirection(data.xfxzdjl, '西');
+            var point1 = new BMap.Point(pst.lng, pst.lat);
+            var point2 = new BMap.Point(pst.lng + obj.x, pst.lat + obj.y);
+			add_line(point1, point2);
+
+
+
+		},
+	};
+    ayMap.init();
+</script>
+
+</html>
