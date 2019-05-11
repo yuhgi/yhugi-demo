@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Controller
-public class Home {
+public class HomeController {
     @RequestMapping({"/","/home"})
     public String showHomePage(Map<String,Object> model){
         model.put("date",new Date());

@@ -12,6 +12,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-    <div>学生人数为：${count}</div>
+<div>学生人数为：${count}</div>
 </body>
 </html>
