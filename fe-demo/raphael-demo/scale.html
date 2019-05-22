@@ -6,57 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script src="./js/raphael.js"></script>
-    <script src="./js/raphael.draggable.js"></script>
     <script src="./js/raphael.panzoom.js"></script>
+    <script src="./js/raphael.simulation.js"></script>
     <style>
       html,
       body {
         width: 100%;
         height: 100%;
-        margin:0;
-        padding:0;
+        margin: 0;
+        padding: 0;
       }
-      div{
-        margin:0;
-        padding:0;
+      div {
+        margin: 0;
+        padding: 0;
       }
       .container {
         width: 100%;
         height: 100%;
         overflow: hidden;
       }
+      #btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
     </style>
   </head>
   <body>
     <div class="container"></div>
-
+    <button id="btn">比例尺</button>
     <script>
       var paper = window.Raphael(
         document.getElementsByClassName("container")[0],
         "100%",
         "100%"
       );
-      var panzoom = paper.panzoom({
-        initScale:2,
-        onZoom:function(scale){
-          console.log(scale);
-        }
-      });
-      
-      paper.rect(0,0,600,800);
-      let el = paper.circle(0, 0, 10);
-      el.attr('fill','#999');
-      el.scale(2);
-      el.draggable((distanceX,distanceY) => {
-        el && el.translate(distanceX/2,distanceY/2);
-      },null,(dx,dy) => {
-        el.remove();
-        var point = panzoom.getSvgPoint(dx,dy);
-        debugger
-        let el2 = paper.circle(point.x, point.y, 10);
-        el2.attr('fill','#999');
-      });
-    
+      var panzoom = paper.panzoom({});
+      var circleEl = paper.circle(200,300,20);
+      circleEl.scale(2);
+      circleEl.scale(0.5);
     </script>
   </body>
 </html>

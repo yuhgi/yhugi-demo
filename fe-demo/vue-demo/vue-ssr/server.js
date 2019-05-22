@@ -16,10 +16,10 @@ const port = process.env.PORT||8080;
 function createRenderer(bundle,options){
     return createBundleRenderer(bundle,Object.assign(options,{
         // for component cache
-        cache:LRU({
-            max:1000,
-            maxAge: 1000 * 60 * 15
-        }),
+        // cache:LRU({
+        //     max:1000,
+        //     maxAge: 1000 * 60 * 15
+        // }),
         basedir:path.resolve(__dirname,'./dist'),
         runInNewContext:false
     }));
@@ -29,18 +29,27 @@ let renderer,readyPromise;
 
 const templatePath = path.resolve(__dirname,'./template/index.template.html');
 
-if(isProd){
-    const template = fs.readFileSync(templatePath,'utf-8');
-    const serverBundle = require('./dist/vue-ssr-server-bundle.json');
-    const clientManifest = require('./dist/vue-ssr-client-manifest.json');
-    renderer = createRenderer(serverBundle,{
-        runInNewContext:false,
-        template,
-        clientManifest,
-    });
-}else{
-    readyPromise = '';
-}
+// if(isProd){
+//     const template = fs.readFileSync(templatePath,'utf-8');
+//     const serverBundle = require('./dist/vue-ssr-server-bundle.json');
+//     const clientManifest = require('./dist/vue-ssr-client-manifest.json');
+//     renderer = createRenderer(serverBundle,{
+//         runInNewContext:false,
+//         template,
+//         clientManifest,
+//     });
+// }else{
+//     readyPromise = Promise.resolve('');
+// }
+
+const template = fs.readFileSync(templatePath,'utf-8');
+const serverBundle = require('./dist/vue-ssr-server-bundle.json');
+const clientManifest = require('./dist/vue-ssr-client-manifest.json');
+renderer = createRenderer(serverBundle,{
+    runInNewContext:false,
+    template,
+    clientManifest,
+});
 
 const serveStatic = (tPath,cache) => express.static(path.resolve(__dirname,tPath),{
     maxAge:cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
@@ -98,9 +107,10 @@ function render(req,res){
     });
 }
 
-app.get('*', isProd ? render : (req, res) => {
-    readyPromise.then(() => render(req,res));
-});
+// app.get('*', isProd ? render : (req, res) => {
+//     readyPromise.then(() => render(req,res));
+// });
+app.get('*', render);
 
 app.listen(port,(err) => {
     if(err){
