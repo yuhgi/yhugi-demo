@@ -25,7 +25,6 @@
             var distanceY = dy - that._draggable.lastDy;
             that._draggable.lastDx = dx;
             that._draggable.lastDy = dy;
-
             if(panzoomInst){
                 distanceX = panzoomInst.getSvgDistance(distanceX);
                 distanceY = panzoomInst.getSvgDistance(distanceY);

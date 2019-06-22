@@ -1,11 +1,11 @@
 export default {
     namespaced : true,
     state:() => {
-        return {message:'empty'};
+        return {message:'你好'};
     },
     actions:{
         changeMessage:({commit},message) => {
-            return commit('inc',message);
+            return commit('changeMessage',message);
         }
     },
     mutations:{

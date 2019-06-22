@@ -148,6 +148,7 @@
     for (i=0, len = circleList.length; i < len; i++) {
         temp = circleList[i];
         temp.radius = Number(temp.radius);
+        temp.x = Number(temp.x);
         circleEl = paper.circle(x + temp.x, y, temp.radius);
         if (mode === "fill") {
           circleEl.attr("fill", color);
@@ -176,7 +177,7 @@
         lineEl.attr('stroke-dasharray','-');
         textEl = paper.text(newX + temp.radius, newY+temp.radius * 3+6,'x='+temp.x+'m');
         textEl.attr('font-size',fontSize);
-        if(Math.abs((rotate%360)/90) > 1) {
+        if (Math.abs(rotate % 360) > 90 && Math.abs(rotate % 360) < 270) {
             lineEl.rotate(rotate+180,newX + temp.radius, newY+temp.radius);
             textEl.rotate(rotate+180,newX + temp.radius, newY+temp.radius);
         } else {

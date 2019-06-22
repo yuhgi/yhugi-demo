@@ -85,7 +85,7 @@ module.exports = {
     },
     plugins:isProd ? [
         vueLoaderPlugin,
-        uglifyJSPlugin,
+        // uglifyJSPlugin,
         extractCssPlugin
     ]:[
         vueLoaderPlugin,
