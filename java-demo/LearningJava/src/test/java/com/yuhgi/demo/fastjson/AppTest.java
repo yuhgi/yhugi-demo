@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AppTest {
@@ -39,5 +41,20 @@ public class AppTest {
         list.add(user3);
         String arrayStr = JSON.toJSONString(list);
         System.out.println(arrayStr);
+    }
+
+    @Test
+    public void jsonFieldTest() throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        Date date = sdf.parse("20190701 18:10:09");
+        Product product = new Product("牙刷",date,"牙刷1厂");
+        String jsonStr = JSON.toJSONString(product);
+        JSONObject jsonObject = JSON.parseObject(jsonStr);
+        Assert.assertEquals("牙刷",jsonObject.get("productName"));
+        Assert.assertNull(jsonObject.get("factory"));
+        Assert.assertEquals("20190701 18:10:09",jsonObject.get("productDate"));
+
+        Product product1 = JSON.parseObject(jsonStr,Product.class);
+        Assert.assertEquals(product,product1);
     }
 }
