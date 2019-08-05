@@ -1,62 +1,74 @@
 package com.yuhgi.converter;
 
-import jdk.internal.util.xml.impl.Input;
 import org.jodconverter.LocalConverter;
 import org.jodconverter.document.DefaultDocumentFormatRegistry;
-import org.jodconverter.job.ConversionJobWithOptionalSourceFormatUnspecified;
-import org.jodconverter.job.ConversionJobWithRequiredSourceFormatUnspecified;
 import org.jodconverter.office.OfficeManager;
 
 import java.io.*;
 
 public class OfficeConverter {
+
     private LocalConverter converter;
+    public static String list[] = {".doc",".docx",".ppt",".pptx"};
+
     public OfficeConverter(OfficeManager officeManager){
         this.converter = LocalConverter.make(officeManager);
     }
-    public OutputStream docToPdf(InputStream inputStream) throws Exception{
-        OutputStream outputStream = new ByteArrayOutputStream();
-
-        this.converter.convert(inputStream)
-                .as(DefaultDocumentFormatRegistry.DOC)
-                .to(outputStream)
-                .as(DefaultDocumentFormatRegistry.PDF)
-                .execute();
-
-        return outputStream;
+    public boolean isSupportedFormat(String fileExtension){
+        for(String s:list){
+            if(s.equals(fileExtension)){
+                return true;
+            }
+        }
+        return false;
     }
-    public OutputStream docxToPdf(File inputStream) throws Exception{
-        OutputStream outputStream = new ByteArrayOutputStream();
+    public ByteArrayOutputStream officeToPdf(InputStream inputStream,String fileExtension) throws Exception{
+        if(!isSupportedFormat(fileExtension)){
+            throw new Exception(fileExtension+" is not supported format.");
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        org.jodconverter.document.DocumentFormat formatRegistry;
 
+        switch (fileExtension){
+            case ".doc":
+                formatRegistry = DefaultDocumentFormatRegistry.DOC;
+                break;
+            case ".docx":
+                formatRegistry = DefaultDocumentFormatRegistry.DOCX;
+                break;
+            case ".ppt":
+                formatRegistry = DefaultDocumentFormatRegistry.PPT;
+                break;
+            case ".pptx": {
+                formatRegistry = DefaultDocumentFormatRegistry.PPTX;
+                break;
+            }
+            default:formatRegistry = DefaultDocumentFormatRegistry.DOC;
+        }
         this.converter.convert(inputStream)
-                .as(DefaultDocumentFormatRegistry.DOCX)
+                .as(formatRegistry)
                 .to(outputStream)
                 .as(DefaultDocumentFormatRegistry.PDF)
                 .execute();
 
         return outputStream;
+
     }
-    public OutputStream pptToPdf(File inputStream) throws Exception{
-        OutputStream outputStream = new ByteArrayOutputStream();
+    public ByteArrayOutputStream officeToPdf(File file) throws Exception{
+        String fileName = file.getName();
+        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+        if(!isSupportedFormat(fileExtension)){
+            throw new Exception(fileExtension+" is not supported format.");
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        this.converter.convert(inputStream)
-                .as(DefaultDocumentFormatRegistry.PPT)
+        this.converter.convert(file)
                 .to(outputStream)
                 .as(DefaultDocumentFormatRegistry.PDF)
                 .execute();
 
         return outputStream;
-    }
-    public OutputStream pptxToPdf(File inputStream) throws Exception{
-        OutputStream outputStream = new ByteArrayOutputStream();
 
-        this.converter.convert(inputStream)
-                .as(DefaultDocumentFormatRegistry.PPTX)
-                .to(outputStream)
-                .as(DefaultDocumentFormatRegistry.PDF)
-                .execute();
-
-        return outputStream;
     }
 
 }

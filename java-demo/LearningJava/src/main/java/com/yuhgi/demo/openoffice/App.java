@@ -1,17 +1,22 @@
 package com.yuhgi.demo.openoffice;
 
 import com.yuhgi.converter.OfficeConverter;
+import com.yuhgi.converter.PdfConverter;
 import com.yuhgi.utils.HuaWeiOssUtil;
 import org.jodconverter.office.LocalOfficeManager;
 import org.jodconverter.office.OfficeManager;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) throws Exception{
         String appName = "test";
         String bussinessCode = "course";
-        String toPath = "/home/yuhgi/Documents/convert/from";
+        String toPath = "/home/yuhgi/Documents/convert/to";
         File fromDir = new File("/home/yuhgi/Documents/convert/from");
         String url = HuaWeiOssUtil.getPreviewUrl("seats/2019/06/course/1561689071.png");
         System.out.println(url);
@@ -38,32 +43,38 @@ public class App {
                     String pdfName = shortName + "/"+shortName+".pdf";
                     String objectKey = HuaWeiOssUtil.createObjectKey(appName,bussinessCode,pdfName);
                     OfficeConverter converter = new OfficeConverter(officeManager);
-
-                    ByteArrayOutputStream outputStream =(ByteArrayOutputStream) converter.docToPdf(inputStream);
+                    System.out.println(fileName+"----开始pdf转换");
+                    long startTime=System.currentTimeMillis();
+                    ByteArrayOutputStream outputStream = converter.officeToPdf(inputStream,fileExtension);
+                    long endTime = System.currentTimeMillis();
+                    System.out.println(fileName+"----pdf转换成功."+"耗时----"+(endTime-startTime)+"ms");
                     byte[] dataBytes = outputStream.toByteArray();
                     InputStream pdfInputStream = new ByteArrayInputStream(dataBytes);//转换后的输入流
                     outputStream.flush(); //加在转换前不行，就放在转换后
-                    HuaWeiOssUtil.uploadByInputStream(objectKey,pdfInputStream);
-                    System.out.println(fileName+"----转换成功");
-                    switch (fileExtension){
-                        case ".pdf":{
+                    PdfConverter pdfConverter = new PdfConverter();
+                    ArrayList<BufferedImage> images = pdfConverter.pdfToJpg(dataBytes);
 
-                            break;
+                    System.out.println(fileName+"----开始图片转换");
+                    startTime=System.currentTimeMillis();
+                    for(int i=0,len=images.size();i<len;i++){
+                        BufferedImage image = images.get(i);
+                        String path = toPath+"/"+shortName+"/"+i+".jpg";
+                        File file = new File(path);
+                        if(!file.exists()){
+                            file.mkdirs();
                         }
-                        case ".doc":
-                        case ".docx":{
-                            //HuaWeiOssUtil.uploadByInputStream(objectKey,inputStream);
-                            break;
-                        }
-                        case ".ppt":
-                        case ".pptx":{
-                            //HuaWeiOssUtil.uploadByInputStream(objectKey,inputStream);
-                            break;
-                        }
+
+                        ImageIO.write(image,"jpg",file);
                     }
-                    System.out.println(objectKey+"----存储oss成功");
-
-
+                    System.out.println(fileName+"----图片转换成功."+"耗时----"+(endTime-startTime)+"ms");
+//                    System.out.println(objectKey+"----开始上传oss");
+//                    startTime=System.currentTimeMillis();
+//                    HuaWeiOssUtil.uploadByInputStream(objectKey,pdfInputStream);
+//                    endTime = System.currentTimeMillis();
+//                    outputStream.close();
+//                    inputStream.close();
+//                    pdfInputStream.close();
+//                    System.out.println(objectKey+"----上传oss成功."+"耗时----"+(endTime-startTime)+"ms");
                 }
             }catch(Exception e){
                 System.out.println("----转换失败");
@@ -74,5 +85,9 @@ public class App {
 
         //停止服务
         officeManager.stop( );
+    }
+
+    public static void convertPdfToImage(){
+
     }
 }
