@@ -1,5 +1,6 @@
 package com.yuhgi.springmvc.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yuhgi.springmvc.model.Student;
 import com.yuhgi.springmvc.service.StudentService;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -20,11 +22,22 @@ public class StudentController {
     @Resource
     private StudentService studentService;
 
-    @RequestMapping(value="/list",method = {RequestMethod.GET})
-    public String count(Map<String,Object> model){
-        ArrayList<com.yuhgi.springmvc.model.Student> studentList = studentService.getList();
+    @RequestMapping(value="/list",method = {RequestMethod.POST})
+    @ResponseBody
+    public Object queryList(@RequestBody JSONObject jsonObject){
+        ArrayList<com.yuhgi.springmvc.model.Student> allList = studentService.getList();
+        ArrayList<Student> studentArrayList = new ArrayList<Student>();
+        int pageSize = jsonObject.getInteger("pageSize");
+        int pageIndex = jsonObject.getInteger("pageIndex");
+        for(int i=pageSize*pageIndex;i<pageSize*(pageIndex+1);i++){
+            studentArrayList.add(allList.get(i));
+        }
 
-        model.put("count",studentList.size());
+        return studentArrayList;
+    }
+
+    @RequestMapping(value="/list",method = {RequestMethod.GET})
+    public Object showList(){
         return "student/list";
     }
 

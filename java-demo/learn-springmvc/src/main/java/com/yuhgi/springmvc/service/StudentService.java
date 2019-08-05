@@ -11,7 +11,7 @@ public class StudentService {
     private ArrayList<Student> list;
     public StudentService(){
         ArrayList<Student> list =  new ArrayList<Student>();
-        for(int i=0;i<10;i++){
+        for(int i=0;i<100;i++){
             Student s = new Student();
             s.setId(Integer.toString(i));
             s.setName("张三"+i);
