@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="http://cesium.marsgis.cn/lib/Cesium/Cesium.js"></script>
+    <link
+      href="http://cesium.marsgis.cn/lib/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #cesium-container {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesium-container"></div>
+    <script>
+      //天地图URL配置
+      var tdtToken = "27fd07f4ce5050bacd301543a12fcccf";
+      var TDTURL_CONFIG = {
+        TDT_IMG_W:
+          "https://{s}.tianditu.gov.cn/img_w/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default&format=tiles&tk=" +
+          tdtToken, //在线天地图影像服务地址(墨卡托投影)
+        TDT_VEC_W:
+          "https://{s}.tianditu.gov.cn/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default&format=tiles&tk=" +
+          tdtToken, //在线天地图矢量地图服务(墨卡托投影)
+        TDT_CIA_W:
+          "https://{s}.tianditu.gov.cn/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default.jpg&tk=" +
+          tdtToken, //在线天地图影像中文标记服务(墨卡托投影)
+        TDT_CVA_W:
+          "https://{s}.tianditu.gov.cn/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default.jpg&tk=" +
+          tdtToken, //在线天地图矢量中文标记服务(墨卡托投影)
+        TDT_IMG_C:
+          "https://{s}.tianditu.gov.cn/img_c/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default&format=tiles&tk=" +
+          tdtToken, //在线天地图影像服务地址(经纬度)
+        TDT_VEC_C:
+          "https://{s}.tianditu.gov.cn/vec_c/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default&format=tiles&tk=" +
+          tdtToken, //在线天地图矢量地图服务(经纬度)
+        TDT_CIA_C:
+          "https://{s}.tianditu.gov.cn/cia_c/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=cia&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default&format=tiles&tk=" +
+          tdtToken, //在线天地图影像中文标记服务(经纬度)
+        TDT_CVA_C:
+          "https://{s}.tianditu.gov.cn/cva_c/wmts?service=wmts&request=GetTile&version=1.0.0" +
+          "&LAYER=cva&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}" +
+          "&style=default&format=tiles&tk=" +
+          tdtToken //在线天地图矢量中文标记服务(经纬度)
+      };
+      var viewer = new Cesium.Viewer("cesium-container", {
+        selectionIndicator: false,
+        animation: false, //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false, //是否显示点击要素之后显示的信息
+        fullscreenButton: true,
+        //天地图影像服务（经纬度）
+        imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
+          url: TDTURL_CONFIG.TDT_IMG_C,
+          layer: "tdtImg_c",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+          tilingScheme: new Cesium.GeographicTilingScheme(),
+          tileMatrixLabels: [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19"
+          ],
+          maximumLevel: 18,
+          show: false
+        })
+      });
+      //天地图影像中文标记服务（经纬度）
+      var tdtCva = new Cesium.WebMapTileServiceImageryProvider({
+        url: TDTURL_CONFIG.TDT_CIA_C,
+        layer: "tdtCva",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "c",
+        subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+        tilingScheme: new Cesium.GeographicTilingScheme(),
+        tileMatrixLabels: [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19"
+        ],
+        maximumLevel: 18,
+        show: false
+      });
+      viewer.imageryLayers.addImageryProvider(tdtCva);
+      //设置初始位置
+      viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(
+          118.63854163,
+          32.04047801,
+          1000
+        )
+      });
+
+      function getPosition() {
+        //得到当前三维场景
+        var scene = viewer.scene;
+        //得到当前三维场景的椭球体
+        var ellipsoid = scene.globe.ellipsoid;
+        var entity = viewer.entities.add({
+          label: {
+            show: false
+          }
+        });
+        var longitudeString = null;
+        var latitudeString = null;
+        var height = null;
+        var cartesian = null;
+        // 定义当前场景的画布元素的事件处理
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        //设置鼠标移动事件的处理函数，这里负责监听x,y坐标值变化
+        handler.setInputAction(function(movement) {
+          //通过指定的椭球或者地图对应的坐标系，将鼠标的二维坐标转换为对应椭球体三维坐标
+          cartesian = viewer.camera.pickEllipsoid(
+            movement.endPosition,
+            ellipsoid
+          );
+          if (cartesian) {
+            //将笛卡尔坐标转换为地理坐标
+            var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+            //将弧度转为度的十进制度表示
+            longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+            latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+            //获取相机高度
+            height = Math.ceil(viewer.camera.positionCartographic.height);
+            entity.position = cartesian;
+            entity.label.show = true;
+            entity.label.text =
+              "(" +
+              longitudeString +
+              ", " +
+              latitudeString +
+              "," +
+              height +
+              ")";
+              console.log("(" +
+              longitudeString +
+              ", " +
+              latitudeString +
+              "," +
+              height +
+              ")")
+          } else {
+            entity.label.show = false;
+          }
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+        //设置鼠标滚动事件的处理函数，这里负责监听高度值变化
+        handler.setInputAction(function(wheelment) {
+          height = Math.ceil(viewer.camera.positionCartographic.height);
+          entity.position = cartesian;
+          entity.label.show = true;
+          entity.label.text =
+            "(" + longitudeString + ", " + latitudeString + "," + height + ")";
+        }, Cesium.ScreenSpaceEventType.WHEEL);
+      }
+
+      getPosition();
+    </script>
+  </body>
+</html>
