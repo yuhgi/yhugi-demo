@@ -63,7 +63,7 @@ class Gaia {
                 '18',
                 '19',
             ],
-            maximumLevel: 18,
+            maximumLevel: 17,
             show: false,
         });
         //天地图影像中文标记服务（经纬度）
@@ -96,7 +96,7 @@ class Gaia {
                 '18',
                 '19',
             ],
-            maximumLevel: 18,
+            maximumLevel: 17,
             show: false,
         });
         return {
