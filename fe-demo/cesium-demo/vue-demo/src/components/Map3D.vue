@@ -87,7 +87,7 @@ export default {
                     );
                 })
                 .otherwise(function(error) {
-                    console.log(error);
+                    console.error(error);
                 });
         },
         addMarkers() {
